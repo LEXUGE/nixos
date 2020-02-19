@@ -4,6 +4,7 @@ set -e
 
 prompt1="Enter your option: "
 ESP="/boot/efi"
+MOUNTPOINT="/mnt"
 
 contains_element() {
 	#check if an element exist in a string
