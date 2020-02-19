@@ -59,12 +59,12 @@ mount_partition() {
 }
 
 # NIXOS_INSTALL
-nixos_install(){
-    nix-env -iA nixos.gitMinimal
-    git clone https://github.com/LEXUGE/nixos /mnt/etc/nixos/
-    nixos-generate-config --root /mnt
-    nixos-install
-    reboot
+nixos_install() {
+	nix-env -iA nixos.gitMinimal
+	git clone https://github.com/LEXUGE/nixos /mnt/etc/nixos/
+	nixos-generate-config --root /mnt
+	nixos-install
+	reboot
 }
 
 # INSTALLATION
