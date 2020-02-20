@@ -9,6 +9,9 @@ in {
   imports = [ "${home-manager}/nixos" ]; # Import home-manager
 
   home-manager.users.ash-heruto = {
+    # User-layer packages
+    home.packages = with pkgs; [ hello ];
+
     # Package settings
     programs = {
       # GnuPG
