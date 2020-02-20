@@ -13,7 +13,7 @@ in {
       ${pkgs.nix}/bin/nix-env -i -E {}
   '';
 
-  home-manager.users.ash-heruto = {
+  home-manager.users.ash = {
     # User-layer packages
     home.packages = with pkgs; [ hello ];
 
