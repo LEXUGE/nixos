@@ -8,6 +8,11 @@ let
 in {
   imports = [ "${home-manager}/nixos" ]; # Import home-manager
 
+  # Hacky workaround of issue 948 of home-manager
+  systemd.services.home-manager-ash.preStart = ''
+      ${pkgs.nix}/bin/nix-env -i -E {}
+  '';
+
   home-manager.users.ash-heruto = {
     # User-layer packages
     home.packages = with pkgs; [ hello ];

@@ -1,8 +1,8 @@
 { config, pkgs, ... }:
 
 {
-  # Define ash-heruto the only user with zsh assigned
-  users.users.ash-heruto = {
+  # Define ash the only user with zsh assigned
+  users.users.ash = {
     initialHashedPassword =
       "$6$2aMNNG9GcF$/5X/fdXWRl3eZXPgSRgJLplpQgjvZ4Nme6rV4mGqgoWYgQLdLwwZBsXBgjb/LQhBD31XNk0OdzWDL.ctSLiu10";
     shell = pkgs.zsh;
