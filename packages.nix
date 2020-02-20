@@ -12,7 +12,8 @@
     tdesktop
     git
     gnupg
-  ];
+    (import ./packages/shadowsocksr.nix) # Custom built ShadowsocksR
+];
 
   # Fonts
   fonts.fonts = with pkgs; [

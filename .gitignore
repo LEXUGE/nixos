@@ -1,6 +1,7 @@
 # -*- mode: gitignore; -*-
 # ignore device specific file
 hardware-configuration.nix
+secrets
 
 # emacs gitignore
 *~
