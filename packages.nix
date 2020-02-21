@@ -12,6 +12,7 @@
     tdesktop
     git
     gnupg
+    shadowsocks-libev
     (import ./packages/simple-obfs.nix)
   ];
 
