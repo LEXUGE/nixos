@@ -6,7 +6,7 @@ It features:
 - GNOME 3 with builtin dark variant.
 - Full-disk encryption including `/boot`.
 - Switchable transparent proxy backended by `shadowsocks-libev + simple-obfs` (I
-  packaged simple-obfs my self). This feature is **extremely** useful if you are
+  packaged simple-obfs myself). This feature is **extremely** useful if you are
   in Mainland China because it helps you get over the firewall without pain.
 - <kbd>CapsLock</kbd> as <kbd>Ctrl</kbd>! No emacs pinky anymore! (Surely I am
   an emacs user).
