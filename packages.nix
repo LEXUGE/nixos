@@ -12,7 +12,8 @@
     tdesktop
     git
     gnupg
-];
+    (import ./packages/simple-obfs.nix)
+  ];
 
   # Fonts
   fonts.fonts = with pkgs; [
