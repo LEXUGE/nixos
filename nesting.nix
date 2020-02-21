@@ -63,7 +63,7 @@ in
     description = "Shadowsocks";
     after = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
-    path = [ pkgs.shadowsocks-libev ]
+    path = [ pkgs.shadowsocks-libev ];
     script = "exec ss-local -c ${configPath} -b ${socksProxyAddr} -l ${socksProxyPortStr}";
 
     unitConfig = {
