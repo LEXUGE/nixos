@@ -29,6 +29,9 @@
     };
   };
 
+  # Add swap file (8GB)
+  swapDevices = [ { device = "/var/swapFile"; size = 8192; } ];
+
   # Set your time zone.
   time.timeZone = "Asia/Shanghai";
 
