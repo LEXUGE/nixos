@@ -2,6 +2,7 @@
 
 rm -rf ./*.nix ./dotfiles/ ./packages/
 
+cp -a /etc/nixos/secrets/*.example ./secrets/.
 cp -a /etc/nixos/*.nix ./
 cp -a /etc/nixos/dotfiles ./
 cp -a /etc/nixos/packages ./

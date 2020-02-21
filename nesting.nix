@@ -5,7 +5,6 @@
 let
   inherit (pkgs) callPackage gnugrep;
   inherit (lib) concatMapStringsSep;
-  secDir = ./secrets;
   mainUser = "ash";
 
   socksGroupName = "Shadowsocks";
@@ -15,7 +14,7 @@ let
   socksProxyPortStr = toString socksProxyPort;
   redirProxyPortStr = toString redirProxyPort;
 
-  configPath = toString (secDir + /shadowsocks.json);
+  configPath = toString "/etc/nixos/secrets/shadowsocks.json";
   tag = "SS_SPEC_ASH";
   doNotRedirect = concatMapStringsSep "\n"
     (f: "ip46tables -t nat -A ${tag} ${f} -j RETURN 2>/dev/null || true")
