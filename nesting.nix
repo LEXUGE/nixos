@@ -15,7 +15,6 @@ let
   socksProxyPortStr = toString socksProxyPort;
   redirProxyPortStr = toString redirProxyPort;
 
-  ss = pkgs.shadowsocks-libev;
   configPath = toString (secDir + /shadowsocks.json);
   tag = "SS_SPEC_ASH";
   doNotRedirect = concatMapStringsSep "\n"
@@ -24,20 +23,19 @@ let
       "-d 0.0.0.0/8"
       "-d 10.0.0.0/8"
       "-d 127.0.0.0/8"
-      "-d 169.254.0.0/16"
       "-d 172.16.0.0/12"
       "-d 192.168.0.0/16"
-      "-d 224.168.0.0/4"
-      "-d 240.168.0.0/4"
+      "-d 1.1.1.3"
       "-m owner --gid-owner ${socksGroupName}"
     ];
 
     transparentProxyConfig = {
       systemd.services.shadowsocks-transparent = {
-        description = "Transparent ShadowSocskR";
+        description = "Transparent Shadowsocks";
         after = [ "network.target" ];
         wantedBy = [ "multi-user.target" ];
-        script = "${ss}/bin/ss-redir -c ${configPath} -b ${socksProxyAddr} -l ${redirProxyPortStr}";
+        path = [ pkgs.shadowsocks-libev ];
+        script = "exec ss-redir -c ${configPath} -b ${socksProxyAddr} -l ${redirProxyPortStr}";
 
         unitConfig = {
           ConditionPathExists = configPath;
@@ -62,10 +60,11 @@ in
 {
   users.groups.${socksGroupName} = {};
   systemd.services.shadowsocks = {
-    description = "ShadowSocskR";
+    description = "Shadowsocks";
     after = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
-    script = "${ss}/bin/ss-local -c ${configPath} -b ${socksProxyAddr} -l ${socksProxyPortStr}";
+    path = [ pkgs.shadowsocks-libev ]
+    script = "exec ss-local -c ${configPath} -b ${socksProxyAddr} -l ${socksProxyPortStr}";
 
     unitConfig = {
       ConditionPathExists = configPath;
