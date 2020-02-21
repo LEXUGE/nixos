@@ -20,9 +20,10 @@ Boot in NixOS LiveCD, and then:
 ``
 curl -Ls https://github.com/LEXUGE/nixos/raw/master/install.sh | bash
 ``
+
 Follow the instructions and there you go.
 
-**NOTE: If you are not on a NVMe SSD, please edit the script to make
+**NOTE: If you are not on a NVMe SSD, please edit the script to fit
     `"${device}p2"` into `"${device}2"` (so does `"${device}p1"`).**
 
 If you want to use `shadowsocks`, please create `secrets/shadowsocks.json`.
