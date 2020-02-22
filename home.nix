@@ -10,7 +10,7 @@ in {
 
   # Hacky workaround of issue 948 of home-manager
   systemd.services.home-manager-ash.preStart = ''
-      ${pkgs.nix}/bin/nix-env -i -E
+    ${pkgs.nix}/bin/nix-env -i -E
   '';
 
   home-manager.users.ash = {
@@ -55,7 +55,7 @@ in {
     # Setting GNOME Dconf settings
     dconf.settings = {
       # Touchpad settings
-      "org/gnome/desktop/peripheral/touchpad" = {
+      "org/gnome/desktop/peripherals/touchpad" = {
         disable-while-typing = false;
         tap-to-click = true;
         two-finger-scrolling-enabled = true;

@@ -13,6 +13,7 @@
     git
     gnupg
     shadowsocks-libev
+    fwupd
     (import ./packages/simple-obfs.nix)
   ];
 
