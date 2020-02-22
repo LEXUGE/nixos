@@ -18,6 +18,7 @@
     fwupd
     thunderbird
     neofetch
+    zoom-us
   ];
 
   # Fonts
