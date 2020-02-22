@@ -11,8 +11,8 @@
   # Enable fwupd service
   services.fwupd.enable = true;
 
-  # Enable ThinkPad Throttled
-  services.throttled.enable = true;
+  # Enable ThinkPad Throttled (Currently unavailable for X1C7)
+  # services.throttled.enable = true;
 
   # Enable fprintd
   services.fprintd.enable = true;

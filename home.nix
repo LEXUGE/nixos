@@ -19,6 +19,16 @@ in {
 
     # Package settings
     programs = {
+      # GNOME Terminal
+      gnome-terminal = {
+        enable = true;
+        profile.b1dcc9dd-5262-4d8d-a863-c897e6d979b9 = {
+          default = true;
+          visibleName = "Ash";
+          font = "Fira Code weight=450 10";
+        };
+      };
+
       # GnuPG
       gpg = {
         enable = true;
