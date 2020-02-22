@@ -12,11 +12,12 @@
     tdesktop
     git
     gnupg
+    spotify
     shadowsocks-libev
+    (import ./packages/simple-obfs.nix)
     fwupd
     thunderbird
     neofetch
-    (import ./packages/simple-obfs.nix)
   ];
 
   # Fonts
