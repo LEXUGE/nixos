@@ -13,7 +13,7 @@ contains_element() {
 
 #SELECT DEVICE
 select_device() {
-	IFS=" " read -r -a devices_list <<<"$(lsblk -d | awk '{print "/dev/" $1}' | grep 'sd\|hd\|vd\|nvme\|mmcblk')"
+	devices_list=($(lsblk -d | awk '{print "/dev/" $1}' | grep 'sd\|hd\|vd\|nvme\|mmcblk'))
 	PS3="$prompt1"
 	echo -e "Attached Devices:\n"
 	lsblk -lnp -I 2,3,8,9,22,34,56,57,58,65,66,67,68,69,70,71,72,91,128,129,130,131,132,133,134,135,259 | awk '{print $1,$4,$6,$7}' | column -t
