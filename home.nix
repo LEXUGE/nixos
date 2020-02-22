@@ -22,7 +22,7 @@ in {
       # GNOME Terminal
       gnome-terminal = {
         enable = true;
-        profile.b1dcc9dd-5262-4d8d-a863-c897e6d979b9 = {
+        profile.aba3fa9f-5aab-4ce9-9775-e2c46737d9b8 = {
           default = true;
           visibleName = "Ash";
           font = "Fira Code weight=450 10";

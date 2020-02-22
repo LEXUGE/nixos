@@ -30,6 +30,8 @@
     fira-code-symbols
   ];
 
+  programs.dconf.enable = true;
+
   # Setup zsh
   programs.zsh.enable = true;
 }
