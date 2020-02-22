@@ -14,6 +14,8 @@
     gnupg
     shadowsocks-libev
     fwupd
+    thunderbird
+    neofetch
     (import ./packages/simple-obfs.nix)
   ];
 

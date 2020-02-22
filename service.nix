@@ -11,6 +11,13 @@
   # Enable fwupd service
   services.fwupd.enable = true;
 
+  # Enable ThinkPad Throttled
+  services.throttled.enable = true;
+
+  # Enable fprintd
+  services.fprintd.enable = true;
+  services.fprintd.package = pkgs.fprintd-thinkpad;
+
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
 }
