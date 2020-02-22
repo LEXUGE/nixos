@@ -19,6 +19,9 @@
     ./nesting.nix # Nesting function dedicates to provide transparent proxy switch
   ];
 
+  # Use the latest linux kernel
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   # Select internationalisation properties.
   i18n = {
     consoleFont = "Lat2-Terminus16";
