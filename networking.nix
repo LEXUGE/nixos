@@ -16,5 +16,9 @@
       server-tls 1.1.1.1:853
       server-https https://cloudflare-dns.com/dns-query
     '';
+    extraConfig = ''
+      prefetch-domain yes
+      speed-check-mode ping,tcp:80
+    '';
   };
 }
