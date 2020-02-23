@@ -60,6 +60,8 @@ in {
     # Handwritten configs
     home.file = {
       ".config/gtk-3.0/settings.ini".source = ./dotfiles/gtk-settings.ini;
+      ".emacs.d/init.el".source = ./dotfiles/emacs.d/init.el;
+      ".emacs.d/elisp/".source = ./dotfiles/emacs.d/elisp;
     };
 
     # Setting GNOME Dconf settings
