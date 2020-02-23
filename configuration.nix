@@ -15,7 +15,6 @@
     ./service.nix # Various services like sound, printer, etc.
     ./user.nix # User and its specifics
     ./home.nix # home-manager related stuff
-    ./auto-update.nix # Faultless auto update from Jollheef
     ./nesting.nix # Nesting function dedicates to provide transparent proxy switch
   ];
 
@@ -40,6 +39,9 @@
 
   # Set your time zone.
   time.timeZone = "Asia/Shanghai";
+
+  # Auto upgrade
+  system.autoUpgrade.enable = true;
 
   # Auto gc and optimise
   nix.optimise.automatic = true;
