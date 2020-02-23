@@ -8,6 +8,7 @@ It features:
 - Switchable transparent proxy backended by `shadowsocks-libev + simple-obfs` (I
   packaged simple-obfs myself). This feature is **extremely** useful if you are
   in Mainland China because it helps you get over the firewall without pain.
+- A built-in smartdns server (custom packaged)
 - <kbd>CapsLock</kbd> as <kbd>Ctrl</kbd>! No emacs pinky anymore! (Surely I am
   an emacs user).
 - zsh with oh-my-zsh builtin, in addition to a git plugin which makes your life
@@ -35,6 +36,7 @@ instructions:
   [simple-obfs](https://github.com/shadowsocks/simple-obfs), just grab
   `packages/simple-obfs.nix`.
 - See `nesting.nix` if you want to use switchable transparent proxy.
+- If you want to use my [smartdns](https://github.com/pymumu/smartdns), take a look into `packages/smartdns.nix` and `modules/smartdns.nix`.
 
 # See also
 [config](https://github.com/LEXUGE/config) for my emacs and other configs (may

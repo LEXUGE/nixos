@@ -15,10 +15,12 @@
     spotify
     shadowsocks-libev
     (import ./packages/simple-obfs.nix)
+    (import ./packages/smartdns.nix)
     fwupd
     thunderbird
     neofetch
     zoom-us
+    bind
   ];
 
   # Virtualbox
