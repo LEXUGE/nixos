@@ -21,6 +21,11 @@
     zoom-us
   ];
 
+  # Virtualbox
+  virtualisation.virtualbox.host.enable = true;
+  users.extraGroups.vboxusers.members = [ "ash" ];
+  virtualisation.virtualbox.host.enableExtensionPack = true;
+
   # Fonts
   fonts.fonts = with pkgs; [
     noto-fonts
