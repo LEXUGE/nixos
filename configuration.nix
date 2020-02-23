@@ -40,6 +40,9 @@
   # Set your time zone.
   time.timeZone = "Asia/Shanghai";
 
+  # Update Intel CPU Microcode
+  hardware.cpu.intel.updateMicrocode = true;
+
   # Auto upgrade
   system.autoUpgrade.enable = true;
 
