@@ -164,4 +164,14 @@
   :config
   (yas-global-mode 1))
 
+(use-package nix-mode
+  :mode "\\.nix\\'")
+
+;; Automatically update packages installed
+(use-package auto-package-update
+  :config
+  (setq auto-package-update-delete-old-versions t)
+  (setq auto-package-update-hide-results t)
+  (auto-package-update-maybe))
+
 (provide 'base-extensions)
