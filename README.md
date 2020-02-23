@@ -1,5 +1,5 @@
 # nixos
-A fully automated replicable nixos configuration set.
+A fully automated replicable nixos configuration set. Tested on Virtualbox and ThinkPad X1 Carbon 7th Gen. It should be working on any x86 machine.
 
 # What does it do?
 It features:
