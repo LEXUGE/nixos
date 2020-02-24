@@ -16,9 +16,7 @@ stdenv.mkDerivation rec {
 
   sourceRoot = "source/src";
 
-  installPhase = ''
-    install -Dm755 smartdns $out/bin/smartdns
-     '';
+  installPhase = "install -Dm755 smartdns $out/bin/smartdns";
 
   meta = with stdenv.lib; {
     description =
