@@ -13,7 +13,6 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [ openssl ];
-  nativeBuildInputs = [ ];
 
   sourceRoot = "source/src";
 
