@@ -1,1 +1,1 @@
-*.el linguist-detectable=false
+dotfiles/* linguist-vendored
