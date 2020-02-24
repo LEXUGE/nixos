@@ -20,4 +20,16 @@ stdenv.mkDerivation rec {
   installPhase = ''
     install -Dm755 smartdns $out/bin/smartdns
      '';
+
+  meta = {
+    description =
+      " A local DNS server to obtain the fastest website IP for the best Internet experience";
+    Description = ''
+      SmartDNS is a local DNS server. SmartDNS accepts DNS query requests from local clients, obtains DNS query results from multiple upstream DNS servers, and returns the fastest access results to clients.
+      Avoiding DNS pollution and improving network access speed, supports high-performance ad filtering.
+      Unlike dnsmasq's all-servers, smartdns returns the fastest access resolution. 
+    '';
+    homepage = "https://github.com/pymumu/smartdns";
+    license = "AGPLv3+";
+  };
 }
