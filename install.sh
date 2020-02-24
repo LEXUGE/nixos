@@ -64,6 +64,10 @@ nixos_install() {
 	nix-env -iA nixos.gitMinimal
 	git clone https://github.com/LEXUGE/nixos /mnt/etc/nixos/
 	rm -rf /mnt/etc/nixos/.git/
+
+	nix-channel --add https://nixos.org/channels/nixos-unstable unstable
+	nix-channel --update
+
 	nixos-generate-config --root /mnt
 	nixos-install
 	reboot
