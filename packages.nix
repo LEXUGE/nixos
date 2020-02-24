@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 
-{
+let unstable = import <unstable> { };
+in {
   nixpkgs.config.allowUnfree = true;
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -16,18 +17,20 @@
     shadowsocks-libev
     (import ./packages/simple-obfs.nix)
     (import ./packages/smartdns.nix)
-    fwupd
+    unstable.fwupd
     thunderbird
     neofetch
     zoom-us
     bind
     texlive.combined.scheme-full
+    unstable.fprintd
+    unstable.libfprint
   ];
 
   # Virtualbox
   virtualisation.virtualbox.host.enable = true;
   users.extraGroups.vboxusers.members = [ "ash" ];
-  virtualisation.virtualbox.host.enableExtensionPack = true;
+  # virtualisation.virtualbox.host.enableExtensionPack = true;
 
   # Fonts
   fonts.fonts = with pkgs; [
