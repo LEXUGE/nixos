@@ -1,5 +1,3 @@
-# This is a custom built smartdns package for NixOS.
-
 with import <nixpkgs> { };
 
 stdenv.mkDerivation rec {
@@ -24,9 +22,10 @@ stdenv.mkDerivation rec {
     longDescription = ''
       SmartDNS is a local DNS server. SmartDNS accepts DNS query requests from local clients, obtains DNS query results from multiple upstream DNS servers, and returns the fastest access results to clients.
       Avoiding DNS pollution and improving network access speed, supports high-performance ad filtering.
-      Unlike dnsmasq's all-servers, smartdns returns the fastest access resolution. 
+      Unlike dnsmasq's all-servers, smartdns returns the fastest access resolution.
     '';
     homepage = "https://github.com/pymumu/smartdns";
+    maintainers = [ maintainers.lexuge ];
     license = licenses.agpl3Plus;
     platforms = platforms.all;
   };
