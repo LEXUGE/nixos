@@ -3,11 +3,11 @@
 with import <nixpkgs> { };
 
 stdenv.mkDerivation rec {
-  name = "smartdns";
+  pname = "smartdns";
   version = "29";
   src = fetchFromGitHub {
     owner = "pymumu";
-    repo = "smartdns";
+    repo = pname;
     rev = "Release${version}";
     sha256 = "06kgmahgma0ybhacqzj5sfazmhzs3p27a0sxik4xbbk3dyqn9ykj";
   };
@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
   buildInputs = [ openssl ];
   nativeBuildInputs = [ ];
 
-  preBuild = "cd src/";
+  sourceRoot = "source/src";
 
   installPhase = ''
     install -Dm755 smartdns $out/bin/smartdns
