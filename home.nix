@@ -72,8 +72,17 @@ in {
         tap-to-click = true;
         two-finger-scrolling-enabled = true;
       };
-      # Keymapping (doesn't work yet)
-      # "org/gnome/desktop/input-sources/xkb-options" = [ "ctrl:nocaps" ];
+      # Favorite apps
+      "org/gnome/shell" = {
+        favorite-apps = [
+          "firefox.desktop"
+          "telegram-desktop.desktop"
+          "org.gnome.Nautilus.desktop"
+          "org.gnome.Terminal.desktop"
+          "emacs.desktop"
+        ];
+      };
+
     };
   };
 }
