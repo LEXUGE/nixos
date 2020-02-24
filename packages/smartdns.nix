@@ -1,4 +1,4 @@
-# This is a custom built simple-obfs package for NixOS. Revised from https://github.com/Ninlives/nixos-config
+# This is a custom built smartdns package for NixOS.
 
 with import <nixpkgs> { };
 
