@@ -21,6 +21,7 @@
     neofetch
     zoom-us
     bind
+    texlive.combined.scheme-full
   ];
 
   # Virtualbox
