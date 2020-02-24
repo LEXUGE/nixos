@@ -2,12 +2,13 @@
 
 with import <nixpkgs> { };
 
-stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   name = "smartdns";
+  version = "29";
   src = fetchFromGitHub {
     owner = "pymumu";
     repo = "smartdns";
-    rev = "Release29";
+    rev = "Release${version}";
     sha256 = "06kgmahgma0ybhacqzj5sfazmhzs3p27a0sxik4xbbk3dyqn9ykj";
   };
 
