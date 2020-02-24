@@ -10,7 +10,11 @@
 
 (use-package dashboard
   :config
-  (dashboard-setup-startup-hook))
+  (dashboard-setup-startup-hook)
+  (setq dashboard-startup-banner 'logo)
+  (setq dashboard-center-content t)
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t))
 
 (use-package ediff
   :config
@@ -68,9 +72,9 @@
 
 (use-package magit
   :config
-  
+
   (setq magit-completing-read-function 'ivy-completing-read)
-  
+
   :bind
   ;; Magic
   ("C-x g s" . magit-status)
@@ -125,9 +129,9 @@
   :config
   (setq projectile-known-projects-file
         (expand-file-name "projectile-bookmarks.eld" temp-dir))
-  
+
   (setq projectile-completion-system 'ivy)
-  
+
   (projectile-global-mode))
 
 (use-package recentf
@@ -173,5 +177,8 @@
   (setq auto-package-update-delete-old-versions t)
   (setq auto-package-update-hide-results t)
   (auto-package-update-maybe))
+
+;; Use vterm to handle terminal related stuff in Emacs (Currently unavailable under NixOS
+;; (use-package vterm)
 
 (provide 'base-extensions)
