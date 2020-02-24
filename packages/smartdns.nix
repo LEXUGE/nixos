@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
     install -Dm755 smartdns $out/bin/smartdns
      '';
 
-  meta = {
+  meta = with stdenv.lib; {
     description =
       " A local DNS server to obtain the fastest website IP for the best Internet experience";
     longDescription = ''
@@ -29,6 +29,7 @@ stdenv.mkDerivation rec {
       Unlike dnsmasq's all-servers, smartdns returns the fastest access resolution. 
     '';
     homepage = "https://github.com/pymumu/smartdns";
-    license = "AGPLv3+";
+    license = licenses.agpl3Plus;
+    platforms = platforms.all;
   };
 }
