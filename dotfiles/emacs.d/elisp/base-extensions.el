@@ -178,7 +178,4 @@
   (setq auto-package-update-hide-results t)
   (auto-package-update-maybe))
 
-;; Use vterm to handle terminal related stuff in Emacs (Currently unavailable under NixOS
-;; (use-package vterm)
-
 (provide 'base-extensions)

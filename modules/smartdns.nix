@@ -41,6 +41,11 @@ in {
   config = lib.mkIf cfg.enable {
     systemd.services.smartdns = {
       startLimitIntervalSec = 2;
+      after = [ "network.target" ];
+      wantedBy = [ "multi-user.target" ];
+      path = [ (import ../packages/smartdns.nix) ];
+      script = "exec smartdns -c ${confFile}";
+
       serviceConfig = {
         Type = "forking";
         KillMode = "process";
@@ -48,10 +53,6 @@ in {
         RestartSec = 2;
         StartLimitBurst = 0;
       };
-      after = [ "network.target" ];
-      wantedBy = [ "multi-user.target" ];
-      path = [ (import ../packages/smartdns.nix) ];
-      script = "exec smartdns -c ${confFile}";
     };
   };
 }

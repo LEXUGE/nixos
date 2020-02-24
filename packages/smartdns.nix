@@ -27,6 +27,6 @@ stdenv.mkDerivation rec {
     homepage = "https://github.com/pymumu/smartdns";
     maintainers = [ maintainers.lexuge ];
     license = licenses.agpl3Plus;
-    platforms = platforms.all;
+    platforms = platforms.linux;
   };
 }
