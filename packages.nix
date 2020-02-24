@@ -1,6 +1,9 @@
 { config, pkgs, ... }:
 
-{
+let
+  unstable = import <unstable> { };
+  unstable-nonfree = import <unstable> { config.allowUnfree = true; };
+in {
   nixpkgs.config.allowUnfree = true;
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -16,12 +19,13 @@
     shadowsocks-libev
     (import ./packages/simple-obfs.nix)
     (import ./packages/smartdns.nix)
-    fwupd
+    unstable.fwupd
     thunderbird
     neofetch
     zoom-us
     bind
     texlive.combined.scheme-full
+    usbutils
   ];
 
   # Virtualbox
@@ -37,6 +41,18 @@
     fira-code
     fira-code-symbols
   ];
+
+  # Override libfprint and fprintd
+  nixpkgs.config = {
+    packageOverrides = super:
+      let self = super.pkgs;
+      in {
+        fprintd = (pkgs.callPackage ./packages/fprintd.nix {
+          libpam-wrapper = (pkgs.callPackage ./packages/libpam-wrapper.nix { });
+        });
+        libfprint = (pkgs.callPackage ./packages/libfprint.nix { });
+      };
+  };
 
   # Setup zsh
   programs.zsh.enable = true;

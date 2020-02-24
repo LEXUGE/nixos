@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 
-{
+let unstable = import <unstable> { };
+in {
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -9,7 +10,10 @@
   hardware.pulseaudio.enable = true;
 
   # Enable fwupd service
-  services.fwupd.enable = true;
+  services.fwupd = {
+    package = unstable.pkgs.fwupd;
+    enable = true;
+  };
 
   # Enable ThinkPad Throttled (Currently unavailable for X1C7)
   # services.throttled.enable = true;
