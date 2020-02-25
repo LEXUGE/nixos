@@ -1,4 +1,3 @@
-# Module of SmartDNS
 { lib, pkgs, config, ... }:
 
 with lib;
@@ -43,8 +42,7 @@ in {
     environment.etc."smartdns/smartdns.conf".source = confFile;
     environment.etc."default/smartdns" = {
       mode = "0644";
-      text = fileContents
-        "${(import ../packages/smartdns.nix)}/etc/default/smartdns";
+      source = "${(import ../packages/smartdns.nix)}/etc/default/smartdns";
     };
   };
 }
