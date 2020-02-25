@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
-rm -rf ./*.nix ./dotfiles/ ./packages/ ./modules/
+rm -rf ./*.nix ./dotfiles/ ./packages/ ./modules/ ./overlays/
 
 cp -a /etc/nixos/secrets/*.example ./secrets/.
 cp -a /etc/nixos/*.nix ./
 cp -a /etc/nixos/dotfiles ./
 cp -a /etc/nixos/packages ./
 cp -a /etc/nixos/modules ./
+cp -a /etc/nixos/overlays ./
 find . -type f -name '*.nix' -exec nixfmt {} +
 
 git add --all

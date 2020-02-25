@@ -18,6 +18,9 @@
     ./nesting.nix # Nesting function dedicates to provide transparent proxy switch
   ];
 
+  # Customized overlays
+  nixpkgs.overlays = [ (import ./overlays/fingerprint.nix) ];
+
   # Use the latest linux kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
 

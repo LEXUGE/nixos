@@ -1,6 +1,6 @@
-{ stdenv, fetchFromGitLab, pkgconfig, meson, ninja, intltool, libpam-wrapper
-, cairo, gtk-doc, glib, dbus-glib, polkit, nss, pam, systemd, libfprint
-, python37Packages }:
+{ stdenv, fetchFromGitLab, fetchpatch, pkgconfig, meson, ninja, intltool
+, libpam-wrapper, cairo, gtk-doc, glib, dbus-glib, polkit, nss, pam, systemd
+, libfprint, python37Packages }:
 
 stdenv.mkDerivation rec {
   pname = "fprintd";
@@ -27,6 +27,8 @@ stdenv.mkDerivation rec {
     [ pkgconfig meson ninja intltool libpam-wrapper pythonPath ];
 
   buildInputs = [ glib dbus-glib polkit nss pam systemd libfprint ];
+
+  patches = [ ./fprintd.patch ];
 
   preConfigure = ''
     substituteInPlace meson.build --replace \

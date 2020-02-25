@@ -27,6 +27,8 @@ curl -Ls https://github.com/LEXUGE/nixos/raw/master/install.sh | bash
 
 Follow the instructions and there you go.
 
+After installastion, `sudo nix-channel --add https://nixos.org/channels/nixos-unstable unstable`.
+
 If you want to use `shadowsocks`, please create `secrets/shadowsocks.json`.
 
 # How do I steal it?

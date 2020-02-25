@@ -26,6 +26,8 @@ in {
     bind
     texlive.combined.scheme-full
     usbutils
+    shfmt
+    shellcheck
   ];
 
   # Virtualbox
@@ -41,18 +43,6 @@ in {
     fira-code
     fira-code-symbols
   ];
-
-  # Override libfprint and fprintd
-  nixpkgs.config = {
-    packageOverrides = super:
-      let self = super.pkgs;
-      in {
-        fprintd = (pkgs.callPackage ./packages/fprintd.nix {
-          libpam-wrapper = (pkgs.callPackage ./packages/libpam-wrapper.nix { });
-        });
-        libfprint = (pkgs.callPackage ./packages/libfprint.nix { });
-      };
-  };
 
   # Setup zsh
   programs.zsh.enable = true;
