@@ -12,9 +12,30 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ openssl ];
 
+  patches = [
+    (fetchpatch {
+      url =
+        "https://git.archlinux.org/svntogit/community.git/plain/trunk/systemd.patch?h=packages/smartdns";
+      sha256 = "0jxzsgxz6y1a4mvwk6d5carxv4nxsswpfs1a6jkplzy2gr0g8281";
+    })
+  ];
+
+  prePatch = "chmod -R +w ../systemd";
+
+  patchFlags = [ "-p1" "../systemd/smartdns.service" ];
+
+  postPatch =
+    "substituteInPlace ../systemd/smartdns.service --replace /usr/bin/smartdns $out/bin/smartdns";
+
   sourceRoot = "source/src";
 
-  installPhase = "install -Dm755 smartdns $out/bin/smartdns";
+  installPhase = ''
+    runHook preInstall
+    install -Dm644 ../systemd/smartdns.service $out/etc/systemd/system/smartdns.service
+    install -Dm644 ../etc/default/smartdns $out/etc/default/smartdns
+    install -Dm755 smartdns $out/bin/smartdns
+    runHook postInstall
+  '';
 
   meta = with stdenv.lib; {
     description =

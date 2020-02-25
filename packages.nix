@@ -28,6 +28,7 @@ in {
     usbutils
     shfmt
     shellcheck
+    deluge
   ];
 
   # Virtualbox
