@@ -106,7 +106,9 @@
   :config
   (setq org-directory "~/org-files"
         org-default-notes-file (concat org-directory "/todo.org"))
+  (setq org-startup-indented t)
   :hook (org-mode . org-cdlatex-mode)
+        (org-mode . visual-line-mode)
   :bind
   ("C-c l" . org-store-link)
   ("C-c a" . org-agenda))
@@ -199,5 +201,26 @@
   :config
   (browse-kill-ring-default-keybindings)
   (setq browse-kill-ring-highlight-current-entry t))
+
+;; On-the-fly spell checker
+(use-package flyspell
+  :ensure nil
+  :diminish
+  :if (executable-find "aspell")
+  :hook (((text-mode outline-mode) . flyspell-mode)
+         ;; (prog-mode . flyspell-prog-mode)
+         (flyspell-mode . (lambda ()
+                            (dolist (key '("C-;" "C-," "C-."))
+                              (unbind-key key flyspell-mode-map)))))
+  :init (setq flyspell-issue-message-flag nil
+              ispell-program-name "aspell"
+              ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together"))
+  :config
+  ;; Correcting words with flyspell via Ivy
+  (use-package flyspell-correct-ivy
+    :after ivy
+    :bind (:map flyspell-mode-map
+           ([remap flyspell-correct-word-before-point] . flyspell-correct-wrapper))
+    :init (setq flyspell-correct-interface #'flyspell-correct-ivy)))
 
 (provide 'base-extensions)

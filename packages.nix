@@ -29,6 +29,8 @@ in {
     shfmt
     shellcheck
     deluge
+    aspell
+    aspellDicts.en
   ];
 
   # Virtualbox
