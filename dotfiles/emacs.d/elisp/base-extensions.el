@@ -195,4 +195,7 @@
         ("prd" "Insert \\prod_{}^{}"
          "\\prod_{?}^{}" cdlatex-position-cursor nil nil t))))
 
+(use-package browse-kill-ring
+  :init (browse-kill-ring-default-keybindings))
+
 (provide 'base-extensions)
