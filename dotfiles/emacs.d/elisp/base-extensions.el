@@ -58,6 +58,7 @@
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers nil)
+  (setq ivy-use-selectable-prompt t)
   (define-key read-expression-map (kbd "C-r") 'counsel-expression-history))
 
 
