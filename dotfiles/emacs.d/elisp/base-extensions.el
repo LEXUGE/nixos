@@ -196,6 +196,8 @@
          "\\prod_{?}^{}" cdlatex-position-cursor nil nil t))))
 
 (use-package browse-kill-ring
-  :init (browse-kill-ring-default-keybindings))
+  :config
+  (browse-kill-ring-default-keybindings)
+  (setq browse-kill-ring-highlight-current-entry t))
 
 (provide 'base-extensions)
