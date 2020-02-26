@@ -3,6 +3,7 @@ with import <nixpkgs> { };
 stdenv.mkDerivation rec {
   pname = "smartdns";
   version = "30";
+
   src = fetchFromGitHub {
     owner = "pymumu";
     repo = pname;
@@ -10,10 +11,8 @@ stdenv.mkDerivation rec {
     sha256 = "1zj1ajvdnpmdal87j7fyn0xdd0ydjii1nvgwgacv2j311b6fdrk7";
   };
 
-  buildInputs = [ openssl ];
-
-  # TODO: A patch is needed by now since the upstream doesn't follow the FHS guideline. It should not be the case in the future.
   patches = [
+    # TODO: A patch is needed by now since the upstream doesn't follow the FHS guideline. It should not be the case in the future.
     (fetchpatch {
       url =
         "https://git.archlinux.org/svntogit/community.git/plain/trunk/systemd.patch?h=packages/smartdns&id=c15e81742c93e24c47de59a956f1d0d0f7156f0a";
@@ -24,8 +23,11 @@ stdenv.mkDerivation rec {
 
   patchFlags = [ "-p1" "systemd/smartdns.service" ];
 
-  postPatch =
-    "substituteInPlace systemd/smartdns.service --replace /usr/bin/smartdns $out/bin/smartdns";
+  postPatch = ''
+    substituteInPlace systemd/smartdns.service --replace /usr/bin/smartdns $out/bin/smartdns
+  '';
+
+  buildInputs = [ openssl ];
 
   makeFlags = [ "-C" "src" ];
 

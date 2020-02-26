@@ -4,36 +4,61 @@ with lib;
 
 let
   cfg = config.services.smartdns;
+  mkServerConfig = method:
+    mkOption {
+      type = types.listOf types.str;
+      default = [ ];
+      description = ''
+        List of servers to query with ${
+          toUpper method
+        } method. You can apply different options at here too. See the <link xlink:href="https://github.com/pymumu/smartdns/blob/master/ReadMe_en.md#configuration-parameter">SmartDNS README</link> for details.
+      '';
+    };
+
   confFile = pkgs.writeText "smartdns.conf" ''
     bind :${toString cfg.bindPort}
     cache-size ${toString cfg.cacheSize}
-    ${cfg.servers}
+    ${flip concatMapStrings cfg.servers-udp (server: ''
+      server-udp ${server}
+    '')}
+    ${flip concatMapStrings cfg.servers-tcp (server: ''
+      server-tcp ${server}
+    '')}
+    ${flip concatMapStrings cfg.servers-tls (server: ''
+      server-tls ${server}
+    '')}
+    ${flip concatMapStrings cfg.servers-https (server: ''
+      server-https ${server}
+    '')}
     ${cfg.extraConfig}
   '';
 in {
   options.services.smartdns = {
     enable = mkEnableOption "SmartDNS DNS server";
-    servers = mkOption {
-      type = types.lines;
-      default = "";
-      description =
-        "List of different DNS servers. Support UDP, TCP, TLS and HTTPS to query. See SmartDNS's readme for more info.";
-    };
+
+    servers-udp = mkServerConfig "udp";
+    servers-tcp = mkServerConfig "tcp";
+    servers-tls = mkServerConfig "tls";
+    servers-https = mkServerConfig "https";
+
     cacheSize = mkOption {
       type = types.int;
       default = 512;
-      description = "Domain name result cache number. Default 512.";
+      description = "Domain name result cache number.";
     };
+
     bindPort = mkOption {
       type = types.int;
       default = 53;
-      description = "DNS listening port number. Default port 53.";
+      description = "DNS listening port number.";
     };
+
     extraConfig = mkOption {
       type = types.lines;
       default = "";
-      description =
-        "Any extra config that will be appended in configuration file";
+      description = ''
+        Any extra parameters that will be appended to configuration file, see the <link xlink:href="https://github.com/pymumu/smartdns/blob/master/ReadMe_en.md#configuration-parameter">SmartDNS README</link> for details.
+      '';
     };
   };
 
