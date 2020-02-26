@@ -106,6 +106,7 @@
   :config
   (setq org-directory "~/org-files"
         org-default-notes-file (concat org-directory "/todo.org"))
+  :hook (org-mode . org-cdlatex-mode)
   :bind
   ("C-c l" . org-store-link)
   ("C-c a" . org-agenda))
@@ -177,5 +178,21 @@
   (setq auto-package-update-delete-old-versions t)
   (setq auto-package-update-hide-results t)
   (auto-package-update-maybe))
+
+(use-package tex
+  :defer t
+  :ensure auctex
+  :mode (("\\.tex\\'" . LaTeX-mode))
+  :config
+  (setq-default TeX-engine 'xetex))
+
+(use-package cdlatex
+  :hook ((latex-mode LaTeX-mode) . turn-on-cdlatex)
+  :config
+  (setq cdlatex-command-alist
+      '(("sum" "Insert \\sum_{}^{}"
+         "\\sum_{?}^{}" cdlatex-position-cursor nil nil t)
+        ("prd" "Insert \\prod_{}^{}"
+         "\\prod_{?}^{}" cdlatex-position-cursor nil nil t))))
 
 (provide 'base-extensions)
