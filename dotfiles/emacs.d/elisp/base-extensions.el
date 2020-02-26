@@ -205,23 +205,21 @@
 
 ;; On-the-fly spell checker
 (use-package flyspell
-  :ensure nil
-  :diminish
-  :if (executable-find "aspell")
-  :hook (((text-mode outline-mode) . flyspell-mode)
-         ;; (prog-mode . flyspell-prog-mode)
-         (flyspell-mode . (lambda ()
-                            (dolist (key '("C-;" "C-," "C-."))
-                              (unbind-key key flyspell-mode-map)))))
-  :init (setq flyspell-issue-message-flag nil
-              ispell-program-name "aspell"
-              ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together"))
-  :config
-  ;; Correcting words with flyspell via Ivy
-  (use-package flyspell-correct-ivy
-    :after ivy
-    :bind (:map flyspell-mode-map
-           ([remap flyspell-correct-word-before-point] . flyspell-correct-wrapper))
-    :init (setq flyspell-correct-interface #'flyspell-correct-ivy)))
+  :if (executable-find "hunspell")
+  :hook (((text-mode org-mode) . flyspell-mode)
+         (rust-mode . flyspell-prog-mode)
+         )
+  :init
+  (setq ispell-program-name "hunspell")
+  (setq ispell-local-dictionary "en_US")
+  (setq ispell-local-dictionary-alist
+        '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)))
+  (setq ispell-hunspell-dictionary-alist ispell-local-dictionary-alist))
+
+(use-package flyspell-correct-ivy
+  :after flyspell
+  :bind ("C-c n" .  flyspell-correct-wrapper)
+  :init
+  (setq flyspell-correct-interface #'flyspell-correct-ivy))
 
 (provide 'base-extensions)
