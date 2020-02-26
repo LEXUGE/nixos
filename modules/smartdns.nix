@@ -18,28 +18,18 @@ let
   confFile = pkgs.writeText "smartdns.conf" ''
     bind :${toString cfg.bindPort}
     cache-size ${toString cfg.cacheSize}
-    ${flip concatMapStrings cfg.servers-udp (server: ''
-      server-udp ${server}
-    '')}
-    ${flip concatMapStrings cfg.servers-tcp (server: ''
-      server-tcp ${server}
-    '')}
-    ${flip concatMapStrings cfg.servers-tls (server: ''
-      server-tls ${server}
-    '')}
-    ${flip concatMapStrings cfg.servers-https (server: ''
-      server-https ${server}
-    '')}
+    ${flip concatMapStrings [ "udp" "tcp" "tls" "https" ] (method:
+      flip concatMapStrings cfg.servers.${method} (server: ''
+        server-${method} server
+      ''))}
     ${cfg.extraConfig}
   '';
 in {
   options.services.smartdns = {
     enable = mkEnableOption "SmartDNS DNS server";
 
-    servers-udp = mkServerConfig "udp";
-    servers-tcp = mkServerConfig "tcp";
-    servers-tls = mkServerConfig "tls";
-    servers-https = mkServerConfig "https";
+    servers = genAttrs [ "udp" "tcp" "tls" "https" ]
+      (method: mkServerConfig "${method}");
 
     cacheSize = mkOption {
       type = types.int;
