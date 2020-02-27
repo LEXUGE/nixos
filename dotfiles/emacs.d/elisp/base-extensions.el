@@ -195,6 +195,12 @@
   (setq cdlatex-command-alist
       '(("sum" "Insert \\sum_{}^{}"
          "\\sum_{?}^{}" cdlatex-position-cursor nil nil t)
+	("tt" "Insert \\text{}"
+	 "\\text{?}" cdlatex-position-cursor nil nil t)
+	("apr" "Insert \\approx{}"
+	 "\\approx{}" cdlatex-position-cursor nil nil t)
+	("alid"       "Insert an ALIGNED environment template"
+	 "" cdlatex-environment ("aligned") t t)
         ("prd" "Insert \\prod_{}^{}"
          "\\prod_{?}^{}" cdlatex-position-cursor nil nil t))))
 

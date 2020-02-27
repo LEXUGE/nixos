@@ -14,6 +14,8 @@ stdenv.mkDerivation rec {
     sha256 = "0gj2f48zs49l2zrs49qhqy99mdznpvw6vkqlxvq32amr15pqdpsd";
   };
 
+  patches = [ ./fprintd.patch ];
+
   pythonPath = with python37Packages; [
     python-dbusmock
     dbus-python
@@ -27,8 +29,6 @@ stdenv.mkDerivation rec {
     [ pkgconfig meson ninja intltool libpam-wrapper pythonPath ];
 
   buildInputs = [ glib dbus-glib polkit nss pam systemd libfprint ];
-
-  patches = [ ./fprintd.patch ];
 
   preConfigure = ''
     substituteInPlace meson.build --replace \
