@@ -1,9 +1,11 @@
 { config, pkgs, ... }:
 
 let
-  home-manager = builtins.fetchGit {
-    url = "https://github.com/rycee/home-manager.git";
-    rev = "621c98f15a31e7f0c1389f69aaacd0ac267ce29e";
+  releaseVer = "19.09"; # Please update this value after bumping system.
+  home-manager = builtins.fetchTarball {
+    url = ("https://github.com/rycee/home-manager/archive/release-" + releaseVer
+      + ".tar.gz");
+    sha256 = "0sw8lw825gg04h6js42bvackgydi5m0xsjvnb5gxlqv45qw8rxjq";
   };
 in {
   imports = [ "${home-manager}/nixos" ]; # Import home-manager
