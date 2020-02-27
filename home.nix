@@ -1,12 +1,11 @@
 { config, pkgs, ... }:
 
 let
-  releaseVer = "19.09"; # Please update this value after bumping system.
-  home-manager = builtins.fetchTarball {
-    url = ("https://github.com/rycee/home-manager/archive/release-" + releaseVer
-      + ".tar.gz");
-    sha256 = "0sw8lw825gg04h6js42bvackgydi5m0xsjvnb5gxlqv45qw8rxjq";
-  };
+  releaseVer = (import <nixpkgs/nixos> {
+    configuration = { ... }: { };
+  }).config.system.nixos.release;
+  home-manager = builtins.fetchTarball
+    "https://github.com/rycee/home-manager/archive/release-${releaseVer}.tar.gz";
 in {
   imports = [ "${home-manager}/nixos" ]; # Import home-manager
 
