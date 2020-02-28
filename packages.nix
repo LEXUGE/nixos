@@ -31,6 +31,7 @@ in {
     deluge
     hunspell
     hunspellDicts.en-us-large
+    smartmontools
   ];
 
   # Virtualbox
