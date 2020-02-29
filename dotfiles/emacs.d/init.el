@@ -8,9 +8,18 @@
 
 (require 'base)
 (require 'base-theme)
-(require 'base-extensions)
+
+(require 'ext-completion)
+(require 'ext-system)
+(require 'ext-edit)
+(require 'ext-git)
+(require 'ext-org)
+(require 'ext-tex)
+
 (require 'base-functions)
 (require 'base-global-keys)
+
+(require 'lang-nix)
 
 (require 'lang-python)
 
