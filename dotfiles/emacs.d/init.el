@@ -21,6 +21,8 @@
 
 (require 'lang-nix)
 
+(require 'lang-markdown)
+
 (require 'lang-python)
 
 (require 'lang-web)

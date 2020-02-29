@@ -23,15 +23,14 @@
 (use-package linum
   :config
   (setq linum-format " %3d ")
-  (global-linum-mode nil))
+  :hook (prog-mode . display-line-numbers-mode))
 
 (use-package neotree
   :config
-  (setq neo-theme 'arrow
+  (setq neo-theme 'icons
         neotree-smart-optn t
         neo-window-fixed-size nil)
-  ;; Disable linum for neotree
-  (add-hook 'neo-after-create-hook 'disable-neotree-hook))
+  :bind ("C-x t" . neotree-toggle))
 
 (use-package page-break-lines)
 
