@@ -32,6 +32,7 @@ in {
     hunspell
     hunspellDicts.en-us-large
     smartmontools
+    tor-browser-bundle-bin
   ];
 
   # Virtualbox

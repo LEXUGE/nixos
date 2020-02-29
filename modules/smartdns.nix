@@ -20,7 +20,7 @@ let
     cache-size ${toString cfg.cacheSize}
     ${flip concatMapStrings [ "udp" "tcp" "tls" "https" ] (method:
       flip concatMapStrings cfg.servers.${method} (server: ''
-        server-${method} server
+        server-${method} ${server}
       ''))}
     ${cfg.extraConfig}
   '';

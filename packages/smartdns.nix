@@ -2,43 +2,25 @@ with import <nixpkgs> { };
 
 stdenv.mkDerivation rec {
   pname = "smartdns";
-  version = "30";
+  version =
+    "30"; # This would be used later in the next release as the FHS commit integrated into realse 31.
 
   src = fetchFromGitHub {
     owner = "pymumu";
     repo = pname;
-    rev = "Release${version}";
-    sha256 = "1zj1ajvdnpmdal87j7fyn0xdd0ydjii1nvgwgacv2j311b6fdrk7";
+    rev = "3ad7cd7f454eec2fbdf338c0eb0541da301f1e73";
+    sha256 = "1y9p8gxpj2k4a10maggkxg8l55jvr7x1wyxi69waxf56ggh2dvv0";
   };
-
-  patches = [
-    # TODO: A patch is needed by now since the upstream doesn't follow the FHS guideline. It should not be the case in the future.
-    (fetchpatch {
-      url =
-        "https://git.archlinux.org/svntogit/community.git/plain/trunk/systemd.patch?h=packages/smartdns&id=c15e81742c93e24c47de59a956f1d0d0f7156f0a";
-      name = "systemd.nix";
-      sha256 = "0jxzsgxz6y1a4mvwk6d5carxv4nxsswpfs1a6jkplzy2gr0g8281";
-    })
-  ];
-
-  patchFlags = [ "-p1" "systemd/smartdns.service" ];
-
-  postPatch = ''
-    substituteInPlace systemd/smartdns.service --replace /usr/bin/smartdns $out/bin/smartdns
-  '';
 
   buildInputs = [ openssl ];
 
-  makeFlags = [ "-C" "src" ];
+  makeFlags = [
+    "PREFIX=${placeholder "out"}"
+    "SYSTEMDSYSTEMUNITDIR=${placeholder "out"}/lib/systemd/system"
+    "RUNSTATEDIR=/run"
+  ];
 
-  # TODO: Manual installation is needed by now due to upstream issue.
-  installPhase = ''
-    runHook preInstall
-    install -Dm644 systemd/smartdns.service $out/etc/systemd/system/smartdns.service
-    install -Dm644 etc/default/smartdns $out/etc/default/smartdns
-    install -Dm755 src/smartdns $out/bin/smartdns
-    runHook postInstall
-  '';
+  installFlags = [ "SYSCONFDIR=${placeholder "out"}/etc" ];
 
   meta = with stdenv.lib; {
     description =

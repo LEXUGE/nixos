@@ -52,6 +52,8 @@
   (setq recentf-save-file (recentf-expand-file-name "~/.emacs.d/private/cache/recentf"))
   (recentf-mode 1))
 
+;; (use-package vterm)
+
 ;; Automatically update packages installed
 (use-package auto-package-update
   :config
