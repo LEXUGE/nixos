@@ -54,6 +54,7 @@ in {
 
   config = lib.mkIf cfg.enable {
     systemd.packages = [ (import ../packages/smartdns.nix) ];
+    systemd.services.smartdns.wantedBy = [ "multi-user.target" ];
     environment.etc."smartdns/smartdns.conf".source = confFile;
     environment.etc."default/smartdns" = {
       mode = "0644";
