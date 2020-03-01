@@ -1,6 +1,6 @@
-{ stdenv, fetchFromGitLab, fetchpatch, pkgconfig, meson, ninja, intltool
-, libpam-wrapper, cairo, gtk-doc, glib, dbus-glib, polkit, nss, pam, systemd
-, libfprint, python37Packages }:
+{ stdenv, fetchFromGitLab, pkgconfig, meson, ninja, intltool, libpam-wrapper
+, cairo, gtk-doc, glib, dbus-glib, polkit, nss, pam, systemd, libfprint
+, python37Packages }:
 
 stdenv.mkDerivation rec {
   pname = "fprintd";
