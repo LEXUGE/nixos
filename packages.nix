@@ -33,6 +33,7 @@ in {
     hunspellDicts.en-us-large
     smartmontools
     pavucontrol
+    gnome3.gnome-tweaks
   ];
 
   # Virtualbox
