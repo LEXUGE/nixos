@@ -10,18 +10,18 @@ cp -a /etc/nixos/packages ./
 cp -a /etc/nixos/modules ./
 cp -a /etc/nixos/overlays ./
 find . -type f -name '*.nix' -exec nixfmt {} +
-echo -n "Done."
+echo "Done."
 
 echo -n "Adding to git..."
 git add --all
-echo -n "Done."
+echo "Done."
 
 echo -n "Commiting..."
 echo "Enter commit message: "
 read -r commitMessage
 git commit -m "$commitMessage"
-echo -n "Done."
+echo "Done."
 
 echo -n "Pushing..."
 git push
-echo -n "Done."
+echo "Done."
