@@ -19,7 +19,7 @@ in {
     shadowsocks-libev
     (import ./packages/simple-obfs.nix)
     (import ./packages/smartdns.nix)
-    unstable.fwupd
+    fwupd
     thunderbird
     neofetch
     zoom-us
@@ -34,6 +34,7 @@ in {
     smartmontools
     pavucontrol
     gnome3.gnome-tweaks
+    efibootmgr
   ];
 
   # Virtualbox

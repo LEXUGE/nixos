@@ -16,7 +16,7 @@ echo -n "Adding to git..."
 git add --all
 echo "Done."
 
-echo -n "Commiting..."
+echo "Commiting..."
 echo "Enter commit message: "
 read -r commitMessage
 git commit -m "$commitMessage"
