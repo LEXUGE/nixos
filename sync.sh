@@ -18,7 +18,7 @@ echo -n "Done."
 
 echo -n "Commiting..."
 echo "Enter commit message: "
-read commitMessage
+read -r commitMessage
 git commit -m "$commitMessage"
 echo -n "Done."
 
