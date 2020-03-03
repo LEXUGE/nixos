@@ -45,6 +45,7 @@ in {
           signByDefault = true;
           key = "0xAE53B4C2E58EDD45";
         };
+        extraConfig = { credential = { helper = "store"; }; };
       };
 
       # zsh
