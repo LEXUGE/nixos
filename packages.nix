@@ -9,28 +9,18 @@ in {
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     wget
-    emacs
     nixfmt
-    firefox
-    tdesktop
     git
     gnupg
-    spotify
     shadowsocks-libev
-    (import ./packages/simple-obfs.nix)
-    (import ./packages/smartdns.nix)
-    unstable.fwupd
-    thunderbird
+    simple-obfs
+    smartdns
+    fwupd
     neofetch
-    zoom-us
     bind
-    texlive.combined.scheme-full
     usbutils
     shfmt
     shellcheck
-    deluge
-    hunspell
-    hunspellDicts.en-us-large
     smartmontools
     pavucontrol
     gnome3.gnome-tweaks

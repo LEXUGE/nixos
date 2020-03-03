@@ -53,12 +53,12 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    systemd.packages = [ (import ../packages/smartdns.nix) ];
+    systemd.packages = [ pkgs.smartdns ];
     systemd.services.smartdns.wantedBy = [ "multi-user.target" ];
     environment.etc."smartdns/smartdns.conf".source = confFile;
     environment.etc."default/smartdns" = {
       mode = "0644";
-      source = "${(import ../packages/smartdns.nix)}/etc/default/smartdns";
+      source = "${pkgs.smartdns}/etc/default/smartdns";
     };
   };
 }

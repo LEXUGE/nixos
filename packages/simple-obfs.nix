@@ -1,6 +1,5 @@
-# This is a custom built simple-obfs package for NixOS. Revised from https://github.com/Ninlives/nixos-config
-
-with import <nixpkgs> { };
+{ stdenv, fetchgit, openssl, libev, autoconf, automake, libtool, asciidoc, xmlto
+, docbook_xsl, docbook_xml_dtd_45, zlib, }:
 
 stdenv.mkDerivation {
   name = "simple-obfs";

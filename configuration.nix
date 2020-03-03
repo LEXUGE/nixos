@@ -13,13 +13,13 @@
     ./packages.nix # All packages and there settings
     ./desktop.nix # For X system and DE
     ./service.nix # Various services like sound, printer, etc.
-    ./user.nix # User and its specifics
-    ./home.nix # home-manager related stuff
+    ./users/ash.nix # User ash's stuff
+    ./devices/x1c7.nix # X1 Carbon device specific config
     ./nesting.nix # Nesting function dedicates to provide transparent proxy switch
   ];
 
   # Customized overlays
-  nixpkgs.overlays = [ (import ./overlays/fingerprint.nix) ];
+  nixpkgs.overlays = [ (import ./overlays/packages.nix) ];
 
   # Use the latest linux kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -42,9 +42,6 @@
 
   # Set your time zone.
   time.timeZone = "Asia/Shanghai";
-
-  # Update Intel CPU Microcode
-  hardware.cpu.intel.updateMicrocode = true;
 
   # Auto upgrade
   system.autoUpgrade.enable = true;

@@ -1,4 +1,4 @@
-with import <nixpkgs> { };
+{ stdenv, fetchFromGitHub, openssl }:
 
 stdenv.mkDerivation rec {
   pname = "smartdns";

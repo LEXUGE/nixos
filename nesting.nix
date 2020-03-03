@@ -32,7 +32,7 @@ let
       description = "Transparent Shadowsocks";
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
-      path = [ pkgs.shadowsocks-libev (import ./packages/simple-obfs.nix) ];
+      path = [ pkgs.shadowsocks-libev pkgs.simple-obfs ];
       script =
         "exec ss-redir -c ${configPath} -b ${socksProxyAddr} -l ${redirProxyPortStr}";
 
@@ -59,7 +59,7 @@ in {
     description = "Shadowsocks";
     after = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
-    path = [ pkgs.shadowsocks-libev (import ./packages/simple-obfs.nix) ];
+    path = [ pkgs.shadowsocks-libev pkgs.simple-obfs ];
     script =
       "exec ss-local -c ${configPath} -b ${socksProxyAddr} -l ${socksProxyPortStr}";
 

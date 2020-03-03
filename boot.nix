@@ -11,7 +11,4 @@
     enableCryptodisk = true;
   };
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
-
-  # Activate acpi_call module for TLP features
-  boot.extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
 }
