@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-rm -rf ./*.nix ./dotfiles/ ./packages/ ./modules/ ./overlays/
+rm -rf ./*.nix ./dotfiles/ ./packages/ ./modules/ ./overlays/ ./users/ ./devices
 
 echo -n "Copying..."
 cp -a /etc/nixos/secrets/*.example ./secrets/.
@@ -9,6 +9,8 @@ cp -a /etc/nixos/dotfiles ./
 cp -a /etc/nixos/packages ./
 cp -a /etc/nixos/modules ./
 cp -a /etc/nixos/overlays ./
+cp -a /etc/nixos/users ./
+cp -a /etc/nixos/devices ./
 find . -type f -name '*.nix' -exec nixfmt {} +
 echo "Done."
 

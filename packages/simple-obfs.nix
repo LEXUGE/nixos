@@ -1,5 +1,5 @@
 { stdenv, fetchgit, openssl, libev, autoconf, automake, libtool, asciidoc, xmlto
-, docbook_xsl, docbook_xml_dtd_45, zlib, }:
+, docbook_xsl, docbook_xml_dtd_45, zlib }:
 
 stdenv.mkDerivation {
   name = "simple-obfs";
