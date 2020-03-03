@@ -40,6 +40,9 @@ instructions:
 - See `nesting.nix` if you want to use switchable transparent proxy.
 - If you want to use my [smartdns](https://github.com/pymumu/smartdns), take a look into `packages/smartdns.nix` and `modules/smartdns.nix`.
 
+# NOTE
+Do remeber to run `sudo nix-channel --update` regularly in order to upgrade `unstable` channel which would not be upgraded automatically.
+
 # See also
 [config](https://github.com/LEXUGE/config) for my emacs and other configs (may
 integrate into this repository later).

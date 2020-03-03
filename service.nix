@@ -3,10 +3,8 @@
 let unstable = import <unstable> { };
 in {
   # Disable fwupd module to opt in unstbale module of fwupd
-  # disabledModules = [ "services/hardware/fwupd.nix" ];
-  # imports = [
-  #   <unstable/nixos/modules/services/hardware/fwupd.nix>
-  # ];
+  disabledModules = [ "services/hardware/fwupd.nix" ];
+  imports = [ <unstable/nixos/modules/services/hardware/fwupd.nix> ];
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -27,7 +25,7 @@ in {
 
   # Enable fwupd service
   services.fwupd = {
-    # package = unstable.pkgs.fwupd;
+    package = unstable.pkgs.fwupd;
     enable = true;
   };
 

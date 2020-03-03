@@ -19,7 +19,7 @@ in {
     shadowsocks-libev
     (import ./packages/simple-obfs.nix)
     (import ./packages/smartdns.nix)
-    fwupd
+    unstable.fwupd
     thunderbird
     neofetch
     zoom-us
