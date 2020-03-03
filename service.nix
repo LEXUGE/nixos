@@ -29,6 +29,17 @@ in {
     enable = true;
   };
 
+  # Enable TLP Power Management
+  services.tlp = {
+    enable = true;
+    extraConfig = ''
+      START_CHARGE_THRESH_BAT0=85
+      STOP_CHARGE_THRESH_BAT0=90
+      CPU_SCALING_GOVERNOR_ON_BAT=powersave
+      ENERGY_PERF_POLICY_ON_BAT=powersave
+    '';
+  };
+
   # Enable fprintd
   services.fprintd.enable = true;
 
