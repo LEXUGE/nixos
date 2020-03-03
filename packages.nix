@@ -35,6 +35,7 @@ in {
     pavucontrol
     gnome3.gnome-tweaks
     efibootmgr
+    geekbench
   ];
 
   # Virtualbox
