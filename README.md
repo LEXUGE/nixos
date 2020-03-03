@@ -31,6 +31,15 @@ After installastion, `sudo nix-channel --add https://nixos.org/channels/nixos-un
 
 If you want to use `shadowsocks`, please create `secrets/shadowsocks.json`.
 
+## Note
+Do remeber to run `sudo nix-channel --update` regularly in order to upgrade `unstable` channel which would not be upgraded automatically.
+
+# Structure of the configuration
+The system configuration could be split up into three pieces, system-wide, user-land, and device-specifications.
+- User-land `users/`: I would do some personal configuration here, this would include which shell to use for specific user, what packages to install, etc.
+- Device-specifications `devices/`: This would include some non-universal device specific configurations like `TLP` power management and `fprintd` fingerprint auth.
+- System: Rest of them are a re-usable system with my personal flavor added (e.g. `smartdns` and transparent proxy for better networking experience).
+
 # How do I steal it?
 It's actually not well-structured for stealing. But here are some
 instructions:
@@ -39,9 +48,6 @@ instructions:
   `packages/simple-obfs.nix`.
 - See `nesting.nix` if you want to use switchable transparent proxy.
 - If you want to use my [smartdns](https://github.com/pymumu/smartdns), take a look into `packages/smartdns.nix` and `modules/smartdns.nix`.
-
-# NOTE
-Do remeber to run `sudo nix-channel --update` regularly in order to upgrade `unstable` channel which would not be upgraded automatically.
 
 # See also
 [config](https://github.com/LEXUGE/config) for my emacs and other configs (may

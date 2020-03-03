@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-rm -rf ./*.nix ./dotfiles/ ./packages/ ./modules/ ./overlays/ ./users/ ./devices
+rm -rf ./*.nix ./dotfiles/ ./packages/ ./modules/ ./overlays/ ./users/ ./devices/
 
 echo -n "Copying..."
 cp -a /etc/nixos/secrets/*.example ./secrets/.
