@@ -1,9 +1,6 @@
 { config, pkgs, ... }:
 
-let
-  unstable = import <unstable> { };
-  unstable-nonfree = import <unstable> { config.allowUnfree = true; };
-in {
+{
   nixpkgs.config.allowUnfree = true;
   # List packages installed in system profile. To search, run:
   # $ nix search wget

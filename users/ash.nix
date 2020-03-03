@@ -6,8 +6,6 @@ let
   }).config.system.nixos.release;
   home-manager = builtins.fetchTarball
     "https://github.com/rycee/home-manager/archive/release-${releaseVer}.tar.gz";
-  unstable = import <unstable> { };
-  unstable-nonfree = import <unstable> { config.allowUnfree = true; };
 in {
   imports = [ "${home-manager}/nixos" ]; # Import home-manager
 
