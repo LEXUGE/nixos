@@ -37,6 +37,7 @@ in {
       firefox
       tdesktop
       emacs
+      minecraft
     ];
 
     # Package settings

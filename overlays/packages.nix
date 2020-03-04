@@ -10,4 +10,5 @@ in {
   smartdns = (super.callPackage ../packages/smartdns.nix { });
   simple-obfs = (super.callPackage ../packages/simple-obfs.nix { });
   fwupd = unstable.fwupd;
+  minecraft = unstable-nonfree.minecraft;
 }
