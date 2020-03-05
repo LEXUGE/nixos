@@ -14,4 +14,8 @@
     displayManager.gdm.enable = true;
     desktopManager.gnome3.enable = true;
   };
+
+  # Some of the GNOME Packages are unwanted
+  environment.gnome3.excludePackages =
+    [ pkgs.gnome3.geary pkgs.gnome3.epiphany pkgs.gnome3.gnome-software ];
 }
