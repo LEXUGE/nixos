@@ -107,6 +107,10 @@ in {
           "emacs.desktop"
         ];
       };
+      # Don't suspend when it is plugged in
+      "org/gnome/settings-daemon/plugins/power" = {
+        sleep-inactive-ac-type = "nothing";
+      };
     };
   };
 }
