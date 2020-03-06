@@ -12,6 +12,10 @@ in {
   # Enable sound.
   sound.enable = true;
 
+  # Libvirtd
+  virtualisation.libvirtd.enable = true;
+  users.extraGroups.libvirtd.members = [ "ash" ];
+
   # Configuration to facilitate bluetooth headphones.
   hardware.pulseaudio = {
     enable = true;

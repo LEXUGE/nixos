@@ -38,6 +38,7 @@ in {
       tdesktop
       emacs
       minecraft
+      virtmanager
     ];
 
     # Package settings
