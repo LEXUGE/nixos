@@ -40,6 +40,9 @@
     size = 8192;
   }];
 
+  # Support NTFS
+  boot.supportedFilesystems = [ "ntfs" ];
+
   # Set your time zone.
   time.timeZone = "Asia/Shanghai";
 
