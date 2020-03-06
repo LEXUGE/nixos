@@ -73,7 +73,6 @@ in {
       # zsh
       zsh = {
         enable = true;
-        envExtra = "export QT_SCALE_FACTOR=2";
         oh-my-zsh = {
           enable = true;
           theme = "agnoster";
