@@ -16,9 +16,6 @@ It features:
 - An almost automated onliner installation script.
 
 # How do I install it?
-**NOTE:** If you are not on a NVMe SSD, please edit the script to fit
-    `"${device}p2"` into `"${device}2"` (so does `"${device}p1"`).
-
 Boot in NixOS LiveCD, and then:
 
 ``
@@ -27,12 +24,16 @@ curl -Ls https://github.com/LEXUGE/nixos/raw/master/install.sh | bash
 
 Follow the instructions and there you go.
 
-After installastion, `sudo nix-channel --add https://nixos.org/channels/nixos-unstable unstable`.
+After installastion, `sudo nix-channel --add https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixos-unstable unstable` (If you are outside Mainland China, use `sudo nix-channel --add https://nixos.org/channels/nixos-unstable unstable`).
 
 If you want to use `shadowsocks`, please create `secrets/shadowsocks.json`.
 
 ## Note
-Do remeber to run `sudo nix-channel --update` regularly in order to upgrade `unstable` channel which would not be upgraded automatically.
+If you are not on a NVMe SSD, please edit the script to fit `"${device}p2"` into `"${device}2"` (so does `"${device}p1"`).
+
+If you are outside of Mainland China, please edit the script to use official channel instead of TUNA channel mirror. You may also need to delete the `binaryCaches` setting in `configuration.nix`.
+
+After installation, in regular uses, do remeber to run `sudo nix-channel --update` regularly in order to upgrade `unstable` channel which would not be upgraded automatically.
 
 # Structure of the configuration
 The system configuration could be split up into three pieces, system-wide, user-land, and device-specifications.

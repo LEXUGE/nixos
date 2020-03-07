@@ -61,12 +61,15 @@ mount_partition() {
 
 # NIXOS_INSTALL
 nixos_install() {
+	echo "Enter the $(nixos) channel that you want to subscribe to:"
+	read -r version
+	nix-channel --add https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixos-"${version}" nixos
+	nix-channel --add https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixos-unstable unstable
+	nix-channel --update
+
 	nix-env -iA nixos.gitMinimal
 	git clone https://github.com/LEXUGE/nixos /mnt/etc/nixos/
 	rm -rf /mnt/etc/nixos/.git/
-
-	nix-channel --add https://nixos.org/channels/nixos-unstable unstable
-	nix-channel --update
 
 	nixos-generate-config --root /mnt
 	nixos-install
