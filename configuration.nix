@@ -26,7 +26,7 @@ in {
     ./desktop.nix # For X system and DE
     ./service.nix # Various services like sound, printer, etc
     ./options.nix # Build options of configuration
-    ./nesting.nix # Nesting function dedicates to provide transparent proxy switch
+    ./proxy.nix # Proxy service (shadowsocks + simple-obfs) provider
     "${home-manager}/nixos" # Home-manager plugin which is useful for userland configurations
   ] ++ (modulesFrom ./users) ++ (modulesFrom ./devices)
     ++ (modulesFrom ./modules);
