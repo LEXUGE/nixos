@@ -9,5 +9,6 @@
       };
     };
     devices = { x1c7 = { enable = true; }; };
+    system = { hostname = "nixos"; };
   };
 }
