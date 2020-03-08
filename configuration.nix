@@ -9,9 +9,11 @@ let
     map (f: dir + "/${f}") (builtins.attrNames
       (lib.filterAttrs (n: v: (v == "regular") && (lib.hasSuffix ".nix" n))
         (builtins.readDir dir)));
+
   releaseVer = (import <nixpkgs/nixos> {
     configuration = { ... }: { };
   }).config.system.nixos.release;
+
   home-manager = builtins.fetchTarball
     "https://github.com/rycee/home-manager/archive/release-${releaseVer}.tar.gz";
 in {
@@ -25,7 +27,7 @@ in {
     ./service.nix # Various services like sound, printer, etc
     ./options.nix # Build options of configuration
     ./nesting.nix # Nesting function dedicates to provide transparent proxy switch
-    "${home-manager}/nixos"
+    "${home-manager}/nixos" # Home-manager plugin which is useful for userland configurations
   ] ++ (modulesFrom ./users) ++ (modulesFrom ./devices)
     ++ (modulesFrom ./modules);
 
