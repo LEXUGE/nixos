@@ -63,20 +63,24 @@ mount_partition() {
 nixos_install() {
 	echo "Enter the NixOS channel (e.g. 19.09) that you want to subscribe to:"
 	read -r version
+	# Add TUNA channel and unstable channel to LiveCD
 	nix-channel --add https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixos-"${version}" nixos
 	nix-channel --add https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixos-unstable unstable
 	nix-channel --update
 
-	nix-env -iA nixos.gitMinimal
+	# Install git by using TUNA binary cache
+	nix-env -iA nixos.gitMinimal --option substituters "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
 	git clone https://github.com/LEXUGE/nixos /mnt/etc/nixos/
 	rm -rf /mnt/etc/nixos/.git/
 
+	# Create new options.nix and open it to let user customize.
 	cp /mnt/etc/nixos/options.nix.example /mnt/etc/nixos/options.nix
 	nano /mnt/etc/nixos/options.nix
 
 	nixos-generate-config --root /mnt
 	nixos-install --option substituters "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
 
+	# Add TUNA channel and unstable channel to newly installed target
 	nixos-enter -- nix-channel --add https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixos-"${version}" nixos
 	nixos-enter -- nix-channel --add https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixos-unstable unstable
 	nixos-enter -- nix-channel --update
