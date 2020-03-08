@@ -75,7 +75,11 @@ nixos_install() {
 	nano /mnt/etc/nixos/options.nix
 
 	nixos-generate-config --root /mnt
-	nixos-install
+	nixos-install --option substituters "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
+
+	nixos-enter -- nix-channel --add https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixos-"${version}" nixos
+	nixos-enter -- nix-channel --add https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixos-unstable unstable
+	nixos-enter -- nix-channel --update
 	reboot
 }
 
