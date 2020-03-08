@@ -5,7 +5,7 @@ A fully automated replicable nixos configuration set. Tested on Virtualbox and T
 It features:
 - GNOME 3 with builtin dark variant.
 - Full-disk encryption including `/boot`.
-- Switchable transparent proxy backended by `shadowsocks-libev + simple-obfs` (I
+- Transparent proxy backended by `shadowsocks-libev + simple-obfs` (I
   packaged simple-obfs myself). This feature is **extremely** useful if you are
   in Mainland China because it helps you get over the firewall without pain.
 - A built-in smartdns server (custom packaged)
@@ -13,7 +13,7 @@ It features:
   an emacs user).
 - zsh with oh-my-zsh builtin, in addition to a git plugin which makes your life
   easier.
-- An almost automated onliner installation script.
+- An almost automated one-liner installation script.
 
 # How do I install it?
 Boot in NixOS LiveCD, and then:
@@ -47,7 +47,7 @@ instructions:
 - If you want to use my packaged
   [simple-obfs](https://github.com/shadowsocks/simple-obfs), just grab
   `packages/simple-obfs.nix`.
-- See `nesting.nix` if you want to use switchable transparent proxy.
+- See `proxy.nix` if you want to use transparent proxy.
 - If you want to use my [smartdns](https://github.com/pymumu/smartdns), take a look into `packages/smartdns.nix` and `modules/smartdns.nix`.
 
 # See also
@@ -59,4 +59,4 @@ Thanks to following repositories:
 - [Jollheef - localhost](https://github.com/jollheef/localhost). It inspired me
 the general structure of the config and how to use home-manager.
 - [Ninlives - nixos-config](https://github.com/Ninlives/nixos-config). It
-  inspired me to implement the switchable transparent proxy function based on `nesting`.
+  inspired me to implement the transparent proxy functionality.

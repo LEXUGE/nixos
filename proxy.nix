@@ -3,7 +3,6 @@
 let
   inherit (pkgs) gnugrep shadowsocks-libev iptables utillinux;
   inherit (lib) concatMapStringsSep optionalString;
-  inherit (config.lib) proxy;
   mainUser = "ash";
 
   socksGroupName = "Shadowsocks";
