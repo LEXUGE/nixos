@@ -61,7 +61,7 @@ mount_partition() {
 
 # NIXOS_INSTALL
 nixos_install() {
-	echo "Enter the $(nixos) channel that you want to subscribe to:"
+	echo "Enter the NixOS channel (e.g. 19.09) that you want to subscribe to:"
 	read -r version
 	nix-channel --add https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixos-"${version}" nixos
 	nix-channel --add https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixos-unstable unstable
