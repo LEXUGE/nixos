@@ -1,7 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./modules/smartdns.nix ];
   networking.hostName = "nixos"; # Define your hostname.
 
   # Allow Spotify Local discovery

@@ -71,6 +71,8 @@ nixos_install() {
 	git clone https://github.com/LEXUGE/nixos /mnt/etc/nixos/
 	rm -rf /mnt/etc/nixos/.git/
 
+	nano /mnt/etc/nixos/options.nix
+
 	nixos-generate-config --root /mnt
 	nixos-install
 	reboot

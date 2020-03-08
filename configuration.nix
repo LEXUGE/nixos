@@ -2,21 +2,32 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
-{
+let
+  modulesFrom = dir:
+    map (f: dir + "/${f}") (builtins.attrNames
+      (lib.filterAttrs (n: v: (v == "regular") && (lib.hasSuffix ".nix" n))
+        (builtins.readDir dir)));
+  releaseVer = (import <nixpkgs/nixos> {
+    configuration = { ... }: { };
+  }).config.system.nixos.release;
+  home-manager = builtins.fetchTarball
+    "https://github.com/rycee/home-manager/archive/release-${releaseVer}.tar.gz";
+in {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     # Following are my own config
     ./networking.nix # Network settings
     ./boot.nix # Bootloader settings
-    ./packages.nix # All packages and there settings
+    ./packages.nix # All system-wide packages
     ./desktop.nix # For X system and DE
-    ./service.nix # Various services like sound, printer, etc.
-    ./users/ash.nix # User ash's stuff
-    ./devices/x1c7.nix # X1 Carbon device specific config
+    ./service.nix # Various services like sound, printer, etc
+    ./options.nix # Build options of configuration
     ./nesting.nix # Nesting function dedicates to provide transparent proxy switch
-  ];
+    "${home-manager}/nixos"
+  ] ++ (modulesFrom ./users) ++ (modulesFrom ./devices)
+    ++ (modulesFrom ./modules);
 
   # Customized overlays
   nixpkgs.overlays = [ (import ./overlays/packages.nix) ];

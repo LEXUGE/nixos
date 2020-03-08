@@ -1,7 +1,7 @@
 # Device specific configuration for ThinkPad X1 Carbon 7th Gen (20R1)
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
-{
+lib.mkIf config.lib.devices.x1c7.enable {
   # Activate acpi_call module for TLP ThinkPad features
   boot.extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
 
