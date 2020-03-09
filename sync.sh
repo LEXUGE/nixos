@@ -1,24 +1,23 @@
 #!/usr/bin/env bash
 
-rm -rf ./*.{nix,example}\
-   ./dotfiles/\
-   ./packages/\
-   ./modules/\
-   ./overlays/\
-   ./users/\
-   ./devices/\
-   ./secrets/
+rm -rf ./*.{nix,example} \
+	./dotfiles/ \
+	./packages/ \
+	./modules/ \
+	./overlays/ \
+	./users/ \
+	./devices/ \
+	./secrets/
 
 echo -n "Copying..."
 rsync -avP \
-	--exclude "shadowsocks.json" \
-	--exclude "options.nix" \
 	--include "*/" \
 	--include "*.*.example" \
 	--include "*.nix" \
 	--include "*.el" \
 	--include "*.ini" \
 	--include "*.patch" \
+	--include "*.json" \
 	--exclude "*" \
 	/etc/nixos/ .
 find . -type f -name '*.nix' -exec nixfmt {} +
