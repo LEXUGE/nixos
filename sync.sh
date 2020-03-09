@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-rm -rf ./*.{nix,example} \
+rm -rf ./system/ \
 	./dotfiles/ \
 	./packages/ \
 	./modules/ \

@@ -5,11 +5,13 @@
 { config, pkgs, lib, ... }:
 
 let
+  # Import all the nix files in a folder
   modulesFrom = dir:
     map (f: dir + "/${f}") (builtins.attrNames
       (lib.filterAttrs (n: v: (v == "regular") && (lib.hasSuffix ".nix" n))
         (builtins.readDir dir)));
 
+  # Get the current release version without involving infinite recursion
   releaseVer = (import <nixpkgs/nixos> {
     configuration = { ... }: { };
   }).config.system.nixos.release;
@@ -19,17 +21,9 @@ let
 in {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    # Following are my own config
-    ./networking.nix # Network settings
-    ./boot.nix # Bootloader settings
-    ./packages.nix # All system-wide packages
-    ./desktop.nix # For X system and DE
-    ./service.nix # Various services like sound, printer, etc
-    ./options.nix # Build options of configuration
-    ./proxy.nix # Proxy service (shadowsocks + simple-obfs) provider
     "${home-manager}/nixos" # Home-manager plugin which is useful for userland configurations
   ] ++ (modulesFrom ./users) ++ (modulesFrom ./devices)
-    ++ (modulesFrom ./modules);
+    ++ (modulesFrom ./system) ++ (modulesFrom ./modules);
 
   # Customized overlays
   nixpkgs.overlays = [ (import ./overlays/packages.nix) ];
