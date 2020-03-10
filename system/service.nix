@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 
 {
+  # Enable GNU Agent in order to make GnuPG works.
   programs.gnupg.agent.enable = true;
 
   # Enable CUPS to print documents.

@@ -2,6 +2,7 @@
 { config, pkgs, lib, ... }:
 
 with lib;
+
 let inherit (config.lib.devices) x1c7;
 in mkMerge [
   (mkIf x1c7.enable {
