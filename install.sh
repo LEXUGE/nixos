@@ -61,7 +61,7 @@ mount_partition() {
 
 # NIXOS_INSTALL
 nixos_install() {
-	nix-channel --add https://nixos.org/channels/nixos-unstable unstable
+	nix-channel --add https://nixos.org/channels/nixos-unstable nixos
 	nix-channel --update
 
 	# Install git by using TUNA binary cache with fallback

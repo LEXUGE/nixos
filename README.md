@@ -5,6 +5,7 @@ A fully automated replicable nixos configuration set. Tested on Virtualbox and T
 It features:
 - GNOME 3 with builtin dark variant.
 - Full-disk encryption including `/boot`.
+- Working Howdy (Windows Hello like login service) on X1 Carbon 7th Gen
 - Transparent proxy backended by `shadowsocks-libev + simple-obfs` (I
   packaged simple-obfs myself). This feature is **extremely** useful if you are
   in Mainland China because it helps you get over the firewall without pain.
@@ -24,16 +25,12 @@ curl -Ls https://github.com/LEXUGE/nixos/raw/master/install.sh | bash
 
 Follow the instructions and there you go.
 
-After installation, `sudo nix-channel --add https://nixos.org/channels/nixos-unstable unstable`.
-
 If you want to use `shadowsocks`, please create `secrets/shadowsocks.json`.
 
 ## Note
 If you are not on a NVMe SSD, please edit the script to fit `"${device}p2"` into `"${device}2"` (so does `"${device}p1"`).
 
 If you are outside of Mainland China, please edit the script to use official binary cache only instead of TUNA's. You may also need to delete the `binaryCaches` setting in `configuration.nix`.
-
-After installation, in regular uses, do remeber to run `sudo nix-channel --update` regularly in order to upgrade `unstable` channel which would not be upgraded automatically.
 
 # Structure of the configuration
 The system configuration could be split up into three pieces, system-wide, user-land, and device-specifications.
@@ -49,6 +46,7 @@ instructions:
   `packages/simple-obfs.nix`.
 - See `proxy.nix` if you want to use transparent proxy.
 - If you want to use my [smartdns](https://github.com/pymumu/smartdns), take a look into `packages/smartdns.nix` and `modules/smartdns.nix`.
+- See `packages/ir_toggle.nix`, `packages/howdy.nix`, `modules/ir_toggle.nix`, `modules/howdy.nix` if you want to use Howdy on X1 Carbon 7th Gen (20R1). (**Tip:** if you are not on X1 Carbon 7th Gen, you would probably not need `ir_toggle` in order to get it work.)
 
 # See also
 [config](https://github.com/LEXUGE/config) for my emacs and other configs (may

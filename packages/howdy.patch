@@ -1,0 +1,154 @@
+diff --git a/src/cli/add.py b/src/cli/add.py
+index 3106055..5b8f2ba 100644
+--- a/src/cli/add.py
++++ b/src/cli/add.py
+@@ -33,7 +33,7 @@ if not os.path.isfile(path + "/../dlib-data/shape_predictor_5_face_landmarks.dat
+ 
+ # Read config from disk
+ config = configparser.ConfigParser()
+-config.read(path + "/../config.ini")
++config.read("/etc/howdy/config.ini")
+ 
+ if not os.path.exists(config.get("video", "device_path")):
+ 	print("Camera path is not configured correctly, please edit the 'device_path' config value.")
+@@ -50,14 +50,14 @@ face_encoder = dlib.face_recognition_model_v1(path + "/../dlib-data/dlib_face_re
+ 
+ user = builtins.howdy_user
+ # The permanent file to store the encoded model in
+-enc_file = path + "/../models/" + user + ".dat"
++enc_file = "/var/lib/howdy/models/" + user + ".dat"
+ # Known encodings
+ encodings = []
+ 
+ # Make the ./models folder if it doesn't already exist
+-if not os.path.exists(path + "/../models"):
++if not os.path.exists("/var/lib/howdy/models"):
+ 	print("No face model folder found, creating one")
+-	os.makedirs(path + "/../models")
++	os.makedirs("/var/lib/howdy/models", mode=0o655)
+ 
+ # To try read a premade encodings file if it exists
+ try:
+diff --git a/src/cli/clear.py b/src/cli/clear.py
+index 817de48..fefa887 100644
+--- a/src/cli/clear.py
++++ b/src/cli/clear.py
+@@ -11,12 +11,12 @@ path = os.path.dirname(os.path.abspath(__file__))
+ user = builtins.howdy_user
+ 
+ # Check if the models folder is there
+-if not os.path.exists(path + "/../models"):
++if not os.path.exists("/var/lib/howdy/models"):
+ 	print("No models created yet, can't clear them if they don't exist")
+ 	sys.exit(1)
+ 
+ # Check if the user has a models file to delete
+-if not os.path.isfile(path + "/../models/" + user + ".dat"):
++if not os.path.isfile("/var/lib/howdy/models/" + user + ".dat"):
+ 	print(user + " has no models or they have been cleared already")
+ 	sys.exit(1)
+ 
+@@ -32,5 +32,5 @@ if not builtins.howdy_args.y:
+ 		sys.exit(1)
+ 
+ # Delete otherwise
+-os.remove(path + "/../models/" + user + ".dat")
++os.remove("/var/lib/howdy/models/" + user + ".dat")
+ print("\nModels cleared")
+diff --git a/src/cli/config.py b/src/cli/config.py
+index 4f6caca..f768096 100644
+--- a/src/cli/config.py
++++ b/src/cli/config.py
+@@ -17,4 +17,4 @@ elif "EDITOR" in os.environ:
+ 	editor = os.environ["EDITOR"]
+ 
+ # Open the editor as a subprocess and fork it
+-subprocess.call([editor, os.path.dirname(os.path.realpath(__file__)) + "/../config.ini"])
++subprocess.call([editor, "/etc/howdy/config.ini"])
+diff --git a/src/cli/disable.py b/src/cli/disable.py
+index cba8931..30fa925 100644
+--- a/src/cli/disable.py
++++ b/src/cli/disable.py
+@@ -9,7 +9,7 @@ import fileinput
+ import configparser
+ 
+ # Get the absolute filepath
+-config_path = os.path.dirname(os.path.abspath(__file__)) + "/../config.ini"
++config_path = "/etc/howdy/config.ini"
+ 
+ # Read config from disk
+ config = configparser.ConfigParser()
+diff --git a/src/cli/list.py b/src/cli/list.py
+index 08a1e9f..a72f93b 100644
+--- a/src/cli/list.py
++++ b/src/cli/list.py
+@@ -8,7 +8,7 @@ import time
+ import builtins
+ 
+ # Get the absolute path and the username
+-path = os.path.dirname(os.path.realpath(__file__)) + "/.."
++path = "/var/lib/howdy"
+ user = builtins.howdy_user
+ 
+ # Check if the models file has been created yet
+diff --git a/src/cli/remove.py b/src/cli/remove.py
+index 45e2036..0c1d6bf 100644
+--- a/src/cli/remove.py
++++ b/src/cli/remove.py
+@@ -7,7 +7,7 @@ import json
+ import builtins
+ 
+ # Get the absolute path and the username
+-path = os.path.dirname(os.path.realpath(__file__)) + "/.."
++path = "/var/lib/howdy"
+ user = builtins.howdy_user
+ 
+ # Check if enough arguments have been passed
+diff --git a/src/cli/test.py b/src/cli/test.py
+index 16fadb1..feacd69 100644
+--- a/src/cli/test.py
++++ b/src/cli/test.py
+@@ -13,7 +13,7 @@ path = os.path.dirname(os.path.abspath(__file__))
+ 
+ # Read config from disk
+ config = configparser.ConfigParser()
+-config.read(path + "/../config.ini")
++config.read("/etc/howdy/config.ini")
+ 
+ if config.get("video", "recording_plugin") != "opencv":
+ 	print("Howdy has been configured to use a recorder which doesn't support the test command yet")
+diff --git a/src/compare.py b/src/compare.py
+index 98c6b72..1e9eaaf 100644
+--- a/src/compare.py
++++ b/src/compare.py
+@@ -77,7 +77,7 @@ face_encoder = None
+ 
+ # Try to load the face model from the models folder
+ try:
+-	models = json.load(open(PATH + "/models/" + user + ".dat"))
++	models = json.load(open("/var/lib/howdy/models/" + user + ".dat"))
+ 
+ 	for model in models:
+ 		encodings += model["data"]
+@@ -90,7 +90,7 @@ if len(models) < 1:
+ 
+ # Read config from disk
+ config = configparser.ConfigParser()
+-config.read(PATH + "/config.ini")
++config.read("/etc/howdy/config.ini")
+ 
+ # Get all config values needed
+ use_cnn = config.getboolean("core", "use_cnn", fallback=False)
+diff --git a/src/pam.py b/src/pam.py
+index 3d44114..39d6b80 100644
+--- a/src/pam.py
++++ b/src/pam.py
+@@ -11,7 +11,7 @@ import ConfigParser
+ 
+ # Read config from disk
+ config = ConfigParser.ConfigParser()
+-config.read(os.path.dirname(os.path.abspath(__file__)) + "/config.ini")
++config.read("/etc/howdy/config.ini")
+ 
+ 
+ def doAuth(pamh):

@@ -80,11 +80,13 @@ in mkIf (ash.enable) {
         tap-to-click = true;
         two-finger-scrolling-enabled = true;
       };
-      # Favorite apps
       "org/gnome/shell" = {
+        # Show log out button
+        always-show-log-out = true;
+        # Favorite apps
         favorite-apps = [
           "firefox.desktop"
-          "telegram-desktop.desktop"
+          "telegramdesktop.desktop"
           "org.gnome.Nautilus.desktop"
           "org.gnome.Terminal.desktop"
           "emacs.desktop"

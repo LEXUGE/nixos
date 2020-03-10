@@ -11,13 +11,8 @@ let
       (lib.filterAttrs (n: v: (v == "regular") && (lib.hasSuffix ".nix" n))
         (builtins.readDir dir)));
 
-  # Get the current release version without involving infinite recursion
-  releaseVer = (import <nixpkgs/nixos> {
-    configuration = { ... }: { };
-  }).config.system.nixos.release;
-
   home-manager = builtins.fetchTarball
-    "https://github.com/rycee/home-manager/archive/release-${releaseVer}.tar.gz";
+    "https://github.com/rycee/home-manager/archive/master.tar.gz";
 in {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -36,8 +31,8 @@ in {
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Select internationalisation properties.
+  console.font = "Lat2-Terminus16";
   i18n = {
-    consoleFont = "Lat2-Terminus16";
     defaultLocale = "en_US.UTF-8";
     inputMethod = {
       enabled = "ibus";

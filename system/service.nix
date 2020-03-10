@@ -1,10 +1,7 @@
 { config, pkgs, ... }:
 
-let unstable = import <unstable> { };
-in {
-  # Disable fwupd module to opt in unstbale module of fwupd
-  disabledModules = [ "services/hardware/fwupd.nix" ];
-  imports = [ <unstable/nixos/modules/services/hardware/fwupd.nix> ];
+{
+  programs.gnupg.agent.enable = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;

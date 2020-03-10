@@ -22,7 +22,12 @@
       };
     };
 
-    devices = { x1c7 = { enable = true; }; };
+    devices = {
+      x1c7 = {
+        enable = true;
+        enableHowdy = false;
+      };
+    };
 
     system = {
       hostname = "nixos";
