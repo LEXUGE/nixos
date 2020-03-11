@@ -16,6 +16,7 @@
   };
 
   # Some of the GNOME Packages are unwanted
+  programs.geary.enable = false;
   environment.gnome3.excludePackages =
-    [ pkgs.gnome3.geary pkgs.gnome3.epiphany pkgs.gnome3.gnome-software ];
+    [ pkgs.gnome3.epiphany pkgs.gnome3.gnome-software ];
 }
