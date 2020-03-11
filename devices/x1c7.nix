@@ -23,9 +23,6 @@ in mkMerge [
         STOP_CHARGE_THRESH_BAT0=90
       '';
     };
-
-    # Enable fprintd
-    # services.fprintd.enable = true;
   })
   (mkIf (x1c7.enable && x1c7.enableHowdy) {
     # Howdy service configuration
@@ -38,5 +35,9 @@ in mkMerge [
       };
       ir-toggle.enable = true;
     };
+  })
+  (mkIf (x1c7.enable && x1c7.enableFprintd) {
+    # Enable fprintd
+    services.fprintd.enable = true;
   })
 ]

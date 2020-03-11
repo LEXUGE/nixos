@@ -21,6 +21,7 @@ rsync -avP \
 	--exclude "*" \
 	/etc/nixos/ .
 find . -type f -name '*.nix' -exec nixfmt {} +
+find . -type f -name '*.nix.example' -exec nixfmt {} +
 echo "Done."
 
 echo -n "Adding to git..."

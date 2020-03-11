@@ -26,14 +26,17 @@
     devices = {
       x1c7 = {
         enable = true;
+        # Only enable one of these auth methods!
         enableHowdy = false;
+        enableFprintd = true;
       };
     };
 
     system = {
       hostname = "nixos";
       proxy = {
-        user = "ash"; # The user who would run the systemd service
+        user =
+          "ash"; # The user who would run the transparent proxy systemd service
         address = "127.0.0.1";
         localPort = 1080;
         redirPort = 1081;
