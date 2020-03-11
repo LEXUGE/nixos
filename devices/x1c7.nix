@@ -33,6 +33,8 @@ in mkMerge [
       howdy = {
         enable = true;
         device = "/dev/video2";
+        certainty = 5;
+        dark-threshold = 100;
       };
       ir-toggle.enable = true;
     };
