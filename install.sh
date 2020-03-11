@@ -97,4 +97,5 @@ select_device
 create_partition
 format_partition
 mount_partition
+create_keyfile
 nixos_install
