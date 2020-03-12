@@ -31,7 +31,7 @@ If you want to use `shadowsocks`, please create `secrets/shadowsocks.json`.
 ## Note
 If you are not on a NVMe SSD, please edit the script to fit `"${device}p2"` into `"${device}2"` (so does `"${device}p1"`).
 
-If you are outside of Mainland China, please edit the script to use official binary cache only instead of TUNA's. You may also need to delete the `binaryCaches` setting in `configuration.nix`.
+If you are outside of Mainland China, please edit the script to use official binary cache only instead of TUNA's. You may also need to adapt the `binaryCaches` setting in `system/options.nix` to your own network.
 
 # Structure of the configuration
 The system configuration could be split up into three pieces, system-wide, user-land, and device-specifications.
