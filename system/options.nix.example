@@ -28,12 +28,16 @@
         enable = true;
         # Only enable one of these auth methods!
         enableHowdy = false;
-        enableFprintd = true;
+        enableFprintd = false;
       };
     };
 
     system = {
       hostname = "nixos";
+      # Use TUNA Mirror together with original cache because TUNA has better performance inside Mainland China.
+      # Set the list to `[ ]` to use official cache only.
+      binaryCaches =
+        [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
       proxy = {
         user =
           "ash"; # The user who would run the transparent proxy systemd service

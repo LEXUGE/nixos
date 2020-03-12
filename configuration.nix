@@ -23,9 +23,8 @@ in {
   # Customized overlays
   nixpkgs.overlays = [ (import ./overlays/packages.nix) ];
 
-  # Use TUNA Mirror together with original cache due to TUNA has better performance inside Mainland China
-  nix.binaryCaches =
-    [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
+  # Customized binary caches list (with fallback to official binary cache)
+  nix.binaryCaches = config.lib.system.binaryCaches;
 
   # Use the latest linux kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
