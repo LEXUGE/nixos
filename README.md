@@ -39,6 +39,12 @@ The system configuration could be split up into three pieces, system-wide, user-
 - Device-specifications `devices/`: This would include some non-universal device specific configurations like `TLP` power management and `fprintd` fingerprint auth.
 - System: Rest of them are a re-usable system with my personal flavor added (e.g. `smartdns` and transparent proxy for better networking experience).
 
+# Security details
+As for me, I am on my best to ensure that the system is convenient to use and secure. But here are some concerns:
+- `services.fstrim.enable` is set to `true` which means that attacker may be able to perceive the data usage of the fully encrypted disk.
+- `howdy` is not suggested to use if you need to ensure high level security due to the potentiality of spoofing.
+- There is keyfile added to `/` partition encryption in order to eliminate the twice keying in of the LUKS passphrase. This may imply security concerns.
+
 # How do I steal it?
 It's actually not well-structured for stealing. But here are some
 instructions:
