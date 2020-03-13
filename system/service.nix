@@ -1,6 +1,9 @@
 { config, pkgs, ... }:
 
 {
+  # Enable TRIM Service (May have security concern here)
+  services.fstrim.enable = true;
+
   # Enable GNU Agent in order to make GnuPG works.
   programs.gnupg.agent.enable = true;
 
