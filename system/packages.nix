@@ -6,7 +6,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     wget
-    # nixfmt
+    nixfmt
     git
     gnupg
     shadowsocks-libev

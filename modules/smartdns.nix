@@ -3,56 +3,54 @@
 with lib;
 
 let
+  inherit (lib.types) attrsOf coercedTo listOf oneOf str int bool;
   cfg = config.services.smartdns;
-  mkServerConfig = method:
-    mkOption {
-      type = types.listOf types.str;
-      default = [ ];
-      description = ''
-        List of servers to query with ${
-          toUpper method
-        } method. You can apply different options at here too. See the <link xlink:href="https://github.com/pymumu/smartdns/blob/master/ReadMe_en.md#configuration-parameter">SmartDNS README</link> for details.
-      '';
-    };
 
-  confFile = pkgs.writeText "smartdns.conf" ''
-    bind :${toString cfg.bindPort}
-    cache-size ${toString cfg.cacheSize}
-    ${flip concatMapStrings [ "udp" "tcp" "tls" "https" ] (method:
-      flip concatMapStrings cfg.servers.${method} (server: ''
-        server-${method} ${server}
-      ''))}
-    ${cfg.extraConfig}
-  '';
+  confFile = pkgs.writeText "smartdns.conf" (with generators;
+    toKeyValue {
+      mkKeyValue = mkKeyValueDefault {
+        mkValueString = v:
+          if isBool v then
+            if v then "yes" else "no"
+          else
+            mkValueStringDefault { } v;
+      } " ";
+      listsAsDuplicateKeys =
+        true; # Allowing duplications because we need to deal with multiple entries with the same key.
+    } cfg.settings);
 in {
   options.services.smartdns = {
     enable = mkEnableOption "SmartDNS DNS server";
 
-    servers = genAttrs [ "udp" "tcp" "tls" "https" ]
-      (method: mkServerConfig "${method}");
-
-    cacheSize = mkOption {
-      type = types.int;
-      default = 512;
-      description = "Domain name result cache number.";
-    };
-
     bindPort = mkOption {
-      type = types.int;
+      type = types.port;
       default = 53;
       description = "DNS listening port number.";
     };
 
-    extraConfig = mkOption {
-      type = types.lines;
-      default = "";
+    settings = mkOption {
+      type = let atom = oneOf [ str int bool ];
+      in attrsOf (coercedTo atom toList (listOf atom));
+      example = literalExample ''
+        settings = {
+          bind = ":5353 -no-rule -group example";
+          cache-size = 4096;
+          server-tls = [ "8.8.8.8:853" "1.1.1.1:853" ];
+          server-https = "https://cloudflare-dns.com/dns-query -exclude-default-group";
+          prefetch-domain = true;
+          speed-check-mode = "ping,tcp:80";
+        };
+      '';
       description = ''
-        Any extra parameters that will be appended to configuration file, see the <link xlink:href="https://github.com/pymumu/smartdns/blob/master/ReadMe_en.md#configuration-parameter">SmartDNS README</link> for details.
+        A set that will be generated into configuration file, see the <link xlink:href="https://github.com/pymumu/smartdns/blob/master/ReadMe_en.md#configuration-parameter">SmartDNS README</link> for details of configuration parameters.
+        You could override the options here like <option>services.smartdns.bindPort</option> by writing <literal>settings.bind = ":5353 -no-rule -group example";</literal>.
       '';
     };
   };
 
   config = lib.mkIf cfg.enable {
+    services.smartdns.settings.bind = mkDefault ":${toString cfg.bindPort}";
+
     systemd.packages = [ pkgs.smartdns ];
     systemd.services.smartdns.wantedBy = [ "multi-user.target" ];
     environment.etc."smartdns/smartdns.conf".source = confFile;
