@@ -14,6 +14,7 @@
     neofetch
     bind
     usbutils
+    pciutils
     shfmt
     shellcheck
     smartmontools
