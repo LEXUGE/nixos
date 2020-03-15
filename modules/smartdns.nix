@@ -32,7 +32,7 @@ in {
       type = let atom = oneOf [ str int bool ];
       in attrsOf (coercedTo atom toList (listOf atom));
       example = literalExample ''
-        settings = {
+        {
           bind = ":5353 -no-rule -group example";
           cache-size = 4096;
           server-tls = [ "8.8.8.8:853" "1.1.1.1:853" ];

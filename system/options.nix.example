@@ -19,6 +19,7 @@
           virtmanager
           # texlive.combined.scheme-full
           gnome3.polari
+          steam
         ];
       };
     };
