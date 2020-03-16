@@ -1,22 +1,43 @@
 { config, pkgs, ... }:
 
 {
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  services.xserver.xkbOptions =
-    "ctrl:nocaps"; # The GNOME on Wayland would use this setting if there is no xkb setting has been set. Else you need to reset the key in gsettings.
-
-  # Enable touchpad support.
-  services.xserver.libinput.enable = true;
-
-  # Enable the GNOME 3
   services.xserver = {
-    displayManager.gdm.enable = true;
-    desktopManager.gnome3.enable = true;
+    # Start X11
+    enable = true;
+
+    # Capslock as Control
+    xkbOptions = "ctrl:nocaps";
+
+    # Configure touchpad
+    libinput = {
+      enable = true;
+      naturalScrolling = true;
+    };
+
+    displayManager = {
+      # Add one session that would start user's own xsession profile
+      session = [{
+        manage = "desktop";
+        name = "xsession";
+        start = "exec $HOME/.xsession";
+      }];
+      # LightDM display manager
+      lightdm = {
+        enable = true;
+        greeters.gtk = {
+          # Set cursor size
+          cursorTheme.size = 32;
+          # Use dark them
+          theme.name = "Adwaita-dark";
+        };
+      };
+      # Startup commands
+      sessionCommands = ''
+        ibus-daemon -drx
+      '';
+    };
   };
 
-  # Some of the GNOME Packages are unwanted
-  programs.geary.enable = false;
-  environment.gnome3.excludePackages =
-    [ pkgs.gnome3.epiphany pkgs.gnome3.gnome-software ];
+  # Enable `light` brightness controller
+  programs.light.enable = true;
 }

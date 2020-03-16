@@ -15,26 +15,37 @@ in mkIf (ash.enable) {
       "$6$2aMNNG9GcF$/5X/fdXWRl3eZXPgSRgJLplpQgjvZ4Nme6rV4mGqgoWYgQLdLwwZBsXBgjb/LQhBD31XNk0OdzWDL.ctSLiu10";
     shell = pkgs.zsh;
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    # wheel - sudo
+    # networkmanager - manage network
+    # video - light control
+    extraGroups = [ "wheel" "networkmanager" "video" ];
   };
+
+  # Install packages to `/etc/profile` because upstream would default it in the future.
+  home-manager.useUserPackages = true;
 
   # Home-manager settings. It would be much more powerful and specific than above.
   home-manager.users.ash = {
     # User-layer packages
     home.packages = ash.packages;
 
+    # Fontconfig
+    fonts.fontconfig.enable = true;
+
     # Package settings
     programs = {
-      # GNOME Terminal
-      gnome-terminal = {
+      alacritty = {
         enable = true;
-        profile.aba3fa9f-5aab-4ce9-9775-e2c46737d9b8 = {
-          default = true;
-          visibleName = "Ash";
-          font = "Fira Code weight=450 10";
+        settings = {
+          font = {
+            normal = {
+              family = "Fira Code Retina";
+              style = "Regular";
+            };
+            size = 9;
+          };
         };
       };
-
       # GnuPG
       gpg = {
         enable = true;
@@ -70,32 +81,6 @@ in mkIf (ash.enable) {
       ".config/gtk-3.0/settings.ini".source = ../dotfiles/gtk-settings.ini;
       ".emacs.d/init.el".source = ../dotfiles/emacs.d/init.el;
       ".emacs.d/elisp/".source = ../dotfiles/emacs.d/elisp;
-    };
-
-    # Setting GNOME Dconf settings
-    dconf.settings = {
-      # Touchpad settings
-      "org/gnome/desktop/peripherals/touchpad" = {
-        disable-while-typing = false;
-        tap-to-click = true;
-        two-finger-scrolling-enabled = true;
-      };
-      "org/gnome/shell" = {
-        # Show log out button
-        always-show-log-out = true;
-        # Favorite apps
-        favorite-apps = [
-          "firefox.desktop"
-          "telegramdesktop.desktop"
-          "org.gnome.Nautilus.desktop"
-          "org.gnome.Terminal.desktop"
-          "emacs.desktop"
-        ];
-      };
-      # Don't suspend when it is plugged in
-      "org/gnome/settings-daemon/plugins/power" = {
-        sleep-inactive-ac-type = "nothing";
-      };
     };
   };
 }

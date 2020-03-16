@@ -19,7 +19,6 @@
     shellcheck
     smartmontools
     pavucontrol
-    gnome3.gnome-tweaks
     efibootmgr
     ncdu
   ];

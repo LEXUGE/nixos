@@ -71,6 +71,7 @@ in {
       sudo.text = pam-rule; # Sudo
       login.text = pam-rule; # User login
       polkit-1.text = pam-rule; # PolKit
+      i3lock.text = pam-rule; # i3lock
     };
   };
 }

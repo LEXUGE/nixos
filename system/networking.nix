@@ -6,6 +6,8 @@
   # Allow Spotify Local discovery
   networking.firewall.allowedTCPPorts = [ 57621 ];
 
+  networking.networkmanager.enable = true;
+
   services.smartdns = {
     enable = true;
     settings = {

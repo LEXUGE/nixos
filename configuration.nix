@@ -29,16 +29,6 @@ in {
   # Use the latest linux kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  # Select internationalisation properties.
-  console.font = "Lat2-Terminus16";
-  i18n = {
-    defaultLocale = "en_US.UTF-8";
-    inputMethod = {
-      enabled = "ibus";
-      ibus.engines = with pkgs.ibus-engines; [ libpinyin ];
-    };
-  };
-
   # Add swap file (8GB)
   swapDevices = [{
     device = "/var/swapFile";
@@ -47,9 +37,6 @@ in {
 
   # Support NTFS
   boot.supportedFilesystems = [ "ntfs" ];
-
-  # Set your time zone.
-  time.timeZone = "Asia/Shanghai";
 
   # Auto upgrade
   system.autoUpgrade.enable = true;

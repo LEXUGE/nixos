@@ -18,8 +18,10 @@
           minecraft
           virtmanager
           # texlive.combined.scheme-full
-          gnome3.polari
           steam
+          i3lock
+          xss-lock
+          xautolock
         ];
       };
     };
@@ -46,6 +48,7 @@
         localPort = 1080;
         redirPort = 1081;
       };
+      ibus-engines = with pkgs.ibus-engines; [ libpinyin ];
     };
   };
 }
