@@ -3,6 +3,7 @@
 let
   inherit (lib) mkIf;
   inherit (config.lib.users) ash;
+  inherit (config) share;
 in mkIf (ash.enable) {
   # Hacky workaround of issue 948 of home-manager
   systemd.services.home-manager-ash.preStart = ''
@@ -42,8 +43,8 @@ in mkIf (ash.enable) {
               family = "Fira Code Retina";
               style = "Regular";
             };
-            size = 9;
           };
+          env = { WINIT_HIDPI_FACTOR = toString share.scale; };
         };
       };
       # GnuPG

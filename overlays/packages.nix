@@ -6,6 +6,5 @@ self: super: {
   howdy = (super.callPackage ../packages/howdy.nix { });
   pam_python = (super.callPackage ../packages/pam_python.nix { });
   ir_toggle = (super.callPackage ../packages/ir_toggle.nix { });
-  smartdns = (super.callPackage ../packages/smartdns.nix { });
   simple-obfs = (super.callPackage ../packages/simple-obfs.nix { });
 }

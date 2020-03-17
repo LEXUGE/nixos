@@ -1,9 +1,13 @@
 { config, pkgs, ... }:
 
-{
+let
+  inherit (config.lib) system;
+  inherit (config) share;
+in {
   services.xserver = {
     # Start X11
     enable = true;
+    dpi = system.dpi * share.scale;
 
     # Capslock as Control
     xkbOptions = "ctrl:nocaps";
@@ -26,7 +30,7 @@
         enable = true;
         greeters.gtk = {
           # Set cursor size
-          cursorTheme.size = 32;
+          cursorTheme.size = system.cursorSize * share.scale;
           # Use dark them
           theme.name = "Adwaita-dark";
         };

@@ -9,8 +9,8 @@ in mkMerge [
     # Activate acpi_call module for TLP ThinkPad features
     boot.extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
 
-    # Set DPi to 150% scale
-    services.xserver.dpi = 192;
+    # Set DPi to 200% scale
+    share.scale = 2;
 
     # Update Intel CPU Microcode
     hardware.cpu.intel.updateMicrocode = true;

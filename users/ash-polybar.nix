@@ -3,6 +3,8 @@
 let
   inherit (lib) mkIf;
   inherit (config.lib.users) ash;
+  inherit (config.lib) system;
+  inherit (config) share;
 in mkIf (ash.enable) {
   home-manager.users.ash.services.polybar = {
     # Polybar
@@ -24,7 +26,7 @@ in mkIf (ash.enable) {
       };
 
       "bar/top" = {
-        dpi = 192;
+        dpi = share.scale * system.dpi;
         width = "100%";
         height = "2.7%";
 
@@ -43,7 +45,7 @@ in mkIf (ash.enable) {
       };
 
       "bar/bottom" = {
-        dpi = 192;
+        dpi = share.scale * system.dpi;
         width = "100%";
         height = "2.7%";
 

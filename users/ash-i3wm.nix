@@ -5,6 +5,8 @@
 let
   inherit (lib) mkIf;
   inherit (config.lib.users) ash;
+  inherit (config.lib) system;
+  inherit (config) share;
   lock = "${pkgs.i3lock}/bin/i3lock -c 000000";
 in mkIf (ash.enable) {
   home-manager.users.ash = {
@@ -22,7 +24,7 @@ in mkIf (ash.enable) {
       theme = "glue_pro_blue";
       extraConfig = ''
         rofi.show-icons: true
-        rofi.dpi: 192
+        rofi.dpi: ${toString (share.scale * system.dpi)}
       '';
     };
 
@@ -92,7 +94,7 @@ in mkIf (ash.enable) {
       pointerCursor = {
         package = pkgs.gnome3.adwaita-icon-theme;
         name = "Adwaita";
-        size = 32;
+        size = system.cursorSize * share.scale;
       };
     };
   };
