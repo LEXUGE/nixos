@@ -83,5 +83,12 @@ in mkIf (ash.enable) {
       ".emacs.d/init.el".source = ../dotfiles/emacs.d/init.el;
       ".emacs.d/elisp/".source = ../dotfiles/emacs.d/elisp;
     };
+
+    # Dconf settings
+    dconf.settings = {
+      "desktop/ibus/general/hotkey" = {
+        triggers = [ "<Control><Shift>space" ];
+      };
+    };
   };
 }

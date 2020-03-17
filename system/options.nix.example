@@ -1,6 +1,6 @@
 # Options of configuration
 
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   lib = {
     users = {
       ash = {
@@ -49,6 +49,9 @@
         redirPort = 1081;
       };
       ibus-engines = with pkgs.ibus-engines; [ libpinyin ];
+      # Set the default DPi and cursor size value (under 1080P). These options could be scaled by scale value in share.
+      dpi = 96;
+      cursorSize = 16;
     };
   };
 }
