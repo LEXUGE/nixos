@@ -137,8 +137,8 @@ in mkIf (ash.enable) {
           type = "internal/battery";
           full-at = 99;
           time-format = "%H:%M";
-          battery = "BAT0";
-          adapter = "AC";
+          battery = share.battery;
+          adapter = share.power;
           label-charging = "%percentage%% (%time%)";
           label-discharging = "%percentage%% (%time%)";
         };

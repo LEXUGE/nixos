@@ -12,6 +12,10 @@ in mkMerge [
     # Set DPi to 200% scale
     share.scale = 2;
 
+    # Set battery and AC file name
+    share.battery = "BAT0";
+    share.power = "AC";
+
     # Update Intel CPU Microcode
     hardware.cpu.intel.updateMicrocode = true;
 
