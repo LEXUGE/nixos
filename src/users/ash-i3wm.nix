@@ -3,9 +3,9 @@
 { config, pkgs, lib, ... }:
 
 let
-  inherit (config.meta) share system;
+  inherit (config.local) share system;
 
-  cfg = config.meta.users.ash;
+  cfg = config.local.users.ash;
   lock = "${pkgs.i3lock}/bin/i3lock -c 000000";
 in lib.mkIf (cfg.enable) {
   home-manager.users.ash = {

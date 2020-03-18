@@ -1,7 +1,7 @@
 # Options of configuration
 
 { config, pkgs, lib, ... }: {
-  config.meta = {
+  local = {
     users = {
       ash = {
         enable = true;

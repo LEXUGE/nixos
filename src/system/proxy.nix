@@ -3,7 +3,7 @@
 let
   inherit (pkgs) gnugrep shadowsocks-libev iptables utillinux;
   inherit (lib) concatMapStringsSep optionalString mkIf;
-  cfg = config.meta.system;
+  cfg = config.local.system;
 
   mainUser = cfg.proxy.user;
   socksGroupName = "Shadowsocks";

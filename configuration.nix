@@ -14,20 +14,20 @@ let
   home-manager = builtins.fetchTarball
     "https://github.com/rycee/home-manager/archive/master.tar.gz";
 
-  cfg = config.meta.system;
+  cfg = config.local.system;
 in {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     "${home-manager}/nixos" # Home-manager plugin which is useful for userland configurations
-    ./meta.nix # Meta options for whole system.
+    ./local.nix # Options for whole system configuraions.
   ] ++ builtins.concatLists (map modulesFrom [
     ./src/users # Userland configuration profiles.
     ./src/devices # Device specific configuration profiles.
     ./src/system # System wide configuraions.
     ./modules/packages # Module for packages.
-    ./modules/meta # Module for meta options.
-    ./modules/meta/users # Module for user profile options, located under meta module.
-    ./modules/meta/devices # Module for device profile options, located under meta module.
+    ./modules/local # Module for local options.
+    ./modules/local/users # Module for user profile options, located under local module.
+    ./modules/local/devices # Module for device profile options, located under local module.
   ]);
 
   # Customized overlays

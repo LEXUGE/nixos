@@ -3,7 +3,7 @@
 { lib, ... }:
 
 {
-  options.meta.share = with lib; {
+  options.local.share = with lib; {
     scale = mkOption {
       type = types.int;
       default = 1;

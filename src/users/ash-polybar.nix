@@ -1,8 +1,8 @@
 { config, pkgs, lib, ... }:
 
 let
-  inherit (config.meta) share system;
-  cfg = config.meta.users.ash;
+  inherit (config.local) share system;
+  cfg = config.local.users.ash;
 in lib.mkIf cfg.enable {
   home-manager.users.ash = {
     services.polybar = {

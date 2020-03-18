@@ -1,8 +1,8 @@
 { config, pkgs, lib, ... }:
 
 let
-  inherit (config.meta) share;
-  cfg = config.meta.users.ash;
+  inherit (config.local) share;
+  cfg = config.local.users.ash;
 in lib.mkIf cfg.enable {
   # Hacky workaround of issue 948 of home-manager
   systemd.services.home-manager-ash.preStart = ''
@@ -28,7 +28,7 @@ in lib.mkIf cfg.enable {
   home-manager.users.ash = {
     # User-layer packages
     home.packages = with pkgs;
-      [ hunspell hunspellDicts.en-us-large i3lock xss-lock xautolock ]
+      [ hunspell hunspellDicts.en-us-large emacs i3lock xss-lock xautolock ]
       ++ cfg.extraPackages;
 
     # Fontconfig

@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 
-let cfg = config.meta.system;
+let cfg = config.local.system;
 in {
   # Set your time zone.
   time.timeZone = "Asia/Shanghai";

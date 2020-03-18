@@ -3,7 +3,7 @@
 { lib, ... }:
 
 {
-  options.meta.devices.x1c7 = with lib; {
+  options.local.devices.x1c7 = with lib; {
     enable = mkOption {
       type = types.bool;
       default = false;

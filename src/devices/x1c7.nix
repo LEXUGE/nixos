@@ -1,15 +1,15 @@
 # Device specific configuration for ThinkPad X1 Carbon 7th Gen (20R1)
 { config, pkgs, lib, ... }:
 
-let cfg = config.meta.devices.x1c7;
+let cfg = config.local.devices.x1c7;
 in lib.mkIf cfg.enable (lib.mkMerge [
   ({
     # Activate acpi_call module for TLP ThinkPad features
     boot.extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
 
     # Set DPi to 200% scale
-    meta.share.scale = 2;
-    meta.share.network-interface = [ "wlp0s20f3" ];
+    local.share.scale = 2;
+    local.share.network-interface = [ "wlp0s20f3" ];
 
     # Update Intel CPU Microcode
     hardware.cpu.intel.updateMicrocode = true;

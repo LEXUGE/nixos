@@ -1,8 +1,8 @@
 { config, pkgs, lib, ... }:
 
 let
-  inherit (config.meta) share;
-  cfg = config.meta.system;
+  inherit (config.local) share;
+  cfg = config.local.system;
 in {
   services.xserver = {
     # Start X11

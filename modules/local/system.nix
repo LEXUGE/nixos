@@ -34,7 +34,7 @@ let
       };
     };
 in {
-  options.meta.system = with lib; {
+  options.local.system = with lib; {
     binaryCaches = mkOption {
       type = types.listOf types.str;
       default = [ ];
