@@ -2,7 +2,7 @@
 # ignore device specific file
 hardware-configuration.nix
 # Ignore secrets and personal options
-system/options.nix
+meta.nix
 secrets/*
 !secrets/*.example
 
