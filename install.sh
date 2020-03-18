@@ -82,8 +82,8 @@ nixos_install() {
 	# Create new options.nix and open it to let user customize.
 	echo "Generate and open build options for configuration..."
 	read -n 1 -s -r -p "Press any key to continue"
-	cp /mnt/etc/nixos/meta.nix.example /mnt/etc/nixos/meta.nix
-	nano /mnt/etc/nixos/meta.nix
+	cp /mnt/etc/nixos/local.nix.example /mnt/etc/nixos/local.nix
+	nano /mnt/etc/nixos/local.nix
 
 	# Install NixOS using TUNA binary cache with fallback
 	nixos-generate-config --root /mnt
