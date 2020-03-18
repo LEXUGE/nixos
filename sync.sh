@@ -6,7 +6,7 @@ rm -rf ./src \
 	./modules/ \
 	./overlays/ \
 	./secrets/
-rm ./*.{nix, nix.example}
+rm ./*."{nix, nix.example}"
 
 echo -n "Copying..."
 rsync -avP \
