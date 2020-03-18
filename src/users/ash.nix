@@ -28,8 +28,15 @@ in lib.mkIf cfg.enable {
   home-manager.users.ash = {
     # User-layer packages
     home.packages = with pkgs;
-      [ hunspell hunspellDicts.en-us-large emacs i3lock xss-lock xautolock ]
-      ++ cfg.extraPackages;
+      [
+        hunspell
+        hunspellDicts.en-us-large
+        emacs
+        i3lock
+        xss-lock
+        xautolock
+        escrotum
+      ] ++ cfg.extraPackages;
 
     # Fontconfig
     fonts.fontconfig.enable = true;

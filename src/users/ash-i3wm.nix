@@ -84,7 +84,17 @@ in lib.mkIf (cfg.enable) {
 
             # Rofi run by zsh because we need environments
             "${modifier}+d" = ''
-              exec "zsh -c '${pkgs.rofi}/bin/rofi -combi-modi window,drun -show combi -modi combi'"'';
+              exec "zsh -c 'rofi -combi-modi window,drun -show combi -modi combi'"'';
+
+            # Screenshot
+            "--release Shift+Print" =
+              "exec escrotum -C"; # Screenshot the whole screen and copy to clipboard
+            "--release Shift+Control+Print" =
+              "exec escrotum -Cs"; # Screenshot a selected area and copy to clipboard
+            "--release Control+Print" =
+              "exec escrotum -s"; # Screenshot a selected area and save it.
+            "--release Print" =
+              "exec escrotum"; # Screenshot whole screen and save it.
           };
         };
       };
