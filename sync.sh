@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 
-rm -rf ./system/ \
+rm -rf ./src \
 	./dotfiles/ \
 	./packages/ \
 	./modules/ \
 	./overlays/ \
-	./users/ \
-	./devices/ \
 	./secrets/
+rm ./*.{nix, nix.example}
 
 echo -n "Copying..."
 rsync -avP \

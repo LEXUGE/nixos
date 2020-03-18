@@ -2,14 +2,14 @@
 
 let
   inherit (pkgs) gnugrep shadowsocks-libev iptables utillinux;
-  inherit (lib) concatMapStringsSep optionalString;
-  inherit (config.lib.system) proxy;
+  inherit (lib) concatMapStringsSep optionalString mkIf;
+  cfg = config.meta.system;
 
-  mainUser = proxy.user;
+  mainUser = cfg.proxy.user;
   socksGroupName = "Shadowsocks";
-  socksProxyAddr = proxy.address;
-  socksProxyPortStr = toString proxy.localPort;
-  redirProxyPortStr = toString proxy.redirPort;
+  socksProxyAddr = cfg.proxy.address;
+  socksProxyPortStr = toString cfg.proxy.localPort;
+  redirProxyPortStr = toString cfg.proxy.redirPort;
 
   helper = ''
     ip46tables() {
@@ -35,7 +35,8 @@ let
       "-d 1.1.1.3"
       "-m owner --gid-owner ${socksGroupName}"
     ];
-in {
+in mkIf (cfg.proxy != null) {
+
   users.groups.${socksGroupName} = { };
   systemd.services.shadowsocks = {
     description = "Shadowsocks";

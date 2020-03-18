@@ -3,12 +3,11 @@
 { config, pkgs, lib, ... }:
 
 let
-  inherit (lib) mkIf;
-  inherit (config.lib.users) ash;
-  inherit (config.lib) system;
-  inherit (config) share;
+  inherit (config.meta) share system;
+
+  cfg = config.meta.users.ash;
   lock = "${pkgs.i3lock}/bin/i3lock -c 000000";
-in mkIf (ash.enable) {
+in lib.mkIf (cfg.enable) {
   home-manager.users.ash = {
     # Compton compositor
     services.compton = {
@@ -83,9 +82,9 @@ in mkIf (ash.enable) {
 
             "${modifier}+n" = "exec --no-startup-id ${lock}";
 
-            # Rofi
-            "${modifier}+d" =
-              "exec ${pkgs.rofi}/bin/rofi -combi-modi window#drun -show combi -modi combi";
+            # Rofi run by zsh because we need environments
+            "${modifier}+d" = ''
+              exec "zsh -c '${pkgs.rofi}/bin/rofi -combi-modi window,drun -show combi -modi combi'"'';
           };
         };
       };

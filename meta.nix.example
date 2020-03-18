@@ -1,27 +1,25 @@
 # Options of configuration
 
-{ pkgs, lib, ... }: {
-  lib = {
+{ config, pkgs, lib, ... }: {
+  config.meta = {
     users = {
       ash = {
         enable = true;
-        packages = with pkgs; [
+        battery = "BAT0";
+        power = "AC";
+        network-interface = "wlp0s20f3";
+        extraPackages = with pkgs; [
           deluge
-          hunspell
-          hunspellDicts.en-us-large
           zoom-us
           thunderbird
           spotify
           firefox
           tdesktop
-          emacs
           minecraft
           virtmanager
           # texlive.combined.scheme-full
           steam
-          i3lock
-          xss-lock
-          xautolock
+          evince
         ];
       };
     };
@@ -29,9 +27,8 @@
     devices = {
       x1c7 = {
         enable = true;
-        # Only enable one of these auth methods!
-        enableHowdy = false;
-        enableFprintd = false;
+        # Choose "howdy", "fprintd", or null.
+        bio-auth = null;
       };
     };
 
@@ -48,10 +45,8 @@
         localPort = 1080;
         redirPort = 1081;
       };
+      # Choose ibus engines to apply
       ibus-engines = with pkgs.ibus-engines; [ libpinyin ];
-      # Set the default DPi and cursor size value (under 1080P). These options could be scaled by scale value in share.
-      dpi = 96;
-      cursorSize = 16;
     };
   };
 }

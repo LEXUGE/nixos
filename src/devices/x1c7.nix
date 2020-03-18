@@ -1,20 +1,15 @@
 # Device specific configuration for ThinkPad X1 Carbon 7th Gen (20R1)
 { config, pkgs, lib, ... }:
 
-with lib;
-
-let inherit (config.lib.devices) x1c7;
-in mkMerge [
-  (mkIf x1c7.enable {
+let cfg = config.meta.devices.x1c7;
+in lib.mkIf cfg.enable (lib.mkMerge [
+  ({
     # Activate acpi_call module for TLP ThinkPad features
     boot.extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
 
     # Set DPi to 200% scale
-    share.scale = 2;
-
-    # Set battery and AC file name
-    share.battery = "BAT0";
-    share.power = "AC";
+    meta.share.scale = 2;
+    meta.share.network-interface = [ "wlp0s20f3" ];
 
     # Update Intel CPU Microcode
     hardware.cpu.intel.updateMicrocode = true;
@@ -31,7 +26,8 @@ in mkMerge [
       '';
     };
   })
-  (mkIf (x1c7.enable && x1c7.enableHowdy) {
+
+  (lib.mkIf (cfg.bio-auth == "howdy") {
     # Howdy service configuration
     services = {
       howdy = {
@@ -43,8 +39,9 @@ in mkMerge [
       ir-toggle.enable = true;
     };
   })
-  (mkIf (x1c7.enable && x1c7.enableFprintd) {
+
+  (lib.mkIf (cfg.enable == "fprintd") {
     # Enable fprintd
     services.fprintd.enable = true;
   })
-]
+])

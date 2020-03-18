@@ -1,10 +1,9 @@
 { config, pkgs, lib, ... }:
 
 let
-  inherit (lib) mkIf;
-  inherit (config.lib.users) ash;
-  inherit (config) share;
-in mkIf (ash.enable) {
+  inherit (config.meta) share;
+  cfg = config.meta.users.ash;
+in lib.mkIf cfg.enable {
   # Hacky workaround of issue 948 of home-manager
   systemd.services.home-manager-ash.preStart = ''
     ${pkgs.nix}/bin/nix-env -i -E
@@ -28,10 +27,18 @@ in mkIf (ash.enable) {
   # Home-manager settings. It would be much more powerful and specific than above.
   home-manager.users.ash = {
     # User-layer packages
-    home.packages = ash.packages;
+    home.packages = with pkgs;
+      [ hunspell hunspellDicts.en-us-large i3lock xss-lock xautolock ]
+      ++ cfg.extraPackages;
 
     # Fontconfig
     fonts.fontconfig.enable = true;
+
+    # Enable QT configuration to make it fits in
+    qt = {
+      enable = true;
+      platformTheme = "gnome";
+    };
 
     # Package settings
     programs = {
@@ -79,9 +86,10 @@ in mkIf (ash.enable) {
 
     # Handwritten configs
     home.file = {
-      ".config/gtk-3.0/settings.ini".source = ../dotfiles/gtk-settings.ini;
-      ".emacs.d/init.el".source = ../dotfiles/emacs.d/init.el;
-      ".emacs.d/elisp/".source = ../dotfiles/emacs.d/elisp;
+      ".config/gtk-3.0/settings.ini".source =
+        ../../dotfiles/ash/gtk-settings.ini;
+      ".emacs.d/init.el".source = ../../dotfiles/ash/emacs.d/init.el;
+      ".emacs.d/elisp/".source = ../../dotfiles/ash/emacs.d/elisp;
     };
 
     # Dconf settings

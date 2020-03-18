@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 
-let inherit (config.lib.system) ibus-engines;
+let cfg = config.meta.system;
 in {
   # Set your time zone.
   time.timeZone = "Asia/Shanghai";
@@ -14,7 +14,7 @@ in {
     defaultLocale = "en_US.UTF-8";
     inputMethod = {
       enabled = "ibus";
-      ibus.engines = ibus-engines;
+      ibus.engines = cfg.ibus-engines;
     };
   };
 }

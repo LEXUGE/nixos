@@ -1,11 +1,9 @@
 { config, pkgs, lib, ... }:
 
 let
-  inherit (lib) mkIf;
-  inherit (config.lib.users) ash;
-  inherit (config.lib) system;
-  inherit (config) share;
-in mkIf (ash.enable) {
+  inherit (config.meta) share system;
+  cfg = config.meta.users.ash;
+in lib.mkIf cfg.enable {
   home-manager.users.ash = {
     services.polybar = {
       # Polybar
@@ -121,7 +119,7 @@ in mkIf (ash.enable) {
 
         "module/wlan" = {
           type = "internal/network";
-          interface = "wlp0s20f3";
+          interface = cfg.network-interface;
 
           # Contents to show when network is connected
           label-connected = "%essid%+%downspeed%-%upspeed%";
@@ -137,8 +135,8 @@ in mkIf (ash.enable) {
           type = "internal/battery";
           full-at = 99;
           time-format = "%H:%M";
-          battery = share.battery;
-          adapter = share.power;
+          battery = cfg.battery;
+          adapter = cfg.power;
           label-charging = "%percentage%% (%time%)";
           label-discharging = "%percentage%% (%time%)";
         };
@@ -186,6 +184,7 @@ in mkIf (ash.enable) {
         };
       };
 
+      # Start up script for polybar
       script = ''
         polybar top &
         polybar bottom &
