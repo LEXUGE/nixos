@@ -34,12 +34,6 @@ in lib.mkIf cfg.enable {
     # Fontconfig
     fonts.fontconfig.enable = true;
 
-    # Enable QT configuration to make it fits in
-    qt = {
-      enable = true;
-      platformTheme = "gnome";
-    };
-
     # Package settings
     programs = {
       alacritty = {
