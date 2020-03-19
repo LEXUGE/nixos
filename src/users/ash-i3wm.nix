@@ -27,6 +27,60 @@ in lib.mkIf (cfg.enable) {
       '';
     };
 
+    services.dunst = {
+      enable = true;
+      iconTheme = {
+        package = pkgs.gnome3.adwaita-icon-theme;
+        name = "Adwaita";
+        size = "32x32";
+      };
+
+      settings = {
+        global = {
+          font = "Fira Code 10";
+          follow = "mouse";
+          frame_width = 3; # Frame around the notification window
+          frame_color = "#aaaaaa";
+          geometry =
+            "${toString (300 * share.scale)}x5-${toString (30 * share.scale)}-${
+              toString (50 * share.scale)
+            }";
+          format = "<b>%s</b>\\n%b";
+          icon_position = "left";
+          separator_height = (5 * share.scale);
+          mouse_left_click = "do_action";
+          mouse_middle_click = "close_all";
+          mouse_right_click = "close_current";
+          browser = "${pkgs.firefox}/bin/firefox -new-tab";
+        };
+
+        shortcuts = {
+          close = "mod1+grave"; # mod1 is alt
+          close_all = "mod4+grave"; # mod4 is super
+          history = "ctrl+grave"; # ` is grave
+        };
+
+        urgency_low = { # Dark
+          timeout = 3;
+          background = "#222222";
+          foreground = "#888888";
+        };
+
+        urgency_normal = { # Blue
+          timeout = 5;
+          background = "#285577";
+          foreground = "#ffffff";
+        };
+
+        urgency_critical = { # Red
+          background = "#900000";
+          foreground = "#ffffff";
+          frame_color = "#ff0000";
+          timeout = 0;
+        };
+      };
+    };
+
     services.screen-locker = {
       enable = true;
       lockCmd = lock;
