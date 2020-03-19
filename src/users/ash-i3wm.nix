@@ -104,6 +104,12 @@ in lib.mkIf (cfg.enable) {
             "${modifier}+l" = "focus up";
             "${modifier}+semicolon" = "focus right";
 
+            # Move windows around
+            "${modifier}+Shift+j" = "move left";
+            "${modifier}+Shift+k" = "move down";
+            "${modifier}+Shift+l" = "move up";
+            "${modifier}+Shift+semicolon" = "move right";
+
             # Cycle through the active workspaces
             "${modifier}+n" = "workspace prev";
             "${modifier}+p" = "workspace next";

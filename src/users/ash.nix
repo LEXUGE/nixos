@@ -76,7 +76,14 @@ in lib.mkIf cfg.enable {
       # zsh
       zsh = {
         enable = true;
-        envExtra = "export QT_SCALE_FACTOR=2";
+        # GDK_SCALE: Scale the whole UI for GTK applications
+        # GDK_DPI_SCALE: Scale the fonts back for GTK applications to avoid double scaling
+        # QT_SCALE_FACTOR: Scale the whole UI for QT applications
+        envExtra = ''
+          export GDK_SCALE=${toString share.scale}
+          export GDK_DPI_SCALE=${toString (1.0 / share.scale)}
+          export QT_SCALE_FACTOR=${toString share.scale}
+        '';
         oh-my-zsh = {
           enable = true;
           theme = "agnoster";
