@@ -42,6 +42,28 @@ in lib.mkIf (cfg.enable) {
         config = {
           terminal = "alacritty";
 
+          fonts = [ "Fira Code Regular 10" ];
+
+          colors.focused = {
+            background = "#3ec4d6";
+            border = "#3ec4d6";
+            childBorder = "#3ec4d6";
+            indicator =
+              "#34eb67"; # The side that the next window is gonna to open.
+            text = "#000000";
+          };
+
+          modes = {
+            resize = {
+              l = "resize grow height 2 px or 2 ppt";
+              k = "resize shrink height 2 px or 2 ppt";
+              semicolon = "resize grow width 2 px or 2 ppt";
+              j = "resize shrink width 2 px or 2 ppt";
+              Escape = "mode default";
+              Return = "mode default";
+            };
+          };
+
           gaps = {
             smartGaps = true;
             smartBorders = "on";
@@ -68,11 +90,13 @@ in lib.mkIf (cfg.enable) {
             "XF86MonBrightnessUp" = " exec --no-startup-id light -A 5";
             "XF86MonBrightnessDown" = "exec --no-startup-id light -U 5";
             "XF86AudioRaiseVolume" =
-              "exec --no-startup-id pactl set-sink-volume 0 +5%";
+              "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%";
             "XF86AudioLowerVolume" =
-              "exec --no-startup-id pactl set-sink-volume 0 -5%";
+              "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%";
             "XF86AudioMute" =
-              "exec --no-startup-id pactl set-sink-mute 0 toggle";
+              "exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle";
+            "XF86AudioMicMute" =
+              "exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle";
 
             # Shift focus
             "${modifier}+j" = "focus left";
@@ -80,7 +104,12 @@ in lib.mkIf (cfg.enable) {
             "${modifier}+l" = "focus up";
             "${modifier}+semicolon" = "focus right";
 
-            "${modifier}+n" = "exec --no-startup-id ${lock}";
+            # Cycle through the active workspaces
+            "${modifier}+n" = "workspace prev";
+            "${modifier}+p" = "workspace next";
+
+            # Screenlocker
+            "${modifier}+Control+n" = "exec --no-startup-id ${lock}";
 
             # Rofi run by zsh because we need environments
             "${modifier}+d" = ''
