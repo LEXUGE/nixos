@@ -52,12 +52,14 @@ in lib.mkIf (cfg.enable) {
           mouse_middle_click = "close_all";
           mouse_right_click = "close_current";
           browser = "${pkgs.firefox}/bin/firefox -new-tab";
+          dmenu = "${pkgs.dmenu}/bin/dmenu -p dunst:";
         };
 
         shortcuts = {
           close = "mod1+grave"; # mod1 is alt
           close_all = "mod4+grave"; # mod4 is super
           history = "ctrl+grave"; # ` is grave
+          context = "ctrl+period"; # . is period
         };
 
         urgency_low = { # Dark
@@ -171,9 +173,14 @@ in lib.mkIf (cfg.enable) {
             # Screenlocker
             "${modifier}+Control+n" = "exec --no-startup-id ${lock}";
 
+            # Turn on/off Do Not Disturb
+            "${modifier}+Control+m" = ''
+              exec --no-startup-id "notify-send \\"DUNST_COMMAND_TOGGLE\\""
+            '';
+
             # Rofi run by zsh because we need environments
             "${modifier}+d" = ''
-              exec "zsh -c 'rofi -combi-modi window,drun -show combi -modi combi'"'';
+              exec --no-startup-id "zsh -c 'rofi -combi-modi window,drun -show combi -modi combi'"'';
 
             # Screenshot
             "--release Shift+Print" =

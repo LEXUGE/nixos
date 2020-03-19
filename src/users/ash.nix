@@ -36,6 +36,8 @@ in lib.mkIf cfg.enable {
         xss-lock
         xautolock
         escrotum
+        dmenu
+        libnotify
       ] ++ cfg.extraPackages;
 
     # Fontconfig
