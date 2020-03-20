@@ -154,6 +154,9 @@ in lib.mkIf (cfg.enable) {
             "XF86AudioMicMute" =
               "exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle";
 
+            # Bring you home (toggle back to default)
+            "${modifier}+q" = "layout default";
+
             # Shift focus
             "${modifier}+j" = "focus left";
             "${modifier}+k" = "focus down";
