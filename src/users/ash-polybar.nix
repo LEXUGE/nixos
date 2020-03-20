@@ -19,8 +19,8 @@ in lib.mkIf cfg.enable {
         "colors" = {
           black = "#222";
           grey = "#444";
-          green = "#34eb67";
-          azure = "#3ec4d6";
+          green = "#2ff923";
+          azure = "#1febfd";
           red = "#bd2c40";
         };
 

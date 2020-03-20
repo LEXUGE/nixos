@@ -101,12 +101,12 @@ in lib.mkIf (cfg.enable) {
           fonts = [ "Fira Code Regular 10" ];
 
           colors.focused = {
-            background = "#3ec4d6";
-            border = "#3ec4d6";
-            childBorder = "#3ec4d6";
+            background = "#ff0000";
+            border = "#ff0000";
+            childBorder = "#ff0000";
             indicator =
-              "#34eb67"; # The side that the next window is gonna to open.
-            text = "#000000";
+              "#1febfd"; # The side that the next window is gonna to open.
+            text = "#ffffff";
           };
 
           modes = {
