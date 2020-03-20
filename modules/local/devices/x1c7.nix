@@ -13,7 +13,7 @@
     };
 
     bio-auth = mkOption {
-      type = types.nullOr (types.enum [ "howdy" "fprintd" ]);
+      type = with types; nullOr (enum [ "howdy" "fprintd" ]);
       default = null;
       example = "howdy";
       description = "Biometric authentication method.";

@@ -14,8 +14,8 @@ in lib.mkIf cfg.enable (lib.mkMerge [
     # Update Intel CPU Microcode
     hardware.cpu.intel.updateMicrocode = true;
 
-    # Enable Bluetuooth.
-    hardware.bluetooth.enable = true;
+    # Enable Bluetuooth by default
+    local.share.bluetooth.enable = lib.mkDefault true;
 
     # Enable TLP Power Management
     services.tlp = {

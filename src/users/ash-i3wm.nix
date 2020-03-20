@@ -9,6 +9,10 @@ let
   lock = "${pkgs.i3lock}/bin/i3lock -c 000000";
 in lib.mkIf (cfg.enable) {
   home-manager.users.ash = {
+    # Blueman
+    services.blueman-applet.enable = (lib.mkIf
+      (share.bluetooth.enable && (share.bluetooth.service == "blueman")) true);
+
     # Compton compositor
     services.compton = {
       enable = true;

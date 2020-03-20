@@ -86,6 +86,8 @@ in lib.mkIf cfg.enable {
           export GDK_DPI_SCALE=${toString (1.0 / share.scale)}
           export QT_SCALE_FACTOR=${toString share.scale}
         '';
+        # This would make C-p, C-n act exactly the same as what up/down arrows do.
+        defaultKeymap = "emacs";
         oh-my-zsh = {
           enable = true;
           theme = "agnoster";
