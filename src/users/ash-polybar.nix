@@ -50,7 +50,7 @@ in lib.mkIf cfg.enable {
 
           bottom = true;
 
-          modules-left = "pulseaudio power";
+          modules-left = "cpu filesystem pulseaudio power";
           tray-position = "right";
           # Number of spaces between modules
           module-margin = 2;
@@ -80,9 +80,8 @@ in lib.mkIf cfg.enable {
 
         "module/pulseaudio" = {
           type = "internal/pulseaudio";
-
           label-volume = "VOL %percentage%%";
-
+          label-volume-underline = "\${colors.green}";
           label-muted = "Muted";
         };
 
@@ -115,6 +114,19 @@ in lib.mkIf cfg.enable {
           label-urgent = "%index%";
           label-urgent-background = "\${colors.red}";
           label-urgent-padding = 2;
+        };
+
+        "module/cpu" = {
+          type = "internal/cpu";
+          format-underline = "\${colors.green}";
+          label = "CPU:%percentage%%";
+        };
+
+        "module/filesystem" = {
+          type = "internal/fs";
+          mount-0 = "/";
+          label-mounted = "%mountpoint%:%free%";
+          format-mounted-underline = "\${colors.green}";
         };
 
         "module/wlan" = {
