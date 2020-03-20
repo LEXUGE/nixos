@@ -101,12 +101,12 @@ in lib.mkIf (cfg.enable) {
           fonts = [ "Fira Code Regular 10" ];
 
           colors.focused = {
-            background = "#ff0000";
-            border = "#ff0000";
-            childBorder = "#ff0000";
+            background = "#1febfd"; # Azure
+            border = "#1febfd";
+            childBorder = "#1febfd";
             indicator =
-              "#1febfd"; # The side that the next window is gonna to open.
-            text = "#ffffff";
+              "#2ff923"; # The side that the next window is gonna to open.
+            text = "#000000"; # Dark
           };
 
           modes = {

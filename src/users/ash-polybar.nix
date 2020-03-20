@@ -21,7 +21,7 @@ in lib.mkIf cfg.enable {
           grey = "#444";
           green = "#2ff923";
           azure = "#1febfd";
-          red = "#bd2c40";
+          red = "#ff0000";
         };
 
         "bar/top" = {
