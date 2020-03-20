@@ -59,7 +59,7 @@ in lib.mkIf (cfg.enable) {
           close = "mod1+grave"; # mod1 is alt
           close_all = "mod4+grave"; # mod4 is super
           history = "ctrl+grave"; # ` is grave
-          context = "ctrl+period"; # . is period
+          context = "ctrl+mod4+period"; # . is period
         };
 
         urgency_low = { # Dark
