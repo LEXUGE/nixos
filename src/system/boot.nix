@@ -1,6 +1,9 @@
 { config, pkgs, ... }:
 
 {
+  # Enable plymouth for better experience of booting
+  boot.plymouth.enable = true;
+
   # Use Keyfile to unlock the root partition to avoid keying in twice.
   # Allow fstrim to work on it.
   boot.initrd.luks.devices."cryptroot" = {
