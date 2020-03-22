@@ -7,6 +7,9 @@ mkMerge [
     # Enable TRIM Service (May have security concern here)
     services.fstrim.enable = true;
 
+    # Enable GVFS, implementing "trash" and so on.
+    services.gvfs.enable = true;
+
     # Enable GNU Agent in order to make GnuPG works.
     programs.gnupg.agent.enable = true;
 
