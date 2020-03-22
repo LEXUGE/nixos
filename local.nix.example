@@ -5,6 +5,7 @@
     users = {
       ash = {
         enable = true;
+        # Change the following!
         battery = "BAT0";
         power = "AC";
         network-interface = "wlp0s20f3";
@@ -47,6 +48,15 @@
       };
       # Choose ibus engines to apply
       ibus-engines = with pkgs.ibus-engines; [ libpinyin ];
+    };
+
+    share = {
+      bluetooth = {
+        # Force enable/disable bluetooth
+        # enable = true;
+        # Choose default bluetooth service
+        service = "blueman";
+      };
     };
   };
 }
