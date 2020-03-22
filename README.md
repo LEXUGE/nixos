@@ -3,8 +3,9 @@
 A fully automated replicable nixos configuration set. Tested on Virtualbox and ThinkPad X1 Carbon 7th Gen. It should be working on any x86 machine.
 
 # What does it do?
+** FOLLOWING MAY BE OUTDATED, I WOULD UPDATE IT SOON**
 It features:
-- GNOME 3 with builtin dark variant.
+- GTK with builtin dark variant.
 - Full-disk encryption including `/boot`.
 - Working Howdy (Windows Hello like login service) on X1 Carbon 7th Gen
 - Transparent proxy backended by `shadowsocks-libev + simple-obfs` (I
