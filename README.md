@@ -3,7 +3,7 @@
 A fully automated replicable nixos configuration set. Tested on Virtualbox and ThinkPad X1 Carbon 7th Gen. It should be working on any x86 machine.
 
 # What does it do?
-** FOLLOWING MAY BE OUTDATED, I WOULD UPDATE IT SOON**
+**FOLLOWING MAY BE OUTDATED, I WOULD UPDATE IT SOON**
 It features:
 - GTK with builtin dark variant.
 - Full-disk encryption including `/boot`.
