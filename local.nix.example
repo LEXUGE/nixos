@@ -5,7 +5,7 @@
     users = {
       ash = {
         enable = true;
-        # Change the following!
+        # Adapt followings to what your device profile supplied
         battery = "BAT0";
         power = "AC";
         network-interface = "wlp0s20f3";
@@ -21,6 +21,7 @@
           # texlive.combined.scheme-full
           steam
           evince
+          gnome3.nautilus
         ];
       };
     };

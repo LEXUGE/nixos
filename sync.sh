@@ -27,6 +27,9 @@ echo -n "Adding to git..."
 git add --all
 echo "Done."
 
+git status
+read -n 1 -s -r -p "Press any key to continue"
+
 echo "Commiting..."
 echo "Enter commit message: "
 read -r commitMessage
