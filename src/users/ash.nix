@@ -38,6 +38,8 @@ in lib.mkIf cfg.enable {
         escrotum
         dmenu
         libnotify
+        gnome3.file-roller
+        gnome3.nautilus
       ] ++ cfg.extraPackages;
 
     # Fontconfig

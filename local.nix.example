@@ -21,7 +21,6 @@
           # texlive.combined.scheme-full
           steam
           evince
-          gnome3.nautilus
         ];
       };
     };
