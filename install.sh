@@ -87,8 +87,8 @@ nixos_install() {
 	nixos-generate-config --root /mnt
 	nixos-install --option substituters "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store https://cache.nixos.org/"
 
-	nixos-enter -- chmod 600 ${MOUNTPOINT}/keyfile.bin
-	nixos-enter -- chmod 600 ${MOUNTPOINT}/boot/initrd.keys.gz
+	nixos-enter -- chmod 600 /keyfile.bin
+	nixos-enter -- chmod 600 /boot/initrd.keys.gz
 
 	reboot
 }
