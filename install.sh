@@ -65,8 +65,6 @@ create_keyfile() {
 	echo ${MOUNTPOINT}/keyfile.bin | cpio -o -H newc -R +0:+0 --reproducible | gzip -9 >${MOUNTPOINT}/boot/initrd.keys.gz
 	echo "Add key to root partition"
 	cryptsetup luksAddKey "${ROOT_PARTITION}" ${MOUNTPOINT}/keyfile.bin
-	chmod 600 ${MOUNTPOINT}/keyfile.bin
-	chmod 600 ${MOUNTPOINT}/boot/initrd.keys.gz
 }
 
 # NIXOS_INSTALL
@@ -82,12 +80,15 @@ nixos_install() {
 	# Create new options.nix and open it to let user customize.
 	echo "Generate and open build options for configuration..."
 	read -n 1 -s -r -p "Press any key to continue"
-	cp /mnt/etc/nixos/local.nix.example /mnt/etc/nixos/local.nix
-	nano /mnt/etc/nixos/local.nix
+	cp ${MOUNTPOINT}/etc/nixos/local.nix.example ${MOUNTPOINT}/etc/nixos/local.nix
+	nano ${MOUNTPOINT}/etc/nixos/local.nix
 
 	# Install NixOS using TUNA binary cache with fallback
 	nixos-generate-config --root /mnt
 	nixos-install --option substituters "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store https://cache.nixos.org/"
+
+	nixos-enter -- chmod 600 ${MOUNTPOINT}/keyfile.bin
+	nixos-enter -- chmod 600 ${MOUNTPOINT}/boot/initrd.keys.gz
 
 	reboot
 }
