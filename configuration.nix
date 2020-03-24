@@ -14,7 +14,7 @@ let
   home-manager = builtins.fetchTarball
     "https://github.com/rycee/home-manager/archive/master.tar.gz";
 
-  cfg = config.local.system;
+  inherit (config.local) system share;
 in {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -34,16 +34,22 @@ in {
   nixpkgs.overlays = [ (import ./overlays/packages.nix) ];
 
   # Customized binary caches list (with fallback to official binary cache)
-  nix.binaryCaches = cfg.binaryCaches;
+  nix.binaryCaches = system.binaryCaches;
 
   # Use the latest linux kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  # Add swap file (8GB)
+  # Add swap file
   swapDevices = [{
     device = "/var/swapFile";
-    size = 8192;
+    size = (share.ramSize * 2);
   }];
+  boot.resumeDevice = "/dev/mapper/cryptroot";
+  # If there is no swapResumeOffset defined, then we simply skip it.
+  boot.kernelParams = [
+    (lib.mkIf (share.swapResumeOffset != null)
+      "resume_offset=${toString share.swapResumeOffset}")
+  ];
 
   # Support NTFS
   boot.supportedFilesystems = [ "ntfs" ];

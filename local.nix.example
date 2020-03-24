@@ -58,6 +58,10 @@
         dotfiles = ./dotfiles;
       };
 
+      # resume_offset value. Obtained by <literal>filefrag -v /swapfile | awk '{ if($1=="0:"){print $4} }'</literal>
+      # If you want to hibernate, you MUST set it properly.
+      # swapResumeOffset = <some integer here>;
+
       bluetooth = {
         # Force enable/disable bluetooth
         # enable = true;

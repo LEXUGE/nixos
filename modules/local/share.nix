@@ -31,7 +31,6 @@ in {
     battery = mkOption {
       type = with types; listOf str;
       visible = false;
-      default = [ "BAT0" ];
       description =
         "All the battery filenames under <literal>/sys/class/power_supply/</literal>.";
     };
@@ -39,7 +38,6 @@ in {
     power = mkOption {
       type = with types; listOf str;
       visible = false;
-      default = [ "AC" ];
       description =
         "All the AC Power filenames under <literal>/sys/class/power_supply/</literal>.";
     };
@@ -47,8 +45,20 @@ in {
     network-interface = mkOption {
       type = with types; listOf str;
       visible = false;
-      default = [ "wlan0" ];
       description = "All the network interface name.";
+    };
+
+    ramSize = mkOption {
+      type = types.int;
+      visible = false;
+      description = "RAM size in KB (under 1 GB = 1024 KB scale)";
+    };
+
+    swapResumeOffset = mkOption {
+      type = with types; nullOr int;
+      default = null;
+      description = ''
+        resume_offset value. Obtained by <literal>filefrag -v /swapfile | awk '{ if($1=="0:"){print $4} }'</literal>'';
     };
 
     bluetooth.enable = mkOption {

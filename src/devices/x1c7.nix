@@ -7,9 +7,17 @@ in lib.mkIf cfg.enable (lib.mkMerge [
     # Activate acpi_call module for TLP ThinkPad features
     boot.extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
 
+    # Set hardware related attributes
+    local.share.ramSize = 16384;
+    local.share.battery = [ "BAT0" ];
+    local.share.power = [ "AC" ];
+
     # Set DPi to 200% scale
     local.share.scale = 2;
     local.share.network-interface = [ "wlp0s20f3" ];
+
+    # Enable UPower to take action under critical situations.
+    services.upower.enable = true;
 
     # Update Intel CPU Microcode
     hardware.cpu.intel.updateMicrocode = true;
