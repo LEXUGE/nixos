@@ -62,11 +62,9 @@ mount_partition() {
 #CREATE_KEYFILE
 create_keyfile() {
 	dd bs=512 count=4 if=/dev/random of=${MOUNTPOINT}/keyfile.bin iflag=fullblock
-	echo ${MOUNTPOINT}/keyfile.bin | cpio -o -H newc -R +0:+0 --reproducible | gzip -9 >${MOUNTPOINT}/boot/initrd.keys.gz
 	echo "Add key to root partition"
 	cryptsetup luksAddKey "${ROOT_PARTITION}" ${MOUNTPOINT}/keyfile.bin
 	chmod 600 ${MOUNTPOINT}/keyfile.bin
-	chmod 600 ${MOUNTPOINT}/boot/initrd.keys.gz
 }
 
 # NIXOS_INSTALL

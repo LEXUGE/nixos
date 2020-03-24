@@ -6,10 +6,13 @@
 
   # Use Keyfile to unlock the root partition to avoid keying in twice.
   # Allow fstrim to work on it.
-  boot.initrd.luks.devices."cryptroot" = {
-    keyFile = "/keyfile.bin";
-    allowDiscards = true;
-    fallbackToPassword = true;
+  boot.initrd = {
+    secrets = { "/keyfile.bin" = /keyfile.bin; };
+    luks.devices."cryptroot" = {
+      keyFile = "/keyfile.bin";
+      allowDiscards = true;
+      fallbackToPassword = true;
+    };
   };
 
   # Use GRUB with encrypted /boot under EFI env.
@@ -24,7 +27,6 @@
       device = "nodev";
       efiSupport = true;
       enableCryptodisk = true;
-      extraInitrd = "/boot/initrd.keys.gz"; # Add LUKS key to the initrd
     };
   };
 }
