@@ -9,6 +9,7 @@
   boot.initrd.luks.devices."cryptroot" = {
     keyFile = "/keyfile.bin";
     allowDiscards = true;
+    fallbackToPassword = true;
   };
 
   # Use GRUB with encrypted /boot under EFI env.
