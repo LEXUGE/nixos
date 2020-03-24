@@ -18,7 +18,7 @@
           tdesktop
           minecraft
           virtmanager
-          # texlive.combined.scheme-full
+          texlive.combined.scheme-full
           steam
           evince
         ];
@@ -51,6 +51,13 @@
     };
 
     share = {
+      # Path to directories (use relative paths to avoid trouble in nixos-install.)
+      # If you don't understand, just keep it as it is.
+      dirs = {
+        secrets = ./secrets; # Did you read the comments above?
+        dotfiles = ./dotfiles;
+      };
+
       bluetooth = {
         # Force enable/disable bluetooth
         # enable = true;

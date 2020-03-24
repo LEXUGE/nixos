@@ -23,7 +23,7 @@ let
   '';
 
   ss = shadowsocks-libev;
-  configPath = toString "/etc/nixos/secrets/shadowsocks.json";
+  configPath = toString (config.local.share.dirs.secrets + /shadowsocks.json);
   tag = "SS_SPEC_ASH";
   doNotRedirect = concatMapStringsSep "\n"
     (f: "ip46tables -t nat -A ${tag} ${f} -j RETURN 2>/dev/null || true") [

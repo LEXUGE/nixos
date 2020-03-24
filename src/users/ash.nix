@@ -101,9 +101,9 @@ in lib.mkIf cfg.enable {
     # Handwritten configs
     home.file = {
       ".config/gtk-3.0/settings.ini".source =
-        ../../dotfiles/ash/gtk-settings.ini;
-      ".emacs.d/init.el".source = ../../dotfiles/ash/emacs.d/init.el;
-      ".emacs.d/elisp/".source = ../../dotfiles/ash/emacs.d/elisp;
+        (share.dirs.dotfiles + /ash/gtk-settings.ini);
+      ".emacs.d/init.el".source = (share.dirs.dotfiles + /ash/emacs.d/init.el);
+      ".emacs.d/elisp/".source = (share.dirs.dotfiles + /ash/emacs.d/elisp);
     };
 
     # Dconf settings

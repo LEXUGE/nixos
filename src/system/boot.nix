@@ -1,13 +1,14 @@
 { config, pkgs, ... }:
 
-{
+let inherit (config.local) share;
+in {
   # Enable plymouth for better experience of booting
   boot.plymouth.enable = true;
 
   # Use Keyfile to unlock the root partition to avoid keying in twice.
   # Allow fstrim to work on it.
   boot.initrd = {
-    secrets = { "/keyfile.bin" = ../../secrets/keyfile.bin; };
+    secrets = { "/keyfile.bin" = (share.dirs.secrets + /keyfile.bin); };
     luks.devices."cryptroot" = {
       keyFile = "/keyfile.bin";
       allowDiscards = true;
