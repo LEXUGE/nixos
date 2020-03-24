@@ -3,10 +3,11 @@
 A fully automated replicable nixos configuration set. Tested on Virtualbox and ThinkPad X1 Carbon 7th Gen. It should be working on any x86 machine.
 
 # What does it do?
-**FOLLOWING MAY BE OUTDATED, I WOULD UPDATE IT SOON**
 It features:
+- typed configuration options for this configuration. (You could tune a little for this configuration set).
+- A light saber colored i3 + polybar workflow.
 - GTK with builtin dark variant.
-- Full-disk encryption including `/boot`.
+- Full-disk encryption including `/boot`. Support hibernate.
 - Working Howdy (Windows Hello like login service) on X1 Carbon 7th Gen
 - Transparent proxy backended by `shadowsocks-libev + simple-obfs` (I
   packaged simple-obfs myself). This feature is **extremely** useful if you are
@@ -28,6 +29,8 @@ curl -Ls https://github.com/LEXUGE/nixos/raw/master/install.sh | bash
 Follow the instructions and there you go.
 
 If you want to use `shadowsocks`, please create `secrets/shadowsocks.json`.
+
+If you want hibernate to work, please follow the instructions under `share.swapResumeOffset` in `local.nix`.
 
 ## Note
 If you are not on a NVMe SSD, please edit the script to fit `"${device}p2"` into `"${device}2"` (so does `"${device}p1"`).
