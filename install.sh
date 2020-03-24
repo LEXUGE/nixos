@@ -61,10 +61,10 @@ mount_partition() {
 
 #CREATE_KEYFILE
 create_keyfile() {
-	dd bs=512 count=4 if=/dev/random of=${MOUNTPOINT}/keyfile.bin iflag=fullblock
+	dd bs=512 count=4 if=/dev/random of=${MOUNTPOINT}/etc/nixos/secrets/keyfile.bin iflag=fullblock
 	echo "Add key to root partition"
-	cryptsetup luksAddKey "${ROOT_PARTITION}" ${MOUNTPOINT}/keyfile.bin
-	chmod 600 ${MOUNTPOINT}/keyfile.bin
+	cryptsetup luksAddKey "${ROOT_PARTITION}" ${MOUNTPOINT}/etc/nixos/secrets/keyfile.bin
+	chmod 600 ${MOUNTPOINT}/etc/nixos/secrets/keyfile.bin
 }
 
 # NIXOS_INSTALL
@@ -74,8 +74,10 @@ nixos_install() {
 
 	# Install git by using TUNA binary cache with fallback
 	nix-env -iA nixos.gitMinimal --option substituters "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store https://cache.nixos.org/"
-	git clone https://github.com/LEXUGE/nixos /mnt/etc/nixos/
-	rm -rf /mnt/etc/nixos/.git/
+	git clone https://github.com/LEXUGE/nixos ${MOUNTPOINT}/etc/nixos/
+	# rm -rf ${MOUNTPOINT}/etc/nixos/.git/
+
+	create_keyfile
 
 	# Create new options.nix and open it to let user customize.
 	echo "Generate and open build options for configuration..."
@@ -95,5 +97,4 @@ select_device
 create_partition
 format_partition
 mount_partition
-create_keyfile
 nixos_install
