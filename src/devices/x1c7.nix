@@ -1,7 +1,9 @@
 # Device specific configuration for ThinkPad X1 Carbon 7th Gen (20R1)
 { config, pkgs, lib, ... }:
 
-let cfg = config.local.devices.x1c7;
+let
+  cfg = config.local.devices.x1c7;
+  inherit (config.local) share;
 in lib.mkIf cfg.enable (lib.mkMerge [
   ({
     # Activate acpi_call module for TLP ThinkPad features
@@ -16,8 +18,8 @@ in lib.mkIf cfg.enable (lib.mkMerge [
     local.share.scale = 2;
     local.share.network-interface = [ "wlp0s20f3" ];
 
-    # Enable UPower to take action under critical situations.
-    services.upower.enable = true;
+    # Enable UPower to take action under critical situations. Only when hibernation is possible.
+    services.upower.enable = lib.mkIf (share.swapResumeOffset != null) true;
 
     # Update Intel CPU Microcode
     hardware.cpu.intel.updateMicrocode = true;

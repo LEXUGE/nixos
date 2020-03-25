@@ -153,57 +153,65 @@ in lib.mkIf cfg.enable {
           label-discharging = "%percentage%% (%time%)";
         };
 
-        "module/power" = {
-          type = "custom/menu";
-          expand-right = true;
-          format-spacing = 1;
-          label-separator = "|";
-          label-open = "Power";
-          label-open-underline = "\${colors.red}";
-          label-close = "Cancel";
-          label-close-underline = "\${colors.green}";
+        # Absolute path for systemctl is required because polybar uses `/bin/sh`.
+        "module/power" = with lib;
+          mkMerge [
+            {
+              type = "custom/menu";
+              expand-right = true;
+              format-spacing = 1;
+              label-separator = "|";
+              label-open = "Power";
+              label-open-underline = "\${colors.red}";
+              label-close = "Cancel";
+              label-close-underline = "\${colors.green}";
 
-          menu-0-0 = "Reboot";
-          menu-0-0-exec = "menu-open-1";
-          menu-0-0-underline = "\${colors.red}";
-          menu-0-1 = "Power off";
-          menu-0-1-exec = "menu-open-2";
-          menu-0-1-underline = "\${colors.red}";
-          menu-0-2 = "Hibernate";
-          menu-0-2-exec = "menu-open-3";
-          menu-0-2-underline = "\${colors.red}";
-          menu-0-3 = "Exit i3";
-          menu-0-3-exec = "menu-open-4";
-          menu-0-3-underline = "\${colors.red}";
+              menu-0-0 = "Reboot";
+              menu-0-0-exec = "menu-open-1";
+              menu-0-0-underline = "\${colors.red}";
+              menu-0-1 = "Power off";
+              menu-0-1-exec = "menu-open-2";
+              menu-0-1-underline = "\${colors.red}";
+              menu-0-2 = "Exit i3";
+              menu-0-2-exec = "menu-open-3";
+              menu-0-2-underline = "\${colors.red}";
 
-          menu-1-0 = "Back";
-          menu-1-0-exec = "menu-open-0";
-          menu-1-0-underline = "\${colors.green}";
-          menu-1-1 = "Reboot";
-          menu-1-1-underline = "\${colors.red}";
-          menu-1-1-exec = "${pkgs.systemd}/bin/systemctl reboot";
+              menu-1-0 = "Back";
+              menu-1-0-exec = "menu-open-0";
+              menu-1-0-underline = "\${colors.green}";
+              menu-1-1 = "Reboot";
+              menu-1-1-underline = "\${colors.red}";
+              menu-1-1-exec = "${pkgs.systemd}/bin/systemctl reboot";
 
-          menu-2-0 = "Back";
-          menu-2-0-exec = "menu-open-0";
-          menu-2-0-underline = "\${colors.green}";
-          menu-2-1 = "Power off";
-          menu-2-1-underline = "\${colors.red}";
-          menu-2-1-exec = "${pkgs.systemd}/bin/systemctl poweroff";
+              menu-2-0 = "Back";
+              menu-2-0-exec = "menu-open-0";
+              menu-2-0-underline = "\${colors.green}";
+              menu-2-1 = "Power off";
+              menu-2-1-underline = "\${colors.red}";
+              menu-2-1-exec = "${pkgs.systemd}/bin/systemctl poweroff";
 
-          menu-3-0 = "Back";
-          menu-3-0-exec = "menu-open-0";
-          menu-3-0-underline = "\${colors.green}";
-          menu-3-1 = "Hibernate";
-          menu-3-1-underline = "\${colors.red}";
-          menu-3-1-exec = "${pkgs.systemd}/bin/systemctl hibernate";
+              menu-3-0 = "Back";
+              menu-3-0-exec = "menu-open-0";
+              menu-3-0-underline = "\${colors.green}";
+              menu-3-1 = "Exit i3";
+              menu-3-1-underline = "\${colors.red}";
+              menu-3-1-exec = "i3-msg exit";
+            }
 
-          menu-4-0 = "Back";
-          menu-4-0-exec = "menu-open-0";
-          menu-4-0-underline = "\${colors.green}";
-          menu-4-1 = "Exit i3";
-          menu-4-1-underline = "\${colors.red}";
-          menu-4-1-exec = "i3-msg exit";
-        };
+            # If hibernation is supported, add a new menu that hibernates the machine.
+            (mkIf (share.swapResumeOffset != null) {
+              menu-0-3 = "Hibernate";
+              menu-0-3-exec = "menu-open-4";
+              menu-0-3-underline = "\${colors.red}";
+
+              menu-4-0 = "Back";
+              menu-4-0-exec = "menu-open-0";
+              menu-4-0-underline = "\${colors.green}";
+              menu-4-1 = "Hibernate";
+              menu-4-1-underline = "\${colors.red}";
+              menu-4-1-exec = "${pkgs.systemd}/bin/systemctl hibernate";
+            })
+          ];
       };
 
       # Start up script for polybar
