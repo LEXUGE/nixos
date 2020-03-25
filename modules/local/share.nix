@@ -31,7 +31,6 @@ in {
     battery = mkOption {
       type = with types; listOf str;
       visible = false;
-      readOnly = true;
       description =
         "All the battery filenames under <literal>/sys/class/power_supply/</literal>.";
     };
@@ -39,7 +38,6 @@ in {
     power = mkOption {
       type = with types; listOf str;
       visible = false;
-      readOnly = true;
       description =
         "All the AC Power filenames under <literal>/sys/class/power_supply/</literal>.";
     };
@@ -47,7 +45,6 @@ in {
     network-interface = mkOption {
       type = with types; listOf str;
       visible = false;
-      readOnly = true;
       description = "All the network interface name.";
     };
 
