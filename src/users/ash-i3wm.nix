@@ -13,11 +13,11 @@ in lib.mkIf (cfg.enable) {
     services.blueman-applet.enable = (lib.mkIf
       (share.bluetooth.enable && (share.bluetooth.service == "blueman")) true);
 
-    # Compton compositor
-    services.compton = {
+    # Picom (Compton) compositor
+    services.picom = {
       enable = true;
       # vertical sync to avoid screen tearing
-      vSync = "opengl-swc";
+      vSync = true;
     };
 
     # Rofi

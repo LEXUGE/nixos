@@ -44,12 +44,6 @@ in {
     device = "/var/swapFile";
     size = (share.ramSize * 2);
   }];
-  boot.resumeDevice = "/dev/mapper/cryptroot";
-  # If there is no swapResumeOffset defined, then we simply skip it.
-  boot.kernelParams = [
-    (lib.mkIf (share.swapResumeOffset != null)
-      "resume_offset=${toString share.swapResumeOffset}")
-  ];
 
   # Support NTFS
   boot.supportedFilesystems = [ "ntfs" ];
