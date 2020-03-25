@@ -18,9 +18,6 @@ in lib.mkIf cfg.enable (lib.mkMerge [
     local.share.scale = 2;
     local.share.network-interface = [ "wlp0s20f3" ];
 
-    # Enable UPower to take action under critical situations. Only when hibernation is possible.
-    services.upower.enable = lib.mkIf (share.swapResumeOffset != null) true;
-
     # Update Intel CPU Microcode
     hardware.cpu.intel.updateMicrocode = true;
 
@@ -53,5 +50,14 @@ in lib.mkIf cfg.enable (lib.mkMerge [
   (lib.mkIf (cfg.enable == "fprintd") {
     # Enable fprintd
     services.fprintd.enable = true;
+  })
+
+  (lib.mkIf (share.swapResumeOffset != null) {
+    # Enable UPower to take action under critical situations. Only when hibernation is possible.
+    services.upower = {
+      enable = true;
+      percentageCritical = 5;
+      percentageAction = 3;
+    };
   })
 ])
