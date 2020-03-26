@@ -21,6 +21,8 @@
           texlive.combined.scheme-full
           steam
           evince
+          etcher
+          vlc
         ];
       };
     };

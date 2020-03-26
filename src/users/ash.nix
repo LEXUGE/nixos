@@ -82,11 +82,11 @@ in lib.mkIf cfg.enable {
         enable = true;
         # GDK_SCALE: Scale the whole UI for GTK applications
         # GDK_DPI_SCALE: Scale the fonts back for GTK applications to avoid double scaling
-        # QT_SCALE_FACTOR: Scale the whole UI for QT applications
+        # QT_AUTO_SCREEN_SCALE_FACTOR: Let QT auto detect the DPi
         envExtra = ''
           export GDK_SCALE=${toString share.scale}
           export GDK_DPI_SCALE=${toString (1.0 / share.scale)}
-          export QT_SCALE_FACTOR=${toString share.scale}
+          export QT_AUTO_SCREEN_SCALE_FACTOR=1
         '';
         # This would make C-p, C-n act exactly the same as what up/down arrows do.
         defaultKeymap = "emacs";
