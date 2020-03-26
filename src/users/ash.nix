@@ -40,6 +40,7 @@ in lib.mkIf cfg.enable {
         libnotify
         gnome3.file-roller
         gnome3.nautilus
+        gnome3.eog
       ] ++ cfg.extraPackages;
 
     # Fontconfig
