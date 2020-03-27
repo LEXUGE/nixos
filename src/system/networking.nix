@@ -23,4 +23,6 @@ in {
       speed-check-mode = "ping,tcp:80";
     };
   };
+  # Use local SmartDNS all the time
+  networking.resolvconf.useLocalResolver = true;
 }
