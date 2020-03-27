@@ -7,8 +7,12 @@ in {
   # Allow Spotify Local discovery
   networking.firewall.allowedTCPPorts = [ 57621 ];
 
-  # Enable networkmanager. REMEMBER to add yourself to group in order to use nm related stuff.
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    # Enable networkmanager. REMEMBER to add yourself to group in order to use nm related stuff.
+    enable = true;
+    # Don't use DNS advertised by connected network. Use local configuration
+    dns = "none";
+  };
 
   # Smartdns
   services.smartdns = {
