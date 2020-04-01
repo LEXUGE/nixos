@@ -14,6 +14,9 @@ let
   home-manager = builtins.fetchTarball
     "https://github.com/rycee/home-manager/archive/master.tar.gz";
 
+  moz_overlay = import (builtins.fetchTarball
+    "https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz");
+
   inherit (config.local) system share;
 in {
   imports = [ # Include the results of the hardware scan.
@@ -31,7 +34,7 @@ in {
   ]);
 
   # Customized overlays
-  nixpkgs.overlays = [ (import ./overlays/packages.nix) ];
+  nixpkgs.overlays = [ (import ./overlays/packages.nix) moz_overlay ];
 
   # Customized binary caches list (with fallback to official binary cache)
   nix.binaryCaches = system.binaryCaches;
