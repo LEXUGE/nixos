@@ -176,6 +176,8 @@ in lib.mkIf (cfg.enable) {
             # Cycle through the active workspaces
             "${modifier}+n" = "workspace prev";
             "${modifier}+p" = "workspace next";
+            "${modifier}+Tab" =
+              "workspace back_and_forth"; # Switch back to previously focused workspace
 
             # Screenlocker
             "${modifier}+Control+n" = "exec --no-startup-id ${lock}";

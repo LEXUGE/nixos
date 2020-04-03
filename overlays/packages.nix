@@ -8,11 +8,11 @@ self: super: {
   ir_toggle = (super.callPackage ../packages/ir_toggle.nix { });
   simple-obfs = (super.callPackage ../packages/simple-obfs.nix { });
   tdesktop = super.tdesktop.overrideAttrs (oldAttrs: rec {
-    version = "2.0.0";
+    version = "2.0.1";
     src = super.fetchurl {
       url =
         "https://github.com/telegramdesktop/tdesktop/releases/download/v${version}/tdesktop-${version}-full.tar.gz";
-      sha256 = "1ayyrb1z1hbmglshc4qif2zs2vysfj9c97wxkk00ll9d79w50hqx";
+      sha256 = "0g3jw4can9gmp48s3b8s1w8n9xi54i142y74fszxf9jyq5drzlff";
     };
   });
 }

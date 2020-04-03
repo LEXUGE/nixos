@@ -23,6 +23,8 @@
           evince
           etcher
           vlc
+          calibre
+          latest.rustChannels.stable.rust
         ];
       };
     };
@@ -62,7 +64,7 @@
 
       # resume_offset value. Obtained by <literal>filefrag -v /swapfile | awk '{ if($1=="0:"){print $4} }'</literal>
       # If you want to hibernate, you MUST set it properly.
-      # swapResumeOffset = <some integer here>;
+      # swapResumeOffset = 36864;
 
       bluetooth = {
         # Force enable/disable bluetooth
