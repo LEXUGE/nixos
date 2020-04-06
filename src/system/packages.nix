@@ -9,8 +9,6 @@
     nixfmt
     git
     gnupg
-    shadowsocks-libev
-    simple-obfs
     clash
     neofetch
     bind
