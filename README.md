@@ -25,7 +25,7 @@ curl -Ls https://github.com/LEXUGE/nixos/raw/master/install.sh | bash
 
 Follow the instructions and there you go.
 
-If you want to use `shadowsocks`, please create `secrets/clash.yaml` (You could follow the `secrets/clash.yaml.example` as a guideline).
+If you want to use `clash`, please create `secrets/clash.yaml` (You could follow the `secrets/clash.yaml.example` as a guideline).
 
 If you want hibernate to work, please follow the instructions under `share.swapResumeOffset` in `local.nix`.
 
