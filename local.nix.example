@@ -44,11 +44,8 @@
       binaryCaches =
         [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
       proxy = {
-        user =
-          "ash"; # The user who would run the transparent proxy systemd service
-        address = "127.0.0.1";
-        localPort = 1080;
-        redirPort = 1081;
+        redirPort =
+          7892; # This must be the same with the one in your clash.yaml
       };
       # Choose ibus engines to apply
       ibus-engines = with pkgs.ibus-engines; [ libpinyin ];

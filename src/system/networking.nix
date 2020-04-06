@@ -17,7 +17,7 @@ in {
   # Smartdns
   services.smartdns = {
     # Enable smartdns
-    enable = true;
+    enable = false;
     # Settings
     settings = {
       cache-size = 8192;

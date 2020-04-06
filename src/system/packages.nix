@@ -11,6 +11,7 @@
     gnupg
     shadowsocks-libev
     simple-obfs
+    clash
     neofetch
     bind
     usbutils

@@ -7,6 +7,8 @@ self: super: {
   pam_python = (super.callPackage ../packages/pam_python.nix { });
   ir_toggle = (super.callPackage ../packages/ir_toggle.nix { });
   simple-obfs = (super.callPackage ../packages/simple-obfs.nix { });
+  clash = (super.callPackage ../packages/clash.nix { });
+
   tdesktop = super.tdesktop.overrideAttrs (oldAttrs: rec {
     version = "2.0.1";
     src = super.fetchurl {
