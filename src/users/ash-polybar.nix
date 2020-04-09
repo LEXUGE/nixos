@@ -95,7 +95,7 @@ in lib.mkIf cfg.enable {
           # pin-workspaces = true
 
           # focused = Active workspace on focused monitor
-          label-focused = "%index%";
+          label-focused = "%name%";
           label-focused-background = "\${colors.grey}";
           label-focused-underline = "\${colors.azure}";
           label-focused-padding = 2;

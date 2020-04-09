@@ -20,10 +20,10 @@
           virtmanager
           texlive.combined.scheme-full
           steam
-          evince
           etcher
           vlc
           calibre
+          tor-browser-bundle-bin
           latest.rustChannels.stable.rust
         ];
       };

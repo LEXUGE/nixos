@@ -41,10 +41,19 @@ in lib.mkIf cfg.enable {
         gnome3.file-roller
         gnome3.nautilus
         gnome3.eog
+        evince
       ] ++ cfg.extraPackages;
 
     # Fontconfig
     fonts.fontconfig.enable = true;
+
+    xdg.mimeApps = {
+      enable = true;
+      defaultApplications = {
+        "image/jpeg" = "eog.desktop"; # `.jpg`
+        "application/pdf" = "org.gnome.Evince.desktop"; # `.pdf`
+      };
+    };
 
     # Package settings
     programs = {

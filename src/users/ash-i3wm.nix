@@ -4,6 +4,8 @@
 
 let
   inherit (config.local) share system;
+  inherit (lib.attrsets) mapAttrsToList;
+  inherit (lib.lists) flatten;
 
   cfg = config.local.users.ash;
   lock = "${pkgs.i3lock}/bin/i3lock -c 000000";
@@ -97,7 +99,16 @@ in lib.mkIf (cfg.enable) {
       enable = true;
 
       # Enable i3
-      windowManager.i3 = {
+      windowManager.i3 = let
+        ws-names = {
+          web = "number 1"; # Workspace 1 dedicated for web browsing
+          chat = "number 2"; # Workspace 2 dedicated for chat
+          editing =
+            "number 3"; # Workspace 3 dedicated for editing and programming
+          gaming = "number 9";
+          zoom = "number 10";
+        };
+      in {
         enable = true;
         config = {
           terminal = "alacritty";
@@ -131,13 +142,44 @@ in lib.mkIf (cfg.enable) {
             outer = 5;
           };
 
-          bars = [ ];
+          bars = [ ]; # We don't need i3bars
 
           startup = [{
             command = "systemctl --user restart polybar";
             always = true;
             notification = false;
           }];
+
+          # Set up app specific workspaces and floating rules.
+          window.commands = with ws-names;
+            let
+              # Meta function that could accept { foo = ["bar" "bar1"]; foo1 = ["bar2"] };
+              makeScheme = makeItem: scheme:
+                flatten (mapAttrsToList
+                  (ws: classes: (map (class: makeItem ws class) classes))
+                  scheme);
+
+              moveToWorkspaceByClass = makeScheme (ws: class: {
+                command = "move workspace ${ws}";
+                criteria = { class = class; };
+              });
+
+              makeWindowFloating = makeScheme (key: value: {
+                command = "floating enable";
+                criteria = { ${key} = value; };
+              });
+            in (moveToWorkspaceByClass {
+              # Assign specific apps to specific workspace
+              ${web} = [ "^Firefox$" "^Tor Browser$" ];
+              ${chat} = [ "^TelegramDesktop$" ];
+              ${editing} = [ "^Emacs$" ];
+              ${gaming} = [ "^Steam$" "(?i)minecraft" ];
+              ${zoom} = [ "^zoom$" ];
+            }) ++ (makeWindowFloating {
+              # Make apps meet the criteria floating (meet any one of these would go)
+              class = [ "^Pavucontrol$" ];
+              window_role = [ "About" "pop-up" ];
+            });
 
           # Don't conflict with emacs
           modifier = "Mod4";

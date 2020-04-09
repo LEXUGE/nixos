@@ -31,7 +31,7 @@ in mkIf (cfg.proxy != null) {
     after = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
     # FIXME: run under root. Some security implications may apply.
-    script = "${clash}/bin/clash -f ${configPath}";
+    script = "exec ${clash}/bin/clash -f ${configPath}";
 
     # Delete the chain to avoid unnecessary incident.
     # ip46tables -t nat -F ${tag} 2>/dev/null || true
