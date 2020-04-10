@@ -14,6 +14,6 @@ in {
     dns = "none";
   };
 
-  # Use local SmartDNS all the time
+  # Use local DNS server provided by clash all the time
   networking.resolvconf.useLocalResolver = true;
 }
