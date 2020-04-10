@@ -4,7 +4,8 @@ let
   inherit (pkgs) gnugrep iptables clash;
   inherit (lib) optionalString mkIf;
   cfg = config.local.system;
-  socksGroupName = "clash";
+  clashGroupName = "clash-group";
+  clashUserName = "clash";
   redirProxyPortStr = toString cfg.proxy.redirPort;
 
   # Run iptables 4 and 6 together.
@@ -20,19 +21,20 @@ let
   '';
 
   configPath = toString (config.local.share.dirs.secrets + /clash.yaml);
-  tag = "CLASH_SPEC_ASH";
+  tag = "CLASH_SPEC";
 
 in mkIf (cfg.proxy != null) {
 
-  users.groups.${socksGroupName} = { };
+  users.groups.${clashGroupName} = { };
+  users.users.${clashUserName} = {
+    description = "Clash deamon user";
+    home = "/home/${clashUserName}";
+    createHome = true; # clash needs home to store configuration and data.
+    group = clashGroupName;
+    isSystemUser = true;
+  };
 
-  systemd.services.clash = {
-    description = "Clash networking service";
-    after = [ "network.target" ];
-    wantedBy = [ "multi-user.target" ];
-    # FIXME: run under root. Some security implications may apply.
-    script = "exec ${clash}/bin/clash -f ${configPath}";
-
+  systemd.services.clash = let
     # Delete the chain to avoid unnecessary incident.
     # ip46tables -t nat -F ${tag} 2>/dev/null || true
 
@@ -40,34 +42,50 @@ in mkIf (cfg.proxy != null) {
     # ip46tables -t nat -N ${tag} 2>/dev/null || true
 
     # Don't forward pkts with creator in this group. Since after forwarding by clash the packets' owner would be the one in group, this helps us to avoid dead loop in packet forwarding.
-    # ip46tables -t nat -A ${tag} -m owner --gid-owner ${socksGroupName} -j RETURN 2>/dev/null || true
+    # ip46tables -t nat -A ${tag} -m owner --gid-owner ${clashGroupName} -j RETURN 2>/dev/null || true
 
     # Forward all TCP traffic to the redir port of Clash.
     # ip46tables -t nat -A ${tag} -p tcp -j REDIRECT --to-ports ${redirProxyPortStr}
 
     # For all TCP traffic on OUTPUT chain, put them into our newly created chain.
     # ip46tables -t nat -A OUTPUT -p tcp -j ${tag} 2>/dev/null || true
-    preStart = ''
+    preStartScript = pkgs.writeShellScript "clash-prestart" ''
       ${helper}
       ip46tables -t nat -F ${tag} 2>/dev/null || true
       ip46tables -t nat -N ${tag} 2>/dev/null || true
-      ip46tables -t nat -A ${tag} -m owner --gid-owner ${socksGroupName} -j RETURN 2>/dev/null || true
+      ip46tables -t nat -A ${tag} -m owner --gid-owner ${clashGroupName} -j RETURN 2>/dev/null || true
       ip46tables -t nat -A ${tag} -p tcp -j REDIRECT --to-ports ${redirProxyPortStr}
 
       ip46tables -t nat -A OUTPUT -p tcp -j ${tag} 2>/dev/null || true
     '';
 
-    postStop = ''
+    postStopScript = pkgs.writeShellScript "clash-poststop" ''
       ${iptables}/bin/iptables-save -c|${gnugrep}/bin/grep -v ${tag}|${iptables}/bin/iptables-restore -c
       ${optionalString config.networking.enableIPv6 ''
         ${iptables}/bin/ip6tables-save -c|${gnugrep}/bin/grep -v ${tag}|${iptables}/bin/ip6tables-restore -c
       ''}
     '';
+  in {
+    description = "Clash networking service";
+    after = [
+      "network.target"
+      "smartdns.service"
+    ]; # Smartdns is critical for first time for country DB download
+    wantedBy = [ "multi-user.target" ];
+    script = "exec ${clash}/bin/clash -f ${configPath}";
 
     # Don't start if the config file doesn't exist.
     unitConfig = { ConditionPathExists = configPath; };
     serviceConfig = {
-      Group = socksGroupName;
+      ExecStartPre =
+        "+${preStartScript}"; # Use prefix `+` to run iptables as root/
+      ExecStopPost = "+${postStopScript}";
+      # CAP_NET_BIND_SERVICE: Bind arbitary ports by unprivileged user.
+      # CAP_NET_ADMIN: Listen on UDP.
+      AmbientCapabilities =
+        "CAP_NET_BIND_SERVICE CAP_NET_ADMIN"; # We want additional capabilities upon a unprivileged user.
+      User = clashUserName;
+      Group = clashGroupName;
       Restart = "on-failure";
     };
   };
