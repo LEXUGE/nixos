@@ -90,6 +90,12 @@ in lib.mkIf cfg.enable {
       # zsh
       zsh = {
         enable = true;
+        # This would make C-p, C-n act exactly the same as what up/down arrows do.
+        initExtra = ''
+          bindkey "^P" up-line-or-search
+          bindkey "^N" down-line-or-search
+        '';
+        # NOTE: We don't use the sessionVar option provided by home-manager, because the former one only make it available in zshrc. We need env vars everywhere.
         # GDK_SCALE: Scale the whole UI for GTK applications
         # GDK_DPI_SCALE: Scale the fonts back for GTK applications to avoid double scaling
         # QT_AUTO_SCREEN_SCALE_FACTOR: Let QT auto detect the DPi
@@ -98,7 +104,6 @@ in lib.mkIf cfg.enable {
           export GDK_DPI_SCALE=${toString (1.0 / share.scale)}
           export QT_AUTO_SCREEN_SCALE_FACTOR=1
         '';
-        # This would make C-p, C-n act exactly the same as what up/down arrows do.
         defaultKeymap = "emacs";
         oh-my-zsh = {
           enable = true;
