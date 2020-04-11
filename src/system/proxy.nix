@@ -68,10 +68,7 @@ in mkIf (cfg.proxy != null) {
     '';
   in {
     description = "Clash networking service";
-    after = [
-      "network.target"
-      "smartdns.service"
-    ]; # Smartdns is critical for first time for country DB download
+    after = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
     script =
       "exec ${clash}/bin/clash -d /etc/clash"; # We don't need to worry about whether /etc/clash is reachable in Live CD or not. Since it would never be execuated inside LiveCD.

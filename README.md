@@ -43,7 +43,6 @@ The system configuration could be split up into three pieces, system-wide, user-
 # Security details
 As for me, I am on my best to ensure that the system is convenient to use and secure. But here are some concerns:
 - `services.fstrim.enable` is set to `true` which means that attacker may be able to perceive the data usage of the fully encrypted disk.
-- `clash` runs under root in systemd for UDP redir.
 - `howdy` is not suggested to use if you need to ensure high level security due to the potentiality of spoofing.
 - There is keyfile added to `/` partition encryption in order to eliminate the twice keying in of the LUKS passphrase. This may imply security concerns.
 
