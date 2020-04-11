@@ -48,9 +48,6 @@ in {
     size = (share.ramSize * 2);
   }];
 
-  # We like immutable user.
-  users.mutableUsers = false;
-
   # Support NTFS
   boot.supportedFilesystems = [ "ntfs" ];
 

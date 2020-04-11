@@ -6,23 +6,11 @@ let
   proxyModule = with lib;
     types.submodule {
       options = {
-        user = mkOption {
+        clashUserName = mkOption {
           type = types.str;
+          default = "clash";
           description =
-            "The user who would run the transparent proxy systemd service.";
-        };
-
-        address = mkOption {
-          type = types.str;
-          default = "127.0.0.1";
-          description = "Proxy local server listen address.";
-        };
-
-        localPort = mkOption {
-          type = types.port;
-          default = 1080;
-          description =
-            "Proxy local server (<literal>ss-local</literal>) listen port";
+            "The user who would run the clash proxy systemd service. User would be created automatically.";
         };
 
         redirPort = mkOption {

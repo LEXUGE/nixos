@@ -3,10 +3,9 @@
 let
   inherit (pkgs) gnugrep iptables clash;
   inherit (lib) optionalString mkIf;
-  cfg = config.local.system;
-  clashGroupName = "clash-group";
-  clashUserName = "clash";
-  redirProxyPortStr = toString cfg.proxy.redirPort;
+  cfg = config.local.system.proxy;
+  inherit (cfg) clashUserName;
+  redirProxyPortStr = toString cfg.redirPort;
 
   # Run iptables 4 and 6 together.
   helper = ''
@@ -23,17 +22,10 @@ let
   configPath = toString (config.local.share.dirs.secrets + /clash.yaml);
   tag = "CLASH_SPEC";
 
-in mkIf (cfg.proxy != null) {
+in mkIf (cfg != null) {
   environment.etc."clash/Country.mmdb".source =
     "${pkgs.maxmind-geoip}/Country.mmdb"; # Bring pre-installed geoip data into directory.
   environment.etc."clash/config.yaml".source = configPath;
-
-  users.groups.${clashGroupName} = { };
-  users.users.${clashUserName} = {
-    description = "Clash deamon user";
-    group = clashGroupName;
-    isSystemUser = true;
-  };
 
   systemd.services.clash = let
     # Delete the chain to avoid unnecessary incident.
@@ -42,8 +34,8 @@ in mkIf (cfg.proxy != null) {
     # Create a new chain appending at the end.
     # ip46tables -t nat -N ${tag} 2>/dev/null || true
 
-    # Don't forward pkts with creator in this group. Since after forwarding by clash the packets' owner would be the one in group, this helps us to avoid dead loop in packet forwarding.
-    # ip46tables -t nat -A ${tag} -m owner --gid-owner ${clashGroupName} -j RETURN 2>/dev/null || true
+    # Don't forward package created by ${clashUserName}. Since after forwarding by clash the packets' owner would be changed to ${clashUserName}, this helps us to avoid dead loop in packet forwarding.
+    # ip46tables -t nat -A ${tag} -m owner --uid-owner ${clashUserName} -j RETURN 2>/dev/null || true
 
     # Forward all TCP traffic to the redir port of Clash.
     # ip46tables -t nat -A ${tag} -p tcp -j REDIRECT --to-ports ${redirProxyPortStr}
@@ -54,7 +46,7 @@ in mkIf (cfg.proxy != null) {
       ${helper}
       ip46tables -t nat -F ${tag} 2>/dev/null || true
       ip46tables -t nat -N ${tag} 2>/dev/null || true
-      ip46tables -t nat -A ${tag} -m owner --gid-owner ${clashGroupName} -j RETURN 2>/dev/null || true
+      ip46tables -t nat -A ${tag} -m owner --uid-owner ${clashUserName} -j RETURN 2>/dev/null || true
       ip46tables -t nat -A ${tag} -p tcp -j REDIRECT --to-ports ${redirProxyPortStr}
 
       ip46tables -t nat -A OUTPUT -p tcp -j ${tag} 2>/dev/null || true
@@ -84,7 +76,6 @@ in mkIf (cfg.proxy != null) {
       AmbientCapabilities =
         "CAP_NET_BIND_SERVICE CAP_NET_ADMIN"; # We want additional capabilities upon a unprivileged user.
       User = clashUserName;
-      Group = clashGroupName;
       Restart = "on-failure";
     };
   };
