@@ -29,27 +29,27 @@ in mkIf (cfg != null) {
 
   systemd.services.clash = let
     # Delete the chain to avoid unnecessary incident.
-    # ip46tables -t nat -F ${tag} 2>/dev/null || true
+    # ip46tables -t nat -F ${tag}
 
     # Create a new chain appending at the end.
-    # ip46tables -t nat -N ${tag} 2>/dev/null || true
+    # ip46tables -t nat -N ${tag}
 
     # Don't forward package created by ${clashUserName}. Since after forwarding by clash the packets' owner would be changed to ${clashUserName}, this helps us to avoid dead loop in packet forwarding.
-    # ip46tables -t nat -A ${tag} -m owner --uid-owner ${clashUserName} -j RETURN 2>/dev/null || true
+    # ip46tables -t nat -A ${tag} -m owner --uid-owner ${clashUserName} -j RETURN
 
     # Forward all TCP traffic to the redir port of Clash.
     # ip46tables -t nat -A ${tag} -p tcp -j REDIRECT --to-ports ${redirProxyPortStr}
 
     # For all TCP traffic on OUTPUT chain, put them into our newly created chain.
-    # ip46tables -t nat -A OUTPUT -p tcp -j ${tag} 2>/dev/null || true
+    # ip46tables -t nat -A OUTPUT -p tcp -j ${tag}
     preStartScript = pkgs.writeShellScript "clash-prestart" ''
       ${helper}
-      ip46tables -t nat -F ${tag} 2>/dev/null || true
-      ip46tables -t nat -N ${tag} 2>/dev/null || true
-      ip46tables -t nat -A ${tag} -m owner --uid-owner ${clashUserName} -j RETURN 2>/dev/null || true
+      ip46tables -t nat -F ${tag}
+      ip46tables -t nat -N ${tag}
+      ip46tables -t nat -A ${tag} -m owner --uid-owner ${clashUserName} -j RETURN
       ip46tables -t nat -A ${tag} -p tcp -j REDIRECT --to-ports ${redirProxyPortStr}
 
-      ip46tables -t nat -A OUTPUT -p tcp -j ${tag} 2>/dev/null || true
+      ip46tables -t nat -A OUTPUT -p tcp -j ${tag}
     '';
 
     postStopScript = pkgs.writeShellScript "clash-poststop" ''
