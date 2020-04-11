@@ -10,6 +10,7 @@
     git
     gnupg
     clash
+    maxmind-geoip
     neofetch
     bind
     usbutils
@@ -17,7 +18,6 @@
     shfmt
     shellcheck
     smartmontools
-    pavucontrol
     efibootmgr
     ncdu
   ];

@@ -14,21 +14,6 @@ in {
     dns = "none";
   };
 
-  # Smartdns
-  services.smartdns = {
-    # Enable smartdns
-    enable = true;
-    # Settings
-    settings = {
-      cache-size = 8192;
-      server = "127.0.0.1:5353";
-      server-tls = [ "8.8.8.8:853" "1.1.1.1:853" ];
-      server-https = "https://cloudflare-dns.com/dns-query";
-      prefetch-domain = true;
-      speed-check-mode = "ping,tcp:80";
-    };
-  };
-
   # Use local DNS server all the time
   networking.resolvconf.useLocalResolver = true;
 }

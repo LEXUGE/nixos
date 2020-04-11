@@ -11,8 +11,8 @@ in lib.mkIf cfg.enable {
 
   # System level baasic config for user.
   users.users.ash = {
-    initialHashedPassword =
-      "$6$2aMNNG9GcF$/5X/fdXWRl3eZXPgSRgJLplpQgjvZ4Nme6rV4mGqgoWYgQLdLwwZBsXBgjb/LQhBD31XNk0OdzWDL.ctSLiu10";
+    hashedPassword =
+      "$6$FAs.ZfxAkhAK0ted$/aHwa39iJ6wsZDCxoJVjedhfPZ0XlmgKcxkgxGDE.hw3JlCjPHmauXmQAZUlF8TTUGgxiOJZcbYSPsW.QBH5F.";
     shell = pkgs.zsh;
     isNormalUser = true;
     # wheel - sudo

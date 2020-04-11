@@ -7,4 +7,5 @@ self: super: {
   pam_python = (super.callPackage ../packages/pam_python.nix { });
   ir_toggle = (super.callPackage ../packages/ir_toggle.nix { });
   clash = (super.callPackage ../packages/clash.nix { });
+  maxmind-geoip = (super.callPackage ../packages/maxmind-geoip.nix { });
 }

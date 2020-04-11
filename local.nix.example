@@ -22,6 +22,7 @@
           steam
           etcher
           vlc
+          pavucontrol
           calibre
           tor-browser-bundle-bin
           latest.rustChannels.stable.rust
@@ -33,7 +34,7 @@
       x1c7 = {
         enable = true;
         # Choose "howdy", "fprintd", or null.
-        bio-auth = null;
+        bio-auth = "howdy";
       };
     };
 

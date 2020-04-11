@@ -24,12 +24,13 @@ let
   tag = "CLASH_SPEC";
 
 in mkIf (cfg.proxy != null) {
+  environment.etc."clash/Country.mmdb".source =
+    "${pkgs.maxmind-geoip}/Country.mmdb"; # Bring pre-installed geoip data into directory.
+  environment.etc."clash/config.yaml".source = configPath;
 
   users.groups.${clashGroupName} = { };
   users.users.${clashUserName} = {
     description = "Clash deamon user";
-    home = "/home/${clashUserName}";
-    createHome = true; # clash needs home to store configuration and data.
     group = clashGroupName;
     isSystemUser = true;
   };
@@ -72,7 +73,8 @@ in mkIf (cfg.proxy != null) {
       "smartdns.service"
     ]; # Smartdns is critical for first time for country DB download
     wantedBy = [ "multi-user.target" ];
-    script = "exec ${clash}/bin/clash -f ${configPath}";
+    script =
+      "exec ${clash}/bin/clash -d /etc/clash"; # We don't need to worry about whether /etc/clash is reachable in Live CD or not. Since it would never be execuated inside LiveCD.
 
     # Don't start if the config file doesn't exist.
     unitConfig = { ConditionPathExists = configPath; };
