@@ -40,7 +40,7 @@ in {
   nix.binaryCaches = system.binaryCaches;
 
   # Use the latest linux kernel (temporarily we are using 5.5 branch because acpi_call is broken on 5.6.2)
-  boot.kernelPackages = pkgs.linuxPackages_5_5;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Add swap file
   swapDevices = [{
