@@ -1,67 +1,129 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, lib, ... }:
-
 let
-  # Import all the nix files in a folder
-  modulesFrom = dir:
-    map (f: dir + "/${f}") (builtins.attrNames
-      (lib.filterAttrs (n: v: (v == "regular") && (lib.hasSuffix ".nix" n))
-        (builtins.readDir dir)));
-
-  home-manager = builtins.fetchTarball
-    "https://github.com/rycee/home-manager/archive/master.tar.gz";
-
   moz_overlay = import (builtins.fetchTarball
     "https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz");
-
-  inherit (config.local) system share;
+  home-manager = builtins.fetchTarball
+    "https://github.com/rycee/home-manager/archive/master.tar.gz";
+  icebox = builtins.fetchTarball
+    "https://github.com/LEXUGE/icebox/archive/master.tar.gz";
 in {
-  imports = [ # Include the results of the hardware scan.
+  imports = [
     ./hardware-configuration.nix
-    "${home-manager}/nixos" # Home-manager plugin which is useful for userland configurations
-    ./local.nix # Options for whole system configuraions.
-  ] ++ builtins.concatLists (map modulesFrom [
-    ./src/users # Userland configuration profiles.
-    ./src/devices # Device specific configuration profiles.
-    ./src/system # System wide configuraions.
-    ./modules/packages # Module for packages.
-    ./modules/local # Module for local options.
-    ./modules/local/users # Module for user profile options, located under local module.
-    ./modules/local/devices # Module for device profile options, located under local module.
-  ]);
+    "${icebox}"
+    ./plugins
+    "${home-manager}/nixos"
+  ];
 
-  # Customized overlays
-  nixpkgs.overlays = [ (import ./overlays/packages.nix) moz_overlay ];
+  home-manager.useUserPackages = true;
 
-  # Customized binary caches list (with fallback to official binary cache)
-  nix.binaryCaches = system.binaryCaches;
+  icebox = {
+    users = {
+      plugins = [ "ashde" "hm-fix" ];
+      users = {
+        ash = {
+          regular = {
+            hashedPassword =
+              "$6$FAs.ZfxAkhAK0ted$/aHwa39iJ6wsZDCxoJVjedhfPZ0XlmgKcxkgxGDE.hw3JlCjPHmauXmQAZUlF8TTUGgxiOJZcbYSPsW.QBH5F.";
+            shell = pkgs.zsh;
+            isNormalUser = true;
+            # wheel - sudo
+            # networkmanager - manage network
+            # video - light control
+            # libvirtd - virtual manager controls.
+            extraGroups = [ "wheel" "networkmanager" "video" "libvirtd" ];
+          };
+          configs = {
+            ashde = {
+              enable = true;
+              # Adapt followings to what your device profile supplied
+              battery = "BAT0";
+              power = "AC";
+              network-interface = "wlp0s20f3";
+              extraPackages = with pkgs; [
+                htop
+                deluge
+                zoom-us
+                thunderbird
+                spotify
+                firefox
+                tdesktop
+                minecraft
+                virtmanager
+                texlive.combined.scheme-full
+                steam
+                etcher
+                vlc
+                pavucontrol
+                calibre
+                tor-browser-bundle-bin
+                latest.rustChannels.stable.rust
+              ];
+            };
+          };
+        };
+      };
+    };
 
-  # Use the latest linux kernel (temporarily we are using 5.5 branch because acpi_call is broken on 5.6.2)
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+    devices = {
+      plugins = [ "x1c7" "howdy" ];
+      configs = {
+        x1c7 = {
+          enable = true;
+          # Choose "howdy", "fprintd", or null.
+          bio-auth = "howdy";
+        };
+        # x1c7 would automatically enable howdy and set necessary configuratons.
+        howdy.pamServices = [ "sudo" "login" "polkit-1" "i3lock" ];
+      };
+    };
 
-  # Add swap file
-  swapDevices = [{
-    device = "/var/swapFile";
-    size = (share.ramSize * 2);
-  }];
+    lib = {
+      modules = [ (import ./plugins/lib/modules/std.nix { lib = lib; }) ];
+      configs = {
+        system = {
+          # Path to directories (use relative paths to avoid trouble in nixos-install.)
+          # If you don't understand, just keep it as it is.
+          dirs = {
+            secrets = ./secrets; # Did you read the comments above?
+            dotfiles = ./dotfiles;
+          };
+          bluetooth = {
+            # Force enable/disable bluetooth
+            # enable = true;
+            # Choose default bluetooth service
+            service = "blueman";
+          };
+        };
+        devices = {
+          # resume_offset value. Obtained by <literal>filefrag -v /swapfile | awk '{ if($1=="0:"){print $4} }'</literal>
+          # If you want to hibernate, you MUST set it properly.
+          swapResumeOffset = 36864;
+        };
+      };
+    };
 
-  # Support NTFS
-  boot.supportedFilesystems = [ "ntfs" ];
+    system = {
+      plugins = [ "x-os" "clash" ];
+      stateVersion = "19.09";
+      configs = {
+        x-os = {
+          enable = true;
+          hostname = "nixos";
+          # Use TUNA Mirror together with original cache because TUNA has better performance inside Mainland China.
+          # Set the list to `[ ]` to use official cache only.
+          binaryCaches =
+            [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
+          # Choose ibus engines to apply
+          ibus-engines = with pkgs.ibus-engines; [ libpinyin ];
+        };
+        clash = {
+          enable = true;
+          redirPort =
+            7892; # This must be the same with the one in your clash.yaml
+        };
+      };
+    };
 
-  # Auto upgrade
-  system.autoUpgrade.enable = true;
-
-  # Auto gc and optimise
-  nix.optimise.automatic = true;
-  nix.gc.automatic = true;
-  nix.gc.options = "--delete-older-than 7d";
-
-  # This value determines the NixOS release with which your system is to be
-  # compatible, in order to avoid breaking some software such as database
-  # servers. You should change this only after NixOS release notes say you
-  # should.
-  system.stateVersion = "19.09"; # Did you read the comment?
+    overlays = [ moz_overlay ];
+  };
 }

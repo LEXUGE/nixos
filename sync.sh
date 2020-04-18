@@ -2,9 +2,7 @@
 
 rm -rf ./src \
 	./dotfiles/ \
-	./packages/ \
-	./modules/ \
-	./overlays/ \
+	./plugins/ \
 	./secrets/
 rm ./*."{nix, nix.example}"
 

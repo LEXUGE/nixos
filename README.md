@@ -25,7 +25,7 @@ curl -Ls https://github.com/LEXUGE/nixos/raw/master/install.sh | bash
 
 Follow the instructions and there you go.
 
-If you want to use `clash`, please create `secrets/clash.yaml` (You could follow the `secrets/clash.yaml.example` as a guideline).
+**CAUTION: You need to properly configure `/etc/nixos/secrets/clash.yaml` for your pristine installation to work! If you didn't, stop `clash.service` and use some temporary DNS setting to ensure `nixos-rebuild` works.**
 
 If you want hibernate to work, please follow the instructions under `share.swapResumeOffset` in `local.nix`.
 
@@ -47,17 +47,13 @@ As for me, I am on my best to ensure that the system is convenient to use and se
 - There is keyfile added to `/` partition encryption in order to eliminate the twice keying in of the LUKS passphrase. This may imply security concerns.
 
 # How do I steal it?
-It's actually not well-structured for stealing. But here are some
-instructions:
-- If you want to use my packaged
-  [simple-obfs](https://github.com/shadowsocks/simple-obfs), just grab
-  `packages/simple-obfs.nix` (Removed after first release).
-- See `proxy.nix` if you want to use transparent proxy.
-- See `packages/ir_toggle.nix`, `packages/howdy.nix`, `modules/ir_toggle.nix`, `modules/howdy.nix` if you want to use Howdy on X1 Carbon 7th Gen (20R1). (**Tip:** if you are not on X1 Carbon 7th Gen, you would probably not need `ir_toggle` in order to get it work.)
+I have kept "stealing" in mind while I am writing the whole configuration. All the components have been written as plugins of [icebox](https://github.com/LEXUGE/icebox) toolkit.
+- See `plugins/system/clash` if you want to use clash as systemd service and transparent proxy mechanism.
+- See `plugins/devices/howdy` `plugins/devices/ir-toggle` if you want to use Howdy on X1 Carbon 7th Gen (20R1). (**Tip:** if you are not on X1 Carbon 7th Gen, you would probably not need `ir_toggle` in order to get it work.)
+- **Note: you may need `plugins/lib/modules/std.nix` to properly setup some of the plugins, because they need some pre-set inter-plugin options.**
 
 # See also
-[config](https://github.com/LEXUGE/config) for my emacs and other configs (may
-integrate into this repository later).
+[icebox](https://github.com/LEXUGE/icebox) - A simple configuration framework and plugin toolkit written in pure Nix.
 
 # Acknowledgments
 Thanks to following repositories:

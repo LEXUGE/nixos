@@ -82,8 +82,9 @@ nixos_install() {
 	# Create new options.nix and open it to let user customize.
 	echo "Generate and open build options for configuration..."
 	read -n 1 -s -r -p "Press any key to continue"
-	cp ${MOUNTPOINT}/etc/nixos/local.nix.example ${MOUNTPOINT}/etc/nixos/local.nix
-	nano ${MOUNTPOINT}/etc/nixos/local.nix
+	cp ${MOUNTPOINT}/etc/nixos/secrets/clash.yaml.example ${MOUNTPOINT}/etc/nixos/secrets/clash.yaml
+	nano ${MOUNTPOINT}/etc/nixos/configuration.nix
+	nano ${MOUNTPOINT}/etc/nixos/secrets/clash.yaml
 
 	# Install NixOS using TUNA binary cache with fallback
 	nixos-generate-config --root /mnt
