@@ -1,8 +1,6 @@
 # -*- mode: gitignore; -*-
 # ignore device specific file
 hardware-configuration.nix
-# Ignore local options
-local.nix
 # Ignore secrets and personal options
 secrets/*
 !secrets/*.example

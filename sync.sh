@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-rm -rf ./src \
-	./dotfiles/ \
+rm -rf 	./dotfiles/ \
 	./plugins/ \
 	./secrets/
-rm ./*."{nix, nix.example}"
+rm ./*.nix
+rm ./*.nix.example
 
 echo -n "Copying..."
 rsync -avP \
