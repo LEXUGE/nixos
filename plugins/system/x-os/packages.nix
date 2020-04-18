@@ -12,8 +12,6 @@ in mkIf cfg.enable {
     nixfmt
     git
     gnupg
-    clash
-    maxmind-geoip
     neofetch
     bind
     usbutils
