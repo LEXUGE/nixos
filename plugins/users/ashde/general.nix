@@ -1,6 +1,9 @@
 { config, pkgs, lib, ... }:
 
+with lib;
+
 let
+  inherit (config.icebox.static.lib.configs.system) dpi scale cursorSize;
   inherit (config.icebox.static.lib.configs) system devices;
   iceLib = config.icebox.static.lib;
 in {
@@ -13,14 +16,10 @@ in {
               type = types.bool;
               default = false;
               example = true;
-              description = "Whether to enable user <literal>ash</literal>.";
+              description =
+                "Whether to enable DE customized by user <literal>ash</literal>.";
             };
 
-            extraPackages = mkOption {
-              type = with types; listOf package;
-              description =
-                "Extra packages to install for user <literal>ash</literal>.";
-            };
             battery = mkOption {
               type = types.enum devices.battery;
               description =
@@ -42,25 +41,73 @@ in {
       default = { };
     };
 
+  config.services.xserver =
+    mkIf (iceLib.functions.anyEnabled config.icebox.static.users.ashde) {
+      dpi = dpi * scale;
+
+      displayManager = {
+        # Add one session that would start user's own xsession profile
+        session = [{
+          manage = "desktop";
+          name = "xsession";
+          start = "exec $HOME/.xsession";
+        }];
+        # LightDM display manager
+        lightdm = {
+          enable = true;
+          greeters.gtk = {
+            # Set cursor size
+            cursorTheme.size = cursorSize * scale;
+            # Use dark them
+            theme.name = "Adwaita-dark";
+          };
+        };
+        # Startup commands
+        sessionCommands = ''
+          ibus-daemon -drx
+        '';
+      };
+    };
+
+  config.programs.light.enable =
+    mkIf (iceLib.functions.anyEnabled config.icebox.static.users.ashde) true;
+
   config.home-manager.users = iceLib.functions.mkUserConfigs' (name: cfg: {
-    # Home-manager settings.
-    # User-layer packages
-    home.packages = with pkgs;
-      [
-        hunspell
-        hunspellDicts.en-us-large
-        emacs
-        i3lock
-        xss-lock
-        xautolock
-        escrotum
-        dmenu
-        libnotify
-        gnome3.file-roller
-        gnome3.nautilus
-        gnome3.eog
-        evince
-      ] ++ cfg.extraPackages;
+    # NOTE: We don't use the sessionVar option provided by home-manager, because the former one only make it available in zshrc. We need env vars everywhere.
+    # GDK_SCALE: Scale the whole UI for GTK applications
+    # GDK_DPI_SCALE: Scale the fonts back for GTK applications to avoid double scaling
+    # QT_AUTO_SCREEN_SCALE_FACTOR: Let QT auto detect the DPi
+    home.sessionVariables = {
+      GDK_SCALE = "${toString system.scale}";
+      GDK_DPI_SCALE = "${toString (1.0 / system.scale)}";
+      QT_AUTO_SCREEN_SCALE_FACTOR = 1;
+    };
+
+    home.packages = with pkgs; [
+      i3lock
+      xss-lock
+      xautolock
+      escrotum
+      dmenu
+      libnotify
+      gnome3.file-roller
+      gnome3.nautilus
+      gnome3.eog
+      evince
+    ];
+
+    programs.alacritty = {
+      enable = true;
+      settings = {
+        font = {
+          normal = {
+            family = "Fira Code Retina";
+            style = "Regular";
+          };
+        };
+        env = { WINIT_HIDPI_FACTOR = toString system.scale; };
+      };
+    };
 
     # Fontconfig
     fonts.fontconfig.enable = true;
@@ -71,74 +118,6 @@ in {
         "image/jpeg" = "eog.desktop"; # `.jpg`
         "application/pdf" = "org.gnome.Evince.desktop"; # `.pdf`
       };
-    };
-
-    # Package settings
-    programs = {
-      alacritty = {
-        enable = true;
-        settings = {
-          font = {
-            normal = {
-              family = "Fira Code Retina";
-              style = "Regular";
-            };
-          };
-          env = { WINIT_HIDPI_FACTOR = toString system.scale; };
-        };
-      };
-      # GnuPG
-      gpg = {
-        enable = true;
-        settings = { throw-keyids = false; };
-      };
-
-      # Git
-      git = {
-        enable = true;
-        userName = "Harry Ying";
-        userEmail = "lexugeyky@outlook.com";
-        signing = {
-          signByDefault = true;
-          key = "0xAE53B4C2E58EDD45";
-        };
-        extraConfig = { credential = { helper = "store"; }; };
-      };
-
-      # zsh
-      zsh = {
-        enable = true;
-        # This would make C-p, C-n act exactly the same as what up/down arrows do.
-        initExtra = ''
-          bindkey "^P" up-line-or-search
-          bindkey "^N" down-line-or-search
-        '';
-        # NOTE: We don't use the sessionVar option provided by home-manager, because the former one only make it available in zshrc. We need env vars everywhere.
-        # GDK_SCALE: Scale the whole UI for GTK applications
-        # GDK_DPI_SCALE: Scale the fonts back for GTK applications to avoid double scaling
-        # QT_AUTO_SCREEN_SCALE_FACTOR: Let QT auto detect the DPi
-        envExtra = ''
-          export GDK_SCALE=${toString system.scale}
-          export GDK_DPI_SCALE=${toString (1.0 / system.scale)}
-          export QT_AUTO_SCREEN_SCALE_FACTOR=1
-        '';
-        defaultKeymap = "emacs";
-        oh-my-zsh = {
-          enable = true;
-          theme = "agnoster";
-          plugins = [ "git" ];
-        };
-      };
-    };
-
-    # Handwritten configs
-    home.file = {
-      ".config/gtk-3.0/settings.ini".source =
-        (system.dirs.dotfiles + /ash/gtk-settings.ini);
-      ".emacs.d/init.el".source =
-        (system.dirs.dotfiles + "/${name}/emacs.d/init.el");
-      ".emacs.d/elisp/".source =
-        (system.dirs.dotfiles + "/${name}/emacs.d/elisp");
     };
 
     # Dconf settings

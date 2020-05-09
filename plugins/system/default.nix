@@ -1,1 +1,1 @@
-{ imports = [ ./clash ./x-os ]; }
+{ imports = [ ./clash ./x-os ./gnome.nix ]; }

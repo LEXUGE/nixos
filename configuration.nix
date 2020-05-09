@@ -18,7 +18,7 @@ in {
 
   icebox = {
     users = {
-      plugins = [ "ashde" "hm-fix" ];
+      plugins = [ "ashde" "hm-fix" "ash-profile" ];
       users = {
         ash = {
           regular = {
@@ -33,12 +33,8 @@ in {
             extraGroups = [ "wheel" "networkmanager" "video" "libvirtd" ];
           };
           configs = {
-            ashde = {
+            ash-profile = {
               enable = true;
-              # Adapt followings to what your device profile supplied
-              battery = "BAT0";
-              power = "AC";
-              network-interface = "wlp0s20f3";
               extraPackages = with pkgs; [
                 htop
                 deluge
@@ -50,7 +46,7 @@ in {
                 minecraft
                 virtmanager
                 texlive.combined.scheme-full
-                steam
+                #steam
                 etcher
                 vlc
                 pavucontrol
@@ -58,6 +54,13 @@ in {
                 tor-browser-bundle-bin
                 latest.rustChannels.stable.rust
               ];
+            };
+            ashde = {
+              enable = false;
+              # Adapt followings to what your device profile supplied
+              battery = "BAT0";
+              power = "AC";
+              network-interface = "wlp0s20f3";
             };
           };
         };
@@ -103,7 +106,7 @@ in {
     };
 
     system = {
-      plugins = [ "x-os" "clash" ];
+      plugins = [ "x-os" "gnome" "clash" ];
       stateVersion = "19.09";
       configs = {
         x-os = {
@@ -116,6 +119,7 @@ in {
           # Choose ibus engines to apply
           ibus-engines = with pkgs.ibus-engines; [ libpinyin ];
         };
+        gnome.enable = true;
         clash = {
           enable = true;
           redirPort =
