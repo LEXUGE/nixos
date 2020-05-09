@@ -94,7 +94,7 @@ in {
             # Force enable/disable bluetooth
             # enable = true;
             # Choose default bluetooth service
-            service = "blueman";
+            service = null;
           };
         };
         devices = {

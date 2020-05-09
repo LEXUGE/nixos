@@ -11,6 +11,7 @@ in {
   };
 
   config = mkIf (cfg.enable) {
+    icebox.static.lib.configs.system.bluetooth.service = null;
     services.xserver = {
       displayManager.gdm.enable = true;
       desktopManager.gnome3.enable = true;
