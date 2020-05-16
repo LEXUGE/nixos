@@ -1,4 +1,5 @@
 { config, pkgs, lib, ... }:
+
 let
   moz_overlay = import (builtins.fetchTarball
     "https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz");
@@ -18,7 +19,7 @@ in {
 
   icebox = {
     users = {
-      plugins = [ "ashde" "hm-fix" "ash-profile" ];
+      plugins = [ "hm-fix" "ash-profile" ];
       users = {
         ash = {
           regular = {
@@ -46,13 +47,16 @@ in {
                 minecraft
                 virtmanager
                 texlive.combined.scheme-full
-                #steam
+                steam
                 etcher
                 vlc
                 pavucontrol
                 calibre
                 tor-browser-bundle-bin
                 latest.rustChannels.stable.rust
+                ifuse
+                libimobiledevice
+                onlyoffice-desktop
               ];
             };
             ashde = {
@@ -71,12 +75,11 @@ in {
       plugins = [ "x1c7" "howdy" ];
       configs = {
         x1c7 = {
-          enable = true;
           # Choose "howdy", "fprintd", or null.
           bio-auth = "howdy";
         };
         # x1c7 would automatically enable howdy and set necessary configuratons.
-        howdy.pamServices = [ "sudo" "login" "polkit-1" "i3lock" ];
+        howdy.pamServices = [ "sudo" "login" "polkit-1" ];
       };
     };
 
@@ -106,7 +109,7 @@ in {
     };
 
     system = {
-      plugins = [ "x-os" "gnome" "clash" ];
+      plugins = [ "x-os" "gnome" "clash" "onlyoffice-desktop" ];
       stateVersion = "19.09";
       configs = {
         x-os = {
@@ -119,7 +122,7 @@ in {
           # Choose ibus engines to apply
           ibus-engines = with pkgs.ibus-engines; [ libpinyin ];
         };
-        gnome.enable = true;
+
         clash = {
           enable = true;
           redirPort =

@@ -3,8 +3,9 @@
 let
   inherit (config.icebox.static.lib.configs) devices system;
   iceLib = config.icebox.static.lib;
+  cfg = config.icebox.static.users.ashde;
 in {
-  config.home-manager.users = iceLib.functions.mkUserConfigs' (name: cfg: {
+  config.home-manager.users = iceLib.functions.mkUserConfigs' (n: c: {
     services.polybar = {
       # Polybar
       enable = true;
@@ -131,7 +132,7 @@ in {
 
         "module/wlan" = {
           type = "internal/network";
-          interface = cfg.network-interface;
+          interface = c.network-interface;
 
           # Contents to show when network is connected
           label-connected = "%essid%+%downspeed%-%upspeed%";
@@ -147,8 +148,8 @@ in {
           type = "internal/battery";
           full-at = 99;
           time-format = "%H:%M";
-          battery = cfg.battery;
-          adapter = cfg.power;
+          battery = c.battery;
+          adapter = c.power;
           label-charging = "%percentage%% (%time%)";
           label-discharging = "%percentage%% (%time%)";
         };
@@ -220,5 +221,5 @@ in {
         polybar bottom &
       '';
     };
-  }) config.icebox.static.users.ashde;
+  }) cfg;
 }

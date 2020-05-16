@@ -6,35 +6,39 @@ let
   inherit (config.icebox.static.lib.configs) system;
   iceLib = config.icebox.static.lib;
   gnomeEnable = config.services.xserver.desktopManager.gnome3.enable;
+  cfg = config.icebox.static.users.ash-profile;
 in {
   options.icebox.static.users.ash-profile = with lib;
     mkOption {
-      type = with types;
-        attrsOf (submodule {
-          options = {
-            enable = mkOption {
-              type = types.bool;
-              default = false;
-              example = true;
-              description =
-                "Whether to enable profile for user <literal>ash</literal>.";
-            };
+      type = types.submodule {
+        options = {
+          enable = mkEnableOption
+            "the user tweaks flavoured by ash"; # If this is off, nothing should be configured at all.
 
-            extraPackages = mkOption {
-              type = with types; listOf package;
-              description =
-                "Extra packages to install for user <literal>ash</literal>.";
-            };
+          configs = mkOption {
+            type = with types;
+              attrsOf (submodule {
+                options = {
+                  enable = mkEnableOption
+                    "the user tweaks flavoured by ash for certain user.";
+                  extraPackages = mkOption {
+                    type = with types; listOf package;
+                    description =
+                      "Extra packages to install for user <literal>ash</literal>.";
+                  };
+                };
+              });
+            default = { };
           };
-        });
-      default = { };
+        };
+      };
     };
 
-  config.home-manager.users = iceLib.functions.mkUserConfigs' (name: cfg: {
+  config.home-manager.users = iceLib.functions.mkUserConfigs' (n: c: {
     # Home-manager settings.
     # User-layer packages
     home.packages = with pkgs;
-      [ hunspell hunspellDicts.en-us-large emacs ] ++ cfg.extraPackages;
+      [ hunspell hunspellDicts.en-us-large emacs ] ++ c.extraPackages;
 
     # Package settings
     programs = {
@@ -108,9 +112,8 @@ in {
       ".config/gtk-3.0/settings.ini".source =
         (system.dirs.dotfiles + /ash/gtk-settings.ini);
       ".emacs.d/init.el".source =
-        (system.dirs.dotfiles + "/${name}/emacs.d/init.el");
-      ".emacs.d/elisp/".source =
-        (system.dirs.dotfiles + "/${name}/emacs.d/elisp");
+        (system.dirs.dotfiles + "/${n}/emacs.d/init.el");
+      ".emacs.d/elisp/".source = (system.dirs.dotfiles + "/${n}/emacs.d/elisp");
     };
-  }) config.icebox.static.users.ash-profile;
+  }) cfg;
 }

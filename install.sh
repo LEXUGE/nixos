@@ -83,6 +83,7 @@ nixos_install() {
 	echo "Generate and open build options for configuration..."
 	read -n 1 -s -r -p "Press any key to continue"
 	cp ${MOUNTPOINT}/etc/nixos/secrets/clash.yaml.example ${MOUNTPOINT}/etc/nixos/secrets/clash.yaml
+	cp ${MOUNTPOINT}/etc/nixos/configuration.nix.example ${MOUNTPOINT}/etc/nixos/configuration.nix
 	nano ${MOUNTPOINT}/etc/nixos/configuration.nix
 	nano ${MOUNTPOINT}/etc/nixos/secrets/clash.yaml
 

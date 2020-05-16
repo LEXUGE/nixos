@@ -1,17 +1,29 @@
 { config, lib, pkgs, ... }:
-let iceLib = config.icebox.static.lib;
+let
+  iceLib = config.icebox.static.lib;
+  cfg = config.icebox.static.users.hm-fix;
 in {
   options.icebox.static.users.hm-fix = with lib;
     mkOption {
-      type = with types;
-        attrsOf (submodule {
-          options.enable = mkOption {
-            type = types.bool;
-            default = true;
-            description =
-              "Whether to enable a (hacky) patch plugin for home-manager issue #948.";
+      type = types.submodule {
+        options = {
+          enable = mkEnableOption
+            "the Desktop Environment falovored by ash"; # If this is off, nothing should be configured at all.
+
+          configs = mkOption {
+            type = with types;
+              attrsOf (submodule {
+                options.enable = mkOption {
+                  type = types.bool;
+                  default = true;
+                  description =
+                    "Whether to enable a (hacky) patch plugin for home-manager issue #948.";
+                };
+              });
+            default = { };
           };
-        });
+        };
+      };
       default = { };
     };
   config.systemd.services =
@@ -20,5 +32,5 @@ in {
       preStart = ''
         ${pkgs.nix}/bin/nix-env -i -E
       '';
-    }) config.icebox.static.users.hm-fix;
+    }) cfg;
 }

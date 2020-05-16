@@ -5,6 +5,7 @@
   (setq org-directory "~/org-files"
         org-default-notes-file (concat org-directory "/todo.org"))
   (setq org-startup-indented t)
+  (setq TeX-auto-untabify 't) ;; Convert tabs properly into PDF
   :hook (org-mode . org-cdlatex-mode)
         (org-mode . visual-line-mode)
   :bind

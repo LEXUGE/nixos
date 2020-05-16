@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-rm -rf 	./dotfiles/ \
+rm -rf ./dotfiles/ \
 	./plugins/ \
 	./secrets/
 rm ./*.nix
@@ -17,6 +17,8 @@ rsync -avP \
 	--include "*.json" \
 	--exclude "*" \
 	/etc/nixos/ .
+
+cp configuration.nix configuration.nix.example
 find . -type f -name '*.nix' -exec nixfmt {} +
 find . -type f -name '*.nix.example' -exec nixfmt {} +
 echo "Done."

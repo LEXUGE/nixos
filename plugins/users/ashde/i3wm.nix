@@ -7,8 +7,9 @@ let
 
   iceLib = config.icebox.static.lib;
   lock = "${pkgs.i3lock}/bin/i3lock -c 000000";
+  cfg = config.icebox.static.users.ashde;
 in {
-  config.home-manager.users = iceLib.functions.mkUserConfigs' (name: cfg: {
+  config.home-manager.users = iceLib.functions.mkUserConfigs' (n: c: {
     # Blueman
     services.blueman-applet.enable = (lib.mkIf
       (system.bluetooth.enable && (system.bluetooth.service == "blueman"))
@@ -184,7 +185,7 @@ in {
 
           keybindings = let
             modifier =
-              config.home-manager.users.${name}.xsession.windowManager.i3.config.modifier;
+              config.home-manager.users.${n}.xsession.windowManager.i3.config.modifier;
           in lib.mkOptionDefault {
             # Setup multimedia keys
             "XF86MonBrightnessUp" = " exec --no-startup-id light -A 5";
@@ -252,5 +253,5 @@ in {
       };
     };
 
-  }) config.icebox.static.users.ashde;
+  }) cfg;
 }

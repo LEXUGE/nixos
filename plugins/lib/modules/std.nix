@@ -18,35 +18,39 @@ let
   };
 in {
   options = {
-    devices = {
-      battery = mkOption {
-        type = with types; listOf str;
-        description =
-          "All the battery filenames under <literal>/sys/class/power_supply/</literal>.";
-      };
+    devices = mkOption {
+      type = types.submodule {
+        options = {
+          battery = mkOption {
+            type = with types; listOf str;
+            description =
+              "All the battery filenames under <literal>/sys/class/power_supply/</literal>.";
+          };
 
-      power = mkOption {
-        type = with types; listOf str;
-        description =
-          "All the AC Power filenames under <literal>/sys/class/power_supply/</literal>.";
-      };
+          power = mkOption {
+            type = with types; listOf str;
+            description =
+              "All the AC Power filenames under <literal>/sys/class/power_supply/</literal>.";
+          };
 
-      network-interface = mkOption {
-        type = with types; listOf str;
-        description = "All the network interface name.";
-      };
+          network-interface = mkOption {
+            type = with types; listOf str;
+            description = "All the network interface name.";
+          };
 
-      ramSize = mkOption {
-        type = types.int;
-        readOnly = true;
-        description = "RAM size in KB (under 1 GB = 1024 KB scale)";
-      };
+          ramSize = mkOption {
+            type = types.int;
+            readOnly = true;
+            description = "RAM size in KB (under 1 GB = 1024 KB scale)";
+          };
 
-      swapResumeOffset = mkOption {
-        type = with types; nullOr int;
-        default = null;
-        description = ''
-          resume_offset value. Obtained by <literal>filefrag -v /swapfile | awk '{ if($1=="0:"){print $4} }'</literal>'';
+          swapResumeOffset = mkOption {
+            type = with types; nullOr int;
+            default = null;
+            description = ''
+              resume_offset value. Obtained by <literal>filefrag -v /swapfile | awk '{ if($1=="0:"){print $4} }'</literal>'';
+          };
+        };
       };
     };
 
