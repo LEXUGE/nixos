@@ -2,12 +2,12 @@
 
 stdenv.mkDerivation rec {
   pname = "maxmind-geoip";
-  version = "20200409";
+  version = "20200506";
 
   src = fetchurl {
     url =
       "https://github.com/Dreamacro/${pname}/releases/download/${version}/Country.mmdb";
-    sha256 = "08iqqglc7q7km0ga5jzb4b5cc5x170533qmkhciy70k2zg6gwr98";
+    sha256 = "0k4zczski4lmr18n6cmv03a9wkkb3f5zi82qaz8pjc9xncdqd3qh";
   };
 
   phases = [ "installPhase" ];
