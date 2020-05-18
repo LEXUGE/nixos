@@ -6,6 +6,7 @@
         org-default-notes-file (concat org-directory "/todo.org"))
   (setq org-startup-indented t)
   (setq TeX-auto-untabify 't) ;; Convert tabs properly into PDF
+  (setq org-latex-toc-command "\\tableofcontents \\clearpage") ;; Force page break after TOC
   :hook (org-mode . org-cdlatex-mode)
         (org-mode . visual-line-mode)
   :bind

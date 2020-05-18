@@ -1,4 +1,4 @@
-{ appimageTools, makeDesktopItem, fetchurl }:
+{ appimageTools, fetchurl }:
 
 let
   pname = "desktopeditors";
