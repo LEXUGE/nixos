@@ -14,7 +14,15 @@ let
   appimageContents = appimageTools.extractType2 { inherit name src; };
 in appimageTools.wrapType2 {
   inherit name src;
-  extraPkgs = pkgs: with pkgs; [ libpulseaudio ];
+  extraPkgs = pkgs:
+    with pkgs; [
+      libpulseaudio
+      noto-fonts-cjk
+      wqy_microhei
+      wqy_zenhei
+      source-han-sans-simplified-chinese
+      source-han-serif-simplified-chinese
+    ];
   extraInstallCommands = ''
     mv $out/bin/${name} $out/bin/${pname}
     install -m 444 -D ${appimageContents}/onlyoffice-desktopeditors.desktop $out/share/applications/onlyoffice-desktopeditors.desktop

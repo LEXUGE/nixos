@@ -99,7 +99,7 @@ in {
       "org/gnome/shell" = {
         favorite-apps = [
           "firefox.desktop"
-          "telegram-desktop.desktop"
+          "telegramdesktop.desktop"
           "org.gnome.Nautilus.desktop"
           "org.gnome.Terminal.desktop"
           "emacs.desktop"

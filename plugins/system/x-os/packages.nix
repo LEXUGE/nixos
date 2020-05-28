@@ -27,10 +27,6 @@ in mkIf cfg.enable {
   fonts.fonts = with pkgs; [
     noto-fonts
     noto-fonts-cjk
-    wqy_microhei
-    wqy_zenhei
-    source-han-sans-simplified-chinese
-    source-han-serif-simplified-chinese
     noto-fonts-emoji
     fira-code
     fira-code-symbols

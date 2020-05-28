@@ -16,6 +16,7 @@ in {
       displayManager.gdm.enable = true;
       desktopManager.gnome3.enable = true;
     };
+
     # Some of the GNOME Packages are unwanted
     programs.geary.enable = false;
     environment.gnome3.excludePackages =
