@@ -51,7 +51,7 @@ in {
                 etcher
                 vlc
                 pavucontrol
-                calibre
+                #calibre
                 tor-browser-bundle-bin
                 latest.rustChannels.stable.rust
                 ifuse
