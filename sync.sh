@@ -21,6 +21,8 @@ rsync -avP \
 cp configuration.nix configuration.nix.example
 find . -type f -name '*.nix' -exec nixfmt {} +
 find . -type f -name '*.nix.example' -exec nixfmt {} +
+shellcheck ./*.sh
+shfmt -w ./*.sh
 echo "Done."
 
 echo -n "Adding to git..."

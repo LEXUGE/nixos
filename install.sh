@@ -87,6 +87,10 @@ nixos_install() {
 	nano ${MOUNTPOINT}/etc/nixos/configuration.nix
 	nano ${MOUNTPOINT}/etc/nixos/secrets/clash.yaml
 
+	# We need to copy one set of configuration else nixos-install would get us into folder problems.
+	rm -rf /etc/nixos/
+	cp -a ${MOUNTPOINT}/etc/nixos/ /etc/nixos/
+
 	# Install NixOS using TUNA binary cache with fallback
 	nixos-generate-config --root /mnt
 	nixos-install --option substituters "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store https://cache.nixos.org/"

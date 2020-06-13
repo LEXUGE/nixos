@@ -48,7 +48,7 @@ in {
 
       certainty = mkOption {
         type = types.int;
-        default = 3.5;
+        default = 3;
         description = ''
           The certainty of the detected face belonging to the user of the account. On a scale from 1 to 10, values above 5 are not recommended.
         '';

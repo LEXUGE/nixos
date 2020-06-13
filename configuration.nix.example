@@ -45,8 +45,8 @@ in {
                 firefox
                 tdesktop
                 minecraft
-                virtmanager
-                texlive.combined.scheme-full
+                gnome3.gnome-boxes
+                #texlive.combined.scheme-full
                 steam
                 etcher
                 vlc
@@ -72,6 +72,7 @@ in {
     };
 
     devices = {
+      # Change the plugin list accordingly to the `bio-auth` option of `x1c7` plugin
       plugins = [ "x1c7" "howdy" ];
       configs = {
         x1c7 = {
@@ -87,11 +88,11 @@ in {
       modules = [ (import ./plugins/lib/modules/std.nix { lib = lib; }) ];
       configs = {
         system = {
-          # Path to directories (use relative paths to avoid trouble in nixos-install.)
+          # Path to directories (always use absolute path to avoid trouble in nixos-install, because we will copy the whole configuration to the same folder under LiveCD).
           # If you don't understand, just keep it as it is.
           dirs = {
-            secrets = ./secrets; # Did you read the comments above?
-            dotfiles = ./dotfiles;
+            secrets = /etc/nixos/secrets; # Did you read the comments above?
+            dotfiles = /etc/nixos/dotfiles;
           };
           bluetooth = {
             # Force enable/disable bluetooth
@@ -101,9 +102,9 @@ in {
           };
         };
         devices = {
-          # resume_offset value. Obtained by <literal>filefrag -v /swapfile | awk '{ if($1=="0:"){print $4} }'</literal>
+          # resume_offset value. Obtained by <literal>filefrag -v /var/swapFile | awk '{ if($1=="0:"){print $4} }'</literal>
           # If you want to hibernate, you MUST set it properly.
-          swapResumeOffset = 36864;
+          swapResumeOffset = 59392;
         };
       };
     };
