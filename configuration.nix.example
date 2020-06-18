@@ -52,7 +52,7 @@ in {
                 })
                 steam
                 etcher
-                vlc
+                #vlc
                 pavucontrol
                 #calibre
                 tor-browser-bundle-bin

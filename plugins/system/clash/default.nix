@@ -59,12 +59,20 @@ in {
     icebox.overlays = [
       (self: super: {
         maxmind-geoip = (super.callPackage ./packages/maxmind-geoip.nix { });
+        yacd = (super.callPackage ./packages/yacd.nix { });
       })
     ];
 
     environment.etc."clash/Country.mmdb".source =
       "${pkgs.maxmind-geoip}/Country.mmdb"; # Bring pre-installed geoip data into directory.
     environment.etc."clash/config.yaml".source = configPath;
+
+    # Yacd
+    services.lighttpd = {
+      enable = true;
+      port = 3000;
+      document-root = "${pkgs.yacd}";
+    };
 
     users.users.${clashUserName} = {
       description = "Clash deamon user";
