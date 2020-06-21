@@ -1,12 +1,11 @@
 { stdenv, fetchzip }:
 
 stdenv.mkDerivation rec {
-  pname = "yacd";
-  version = "v0.1.22";
+  name = "yacd";
 
-  src = fetchzip {
-    url = "https://github.com/haishanh/yacd/archive/gh-pages.zip";
-    sha256 = "05wrgzlc6m2n6y6aa276qk7c8d48rc4k6bvyayrgm3gj99zf5ybw";
+  src = builtins.fetchGit {
+    url = "https://github.com/haishanh/yacd.git";
+    ref = "gh-pages";
   };
 
   phases = [ "installPhase" ];
