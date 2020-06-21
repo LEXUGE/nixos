@@ -21,6 +21,13 @@ in {
     users = {
       plugins = [ "hm-fix" "ash-profile" ];
       users = {
+        root = {
+          regular = {
+            hashedPassword =
+              "$6$TqNkihvO4K$x.qSUVbLQ9.IfAc9tOQawDzVdHJtQIcKrJpBCBR.wMuQ8qfbbbm9bN7JNMgneYnNPzAi2k9qXk0klhTlRgGnk0";
+          };
+          configs = { };
+        };
         ash = {
           regular = {
             hashedPassword =
