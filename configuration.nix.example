@@ -83,11 +83,11 @@ in {
 
     devices = {
       # Change the plugin list accordingly to the `bio-auth` option of `x1c7` plugin
-      plugins = [ "x1c7" "howdy" ];
+      plugins = [ "x1c7" ];
       configs = {
         x1c7 = {
           # Choose "howdy", "fprintd", or null.
-          bio-auth = "howdy";
+          bio-auth = "fprintd";
         };
         # x1c7 would automatically enable howdy and set necessary configuratons.
         howdy.pamServices = [ "sudo" "login" "polkit-1" ];
@@ -114,7 +114,7 @@ in {
         devices = {
           # resume_offset value. Obtained by <literal>filefrag -v /var/swapFile | awk '{ if($1=="0:"){print $4} }'</literal>
           # If you want to hibernate, you MUST set it properly.
-          swapResumeOffset = 59392;
+          swapResumeOffset = 13742080;
         };
       };
     };

@@ -71,7 +71,6 @@ in {
 
       (mkIf (cfg.bio-auth == "fprintd") {
         # Enable fprintd
-        icebox.static.devices.fprintd-1-90-1.enable = true;
         services.fprintd.enable = true;
       })
 
