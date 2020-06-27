@@ -44,6 +44,7 @@ in {
             ash-profile = {
               enable = true;
               extraPackages = with pkgs; [
+                (python3.withPackages (ps: [ ps.tkinter ]))
                 htop
                 deluge
                 zoom-us
@@ -58,6 +59,7 @@ in {
                   inherit (texlive) scheme-basic wrapfig ulem capt-of metafont;
                 })
                 steam
+                gparted
                 etcher
                 #vlc
                 pavucontrol
