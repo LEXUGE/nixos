@@ -47,6 +47,10 @@ in {
       wpaPassphrase = "88888888";
     };
 
+    # Hostapd refuses to work properly after resume. Restarting on resume solves this problem.
+    powerManagement.resumeCommands =
+      "${config.systemd.package}/bin/systemctl restart hostapd.service";
+
     networking.interfaces."wlan-ap0".ipv4.addresses = [{
       address = "192.168.12.1";
       prefixLength = 24;
@@ -76,6 +80,12 @@ in {
       description = "iptables rules for wifi-relay";
       after = [ "dhcpd4.service" ];
       wantedBy = [ "multi-user.target" ];
+      # NAT the packets if the packets are from the wlan-ap0 LAN to the Internet
+      # ${iptables}/bin/iptables -w -t nat -I POSTROUTING -s 192.168.12.0/24 ! -o wlan-ap0 -j MASQUERADE
+      # Accept the packets from wlan-ap0 to forward them to the outer world
+      # ${iptables}/bin/iptables -w -I FORWARD -i wlan-ap0 -s 192.168.12.0/24 -j ACCEPT
+      # Accept the packets from wlan-station0 to forward them back to the LAN
+      # ${iptables}/bin/iptables -w -I FORWARD -i wlan-ap0 -s 192.168.12.0/24 -j ACCEPT
       script = ''
         ${iptables}/bin/iptables -w -t nat -I POSTROUTING -s 192.168.12.0/24 ! -o wlan-ap0 -j MASQUERADE
         ${iptables}/bin/iptables -w -I FORWARD -i wlan-ap0 -s 192.168.12.0/24 -j ACCEPT
