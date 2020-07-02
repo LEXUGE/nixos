@@ -142,7 +142,11 @@ in {
             7892; # This must be the same with the one in your clash.yaml
         };
 
-        wifi-relay = { network-interface = "wlp0s20f3"; };
+        wifi-relay = {
+          interface = "wlp0s20f3";
+          ssid = "AP-Freedom";
+          passphrase = "88888888";
+        };
       };
     };
 

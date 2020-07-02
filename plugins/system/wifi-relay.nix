@@ -13,7 +13,19 @@ in {
       description = "Enable Wi-Fi relay on the same card.";
     };
 
-    network-interface = mkOption {
+    ssid = mkOption {
+      type = types.str;
+      description = "SSID of the Access Point to be created";
+      example = "AP-Relay";
+    };
+
+    passphrase = mkOption {
+      type = types.str;
+      description = "Passphrase of the Access Point to be created";
+      example = "mysecret";
+    };
+
+    interface = mkOption {
       type = types.enum devices.network-interface;
       description = "Wi-Fi network interface to use";
     };
@@ -29,22 +41,29 @@ in {
   config = mkIf (cfg.enable) {
     # "wlan-station0" is for wifi-client managed by network manager, "wlan-ap0" is for hostap
     networking.wlanInterfaces = {
-      "wlan-station0" = { device = cfg.network-interface; };
+      "wlan-station0" = { device = cfg.interface; };
       "wlan-ap0" = {
-        device = cfg.network-interface;
+        device = cfg.interface;
         mac = "08:11:96:0e:08:0a";
       };
     };
 
     networking.networkmanager.unmanaged =
-      [ "interface-name:${cfg.network-interface}" "interface-name:wlan-ap0" ];
+      [ "interface-name:${cfg.interface}" "interface-name:wlan-ap0" ];
 
     services.hostapd = {
       enable = true;
       interface = "wlan-ap0";
       hwMode = "g";
-      ssid = "AP-Freedom";
-      wpaPassphrase = "88888888";
+      wpa = true;
+      ssid = cfg.ssid;
+      wpaPassphrase = cfg.passphrase;
+      extraConfig = ''
+        # 1=wpa, 2=wep, 3=both
+        auth_algs=1
+        wpa_key_mgmt=WPA-PSK
+        rsn_pairwise=CCMP
+      '';
     };
 
     # Hostapd refuses to work properly after resume. Restarting on resume solves this problem.
