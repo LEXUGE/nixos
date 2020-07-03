@@ -46,6 +46,17 @@ in {
         # Update Intel CPU Microcode
         hardware.cpu.intel.updateMicrocode = true;
 
+        # Intel UHD 620 Hardware Acceleration
+        hardware.opengl = {
+          enable = true;
+          extraPackages = with pkgs; [
+            vaapiIntel
+            vaapiVdpau
+            libvdpau-va-gl
+            intel-media-driver # only available starting nixos-19.03 or the current nixos-unstable
+          ];
+        };
+
         # Enable TLP Power Management
         services.tlp = {
           enable = true;
