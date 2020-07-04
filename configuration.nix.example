@@ -9,6 +9,8 @@ let
     "https://github.com/icebox-nix/icebox/archive/master.tar.gz";
   netkit = builtins.fetchTarball
     "https://github.com/icebox-nix/netkit.nix/archive/master.tar.gz";
+  std =
+    builtins.fetchurl "https://github.com/icebox-nix/std/raw/master/std.nix";
 in {
   imports = [
     ./hardware-configuration.nix
@@ -100,7 +102,7 @@ in {
     };
 
     lib = {
-      modules = [ (import ./plugins/lib/modules/std.nix { lib = lib; }) ];
+      modules = [ (import "${std}" { lib = lib; }) ];
       configs = {
         system = {
           # Path to directories (always use absolute path to avoid trouble in nixos-install, because we will copy the whole configuration to the same folder under LiveCD).
