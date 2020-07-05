@@ -43,7 +43,7 @@ in {
             # networkmanager - manage network
             # video - light control
             # libvirtd - virtual manager controls.
-            extraGroups = [ "wheel" "networkmanager" "video" "libvirtd" ];
+            extraGroups = [ "wheel" "networkmanager" "video" ];
           };
           configs = {
             ash-profile = {
@@ -58,7 +58,6 @@ in {
                 firefox-wayland
                 tdesktop
                 minecraft
-                virt-manager
                 gnome3.gnome-boxes
                 (texlive.combine {
                   inherit (texlive) scheme-basic wrapfig ulem capt-of metafont;

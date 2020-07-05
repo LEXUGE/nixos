@@ -26,7 +26,8 @@ in mkIf cfg.enable (mkMerge [
     sound.enable = true;
 
     # Libvirtd
-    virtualisation.libvirtd.enable = true;
+    # We DON'T enable it because it uses dnsmasq which blocks clash's binding on 0.0.0.0:53
+    # virtualisation.libvirtd.enable = true;
     # FIXME: Should we let users add them to group or other way around.
 
     # OpenGL 32 bit support for steam
