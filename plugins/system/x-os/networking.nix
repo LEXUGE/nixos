@@ -18,8 +18,8 @@ in {
   config = mkIf cfg.enable {
     networking.hostName = cfg.hostname; # Define hostname
 
-    # Allow Spotify Local discovery
-    networking.firewall.allowedTCPPorts = [ 57621 ];
+    networking.firewall.allowedTCPPorts =
+      [ 57621 ]; # Allow Spotify Local discovery
 
     networking.networkmanager = {
       # Enable networkmanager. REMEMBER to add yourself to group in order to use nm related stuff.

@@ -126,7 +126,14 @@ in {
     };
 
     system = {
-      plugins = [ "x-os" "gnome" "clash" "onlyoffice-desktop" "wifi-relay" ];
+      plugins = [
+        "x-os"
+        "gnome"
+        "clash"
+        "onlyoffice-desktop"
+        "wifi-relay"
+        "minecraft-server"
+      ];
       stateVersion = "19.09";
       configs = {
         x-os = {
@@ -151,6 +158,8 @@ in {
           ssid = "AP-Freedom";
           passphrase = "88888888";
         };
+
+        minecraft-server.port = 33333;
       };
     };
 
