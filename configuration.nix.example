@@ -58,6 +58,7 @@ in {
                 firefox-wayland
                 tdesktop
                 minecraft
+                mcrcon
                 gnome3.gnome-boxes
                 (texlive.combine {
                   inherit (texlive) scheme-basic wrapfig ulem capt-of metafont;
@@ -159,7 +160,35 @@ in {
           passphrase = "88888888";
         };
 
-        minecraft-server.port = 33333;
+        minecraft-server = {
+          eula = true;
+          declarative = true;
+          openFirewall = true;
+
+          ops = [
+            {
+              # Offline UUID Generated for AshBreaker1: 94f4d16b-0e0b-39e3-9a92-a26bf4f7a0dc
+              uuid = "94f4d16b-0e0b-39e3-9a92-a26bf4f7a0dc";
+              name = "AshBreaker1";
+              level = 4;
+            }
+            {
+              # Official UUID issued by Mojang: 65bec9be-2cb8-46c8-bab5-2a5219759a4a
+              uuid = "65bec9be-2cb8-46c8-bab5-2a5219759a4a";
+              name = "AshBreaker1";
+              level = 4;
+            }
+          ];
+
+          serverProperties = {
+            online-mode = false;
+            server-ip = "192.168.12.1";
+            server-port = 33333;
+            enable-rcon = true;
+            "rcon.port" = 25575;
+            "rcon.password" = "nixos";
+          };
+        };
       };
     };
 
