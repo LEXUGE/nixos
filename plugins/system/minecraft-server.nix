@@ -394,7 +394,6 @@ in {
         wantedBy = [ "sockets.target" ];
         # Don't start multiple instances of corresponding service.
         socketConfig.Accept = false;
-        after = [ "hostapd.service" ];
       };
     })
   ]);
