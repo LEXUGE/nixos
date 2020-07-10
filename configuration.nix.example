@@ -158,12 +158,22 @@ in {
           interface = "wlp0s20f3";
           ssid = "AP-Freedom";
           passphrase = "88888888";
+          # To make sure that socket can bind itself to the LAN address
+          unitsAfter = [ "proxy-minecraft-server.socket" ];
         };
 
         minecraft-server = {
           eula = true;
-          declarative = true;
           openFirewall = true;
+
+          serverIp = "192.168.12.1";
+          serverPort = 33333;
+          rconPassword = "nixos";
+
+          onDemand = {
+            enable = true;
+            idleIfTime = 60;
+          };
 
           ops = [
             {
@@ -180,14 +190,7 @@ in {
             }
           ];
 
-          serverProperties = {
-            online-mode = false;
-            server-ip = "192.168.12.1";
-            server-port = 33333;
-            enable-rcon = true;
-            "rcon.port" = 25575;
-            "rcon.password" = "nixos";
-          };
+          serverProperties = { online-mode = false; };
         };
       };
     };
