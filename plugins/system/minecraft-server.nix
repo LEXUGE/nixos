@@ -168,6 +168,7 @@ in {
         '';
       };
 
+      # NOTE on these options: we have to use corresponding keys in `serverProperties` because these might be overriden in `serverProperties.
       serverIp = mkOption {
         type = types.str;
         description = "IP address bond to the Minecraft server.";
@@ -177,6 +178,12 @@ in {
         type = types.port;
         description = "Port that the Minecraft server listens on.";
         default = 25565;
+      };
+
+      maxPlayers = mkOption {
+        type = types.int;
+        description = "Max players allowed in the server.";
+        default = 20;
       };
 
       rconPassword = mkOption {
@@ -239,6 +246,7 @@ in {
     ({
       icebox.static.system.minecraft-server.serverProperties = {
         server-port = mkDefault cfg.serverPort;
+        max-players = mkDefault cfg.maxPlayers;
         enable-rcon = true;
         "rcon.port" = mkDefault cfg.rconPort;
         "rcon.password" = mkDefault cfg.rconPassword;
@@ -258,13 +266,13 @@ in {
         unitConfig.StopWhenUnneeded = true;
         serviceConfig = {
           ExecStart = "${cfg.package}/bin/minecraft-server ${cfg.jvmOpts}";
-          ExecStop =
-            "${pkgs.mcrcon}/bin/mcrcon -H 127.0.0.1 -p ${cfg.rconPassword} -P ${
-              toString cfg.rconPort
-            } stop";
+          ExecStop = "${pkgs.mcrcon}/bin/mcrcon -H 127.0.0.1 -p ${
+              cfg.serverProperties."rcon.password"
+            } -P ${toString cfg.serverProperties."rcon.port"} stop";
           Restart = "always";
           User = "minecraft";
           WorkingDirectory = cfg.dataDir;
+          # This is fine because server does its own job on stopping after `ExecStop`'s order on stopping the server. See also: https://minecraft.gamepedia.com/Commands/stop
           KillMode = "none";
           PrivateNetwork = true;
           PrivateTmp = true;
@@ -293,6 +301,7 @@ in {
         '';
       };
 
+      # We don't use `cfg.serverPort` or something like that directly because it may be overridden by users in `serverProperties`.
       networking.firewall = mkIf cfg.openFirewall {
         allowedUDPPorts = [ cfg.serverProperties.server-port ];
         allowedTCPPorts =
@@ -323,7 +332,7 @@ in {
       systemd.services = {
         # This service serves as a bi-directional relay between the actual server and systemd socket
         proxy-minecraft-server = {
-          # Since we explicitly stops minecraft-server.target (minecraft-server.service as well since state propagates) if there is no one on the server, this proxy would stop as well.
+          # If there is no one on the server, this proxy would stop as well since we explicitly stops minecraft-server.target .
           requires =
             [ "minecraft-server.target" "proxy-minecraft-server.socket" ];
           after = [ "minecraft-server.target" "proxy-minecraft-server.socket" ];
@@ -334,8 +343,8 @@ in {
             # FIXME: Use --exit-idle-time after the release of systemd v246
             ExecStart =
               "${config.systemd.package}/lib/systemd/systemd-socket-proxyd 127.0.0.1:${
-                toString cfg.serverPort
-              }";
+                toString cfg.serverProperties.server-port
+              } -c ${toString cfg.serverProperties.max-players}";
             PrivateTmp = true;
             PrivateNetwork = true;
           };
@@ -345,8 +354,10 @@ in {
           # This script continuously tries to get the number of online players using RCON. If RCON fails to connect or there is at least one player, it would come to another loop, else it exits with 0.
           execScript = pkgs.writeShellScript "minecraftd" ''
             while true; do
-              if [[ "$(${pkgs.mcrcon}/bin/mcrcon -H 127.0.0.1 -p ${cfg.rconPassword} -P ${
-                toString cfg.rconPort
+              if [[ "$(${pkgs.mcrcon}/bin/mcrcon -H 127.0.0.1 -p ${
+                cfg.serverProperties."rcon.password"
+              } -P ${
+                toString cfg.serverProperties."rcon.port"
               } list 2>/dev/null | ${pkgs.gnugrep}/bin/grep "There are" | ${pkgs.gnused}/bin/sed -r -e 's/.*\: //' -e 's/^([^.]+).*$/\1/; s/^[^0-9]*([0-9]+).*$/\1/' | ${pkgs.coreutils}/bin/tr -d '\n')" == "0" ]]; then
                 echo "No players online currently."
                 exit 0
@@ -389,7 +400,8 @@ in {
 
       systemd.sockets.proxy-minecraft-server = {
         # We listen on the real address
-        listenStreams = [ "${cfg.serverIp}:${toString cfg.serverPort}" ];
+        listenStreams =
+          [ "${cfg.serverIp}:${toString cfg.serverProperties.server-port}" ];
         # Start this socket on boot
         wantedBy = [ "sockets.target" ];
         # Don't start multiple instances of corresponding service.

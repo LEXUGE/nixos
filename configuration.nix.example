@@ -190,7 +190,11 @@ in {
             }
           ];
 
-          serverProperties = { online-mode = false; };
+          serverProperties = {
+            online-mode = false;
+            level-name = "newera";
+            level-type = "amplified";
+          };
         };
       };
     };
