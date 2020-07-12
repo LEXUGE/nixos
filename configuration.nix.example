@@ -212,10 +212,22 @@ in {
             }
           ];
 
+          whitelist = {
+            SIMON1314520 =
+              "5f18149d-a806-3491-b5fc-75fadee9154f"; # Simon Shu - Offline
+            AshBreaker1 = "94f4d16b-0e0b-39e3-9a92-a26bf4f7a0dc"; # Offline
+            # AshBreaker1 = "65bec9be-2cb8-46c8-bab5-2a5219759a4a"; # Online
+          };
+
           serverProperties = {
             online-mode = false;
             level-name = "newera";
             level-type = "amplified";
+            white-list = true;
+            network-compression-threshold =
+              64; # Compress any packets larger than 64 bytes
+            motd =
+              "\\u00A76NewEra \\u00A77Vanilla \\u00A7cSurvival\\u00A7r\\n\\u00A7bt.me/NewEraMinecraft";
           };
         };
       };

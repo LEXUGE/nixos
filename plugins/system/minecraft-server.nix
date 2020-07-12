@@ -266,16 +266,24 @@ in {
         unitConfig.StopWhenUnneeded = true;
         serviceConfig = {
           ExecStart = "${cfg.package}/bin/minecraft-server ${cfg.jvmOpts}";
-          ExecStop = "${pkgs.mcrcon}/bin/mcrcon -H 127.0.0.1 -p ${
-              cfg.serverProperties."rcon.password"
-            } -P ${toString cfg.serverProperties."rcon.port"} stop";
           Restart = "always";
           User = "minecraft";
+          # JVM exits 143 on SIGTERM after graceful shutdown, which is fine.
+          SuccessExitStatus = 143;
           WorkingDirectory = cfg.dataDir;
-          # This is fine because server does its own job on stopping after `ExecStop`'s order on stopping the server. See also: https://minecraft.gamepedia.com/Commands/stop
-          KillMode = "none";
           PrivateNetwork = true;
           PrivateTmp = true;
+          # Users Database is not available for within the unit, only root and minecraft is available, everybody else is nobody
+          PrivateUsers = true;
+          # Read only mapping of /usr /boot and /etc
+          ProtectSystem = "full";
+          # /home, /root and /run/user seem to be empty from within the unit.
+          ProtectHome = true;
+          # /proc/sys, /sys, /proc/sysrq-trigger, /proc/latency_stats, /proc/acpi, /proc/timer_stats, /proc/fs and /proc/irq will be read-only within the unit.
+          ProtectKernelTunables = true;
+          # Block module system calls, also /usr/lib/modules.
+          ProtectKernelModules = true;
+          ProtectControlGroups = true;
         };
 
         preStart = ''
@@ -299,6 +307,10 @@ in {
               > .declarative
           fi
         '';
+
+        # There will be no multiple instances, clean up the session lock to avoid successive startup failure.
+        # Use -f flag so that there would be no failure if session.lock doesn't exist.
+        postStop = "${pkgs.coreutils}/bin/rm -f ./*/session.lock";
       };
 
       # We don't use `cfg.serverPort` or something like that directly because it may be overridden by users in `serverProperties`.
