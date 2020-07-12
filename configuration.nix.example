@@ -15,8 +15,7 @@ in {
   imports = [
     ./hardware-configuration.nix
     "${icebox}"
-    /home/ash/Documents/git/netkit.nix
-    #"${netkit}"
+    "${netkit}"
     ./plugins
     "${home-manager}/nixos"
   ];
