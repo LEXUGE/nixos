@@ -268,7 +268,7 @@ in {
           ExecStart = "${cfg.package}/bin/minecraft-server ${cfg.jvmOpts}";
           Restart = "always";
           User = "minecraft";
-          # JVM exits 143 on SIGTERM after graceful shutdown, which is fine.
+          # JVM exits 143 on SIGTERM after graceful shutdown, which is fine. See also: https://serverfault.com/questions/695849/services-remain-in-failed-state-after-stopped-with-systemctl
           SuccessExitStatus = 143;
           WorkingDirectory = cfg.dataDir;
           PrivateNetwork = true;
