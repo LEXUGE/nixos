@@ -28,7 +28,8 @@ in {
 
     systemd.services.frpc = {
       description = "frp client service";
-      after = [ "network.target" ];
+      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
       wantedBy = [ "multi-user.target" ];
 
       serviceConfig = {
