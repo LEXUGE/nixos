@@ -1,3 +1,9 @@
 {
-  imports = [ ./x-os ./gnome.nix ./onlyoffice-desktop ./minecraft-server.nix ];
+  imports = [
+    ./x-os
+    ./gnome.nix
+    ./onlyoffice-desktop
+    ./minecraft-server.nix
+    ./frpc.nix
+  ];
 }

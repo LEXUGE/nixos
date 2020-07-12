@@ -67,6 +67,7 @@ in {
                 gparted
                 etcher
                 #vlc
+                frp
                 pavucontrol
                 #calibre
                 tor-browser-bundle-bin
@@ -134,6 +135,7 @@ in {
         "onlyoffice-desktop"
         "wifi-relay"
         "minecraft-server"
+        "frpc"
       ];
       stateVersion = "19.09";
       configs = {
@@ -158,8 +160,28 @@ in {
           interface = "wlp0s20f3";
           ssid = "AP-Freedom";
           passphrase = "88888888";
-          # To make sure that socket can bind itself to the LAN address
-          unitsAfter = [ "proxy-minecraft-server.socket" ];
+          # To make sure that these units can bind itself to the LAN address
+          unitsAfter = [ "proxy-minecraft-server.socket" "frpc.service" ];
+        };
+
+        frpc = {
+          frpcConfig = {
+            common = {
+              server_addr = "175.24.191.112";
+              server_port = 7000;
+              tls_enable = true;
+              authentication_method = "token";
+              token = "2007f015-fbae-438d-a348-73310678cd11";
+            };
+
+            minecraft-server = {
+              type = "tcp";
+              local_ip = "192.168.12.1";
+              local_port = 33333;
+              remote_port = 33333;
+              use_compression = true;
+            };
+          };
         };
 
         minecraft-server = {
@@ -172,7 +194,7 @@ in {
 
           onDemand = {
             enable = true;
-            idleIfTime = 60;
+            idleIfTime = 180;
           };
 
           ops = [
