@@ -15,7 +15,8 @@ in {
   imports = [
     ./hardware-configuration.nix
     "${icebox}"
-    "${netkit}"
+    /home/ash/Documents/git/netkit.nix
+    #"${netkit}"
     ./plugins
     "${home-manager}/nixos"
   ];
@@ -160,8 +161,6 @@ in {
           interface = "wlp0s20f3";
           ssid = "AP-Freedom";
           passphrase = "88888888";
-          # To make sure that these units can bind itself to the LAN address
-          unitsAfter = [ "proxy-minecraft-server.socket" "frpc.service" ];
         };
 
         frpc = {
@@ -176,7 +175,7 @@ in {
 
             minecraft-server = {
               type = "tcp";
-              local_ip = "192.168.12.1";
+              local_ip = "127.0.0.1";
               local_port = 33333;
               remote_port = 33333;
               use_compression = true;
@@ -188,13 +187,10 @@ in {
           eula = true;
           openFirewall = true;
 
-          serverIp = "192.168.12.1";
-          serverPort = 33333;
-          rconPassword = "nixos";
-
           onDemand = {
             enable = true;
             idleIfTime = 180;
+            serverPort = 33333;
           };
 
           ops = [
@@ -215,6 +211,8 @@ in {
           whitelist = {
             SIMON1314520 =
               "5f18149d-a806-3491-b5fc-75fadee9154f"; # Simon Shu - Offline
+            btbtbt =
+              "36866b49-0e29-3b96-b80c-c8eda7cfe3ff"; # Newt Chen - Offline
             AshBreaker1 = "94f4d16b-0e0b-39e3-9a92-a26bf4f7a0dc"; # Offline
             # AshBreaker1 = "65bec9be-2cb8-46c8-bab5-2a5219759a4a"; # Online
           };
@@ -224,6 +222,8 @@ in {
             level-name = "newera";
             level-type = "amplified";
             white-list = true;
+            enable-rcon = true;
+            "rcon.password" = "nixos";
             network-compression-threshold =
               64; # Compress any packets larger than 64 bytes
             motd =

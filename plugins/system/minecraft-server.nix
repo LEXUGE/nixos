@@ -109,12 +109,24 @@ in {
               enable = mkOption {
                 type = bool;
                 default = false;
-                description = "Enable Minecraft Server Monitor daemon";
+                description =
+                  "Enable Minecraft Server Monitor daemon. You must enable RCON to use it.";
               };
               idleIfTime = mkOption {
                 type = int;
                 description =
                   "Time in seconds. Idle the server if there is no player on it and this time is exceeded.";
+              };
+              serverPort = mkOption {
+                type = port;
+                description =
+                  "Port that players should connect to. Must be different from 25565 if `onDemand.serverIp` is null.";
+              };
+              serverIp = mkOption {
+                type = nullOr str;
+                default = null;
+                description =
+                  "Set to null to listen on all interfaces. Set a string to listen on specific port.";
               };
             };
           };
@@ -168,35 +180,6 @@ in {
         '';
       };
 
-      # NOTE on these options: we have to use corresponding keys in `serverProperties` because these might be overriden in `serverProperties.
-      serverIp = mkOption {
-        type = types.str;
-        description = "IP address bond to the Minecraft server.";
-      };
-
-      serverPort = mkOption {
-        type = types.port;
-        description = "Port that the Minecraft server listens on.";
-        default = 25565;
-      };
-
-      maxPlayers = mkOption {
-        type = types.int;
-        description = "Max players allowed in the server.";
-        default = 20;
-      };
-
-      rconPassword = mkOption {
-        type = types.str;
-        description = "Password of the server's RCON service.";
-      };
-
-      rconPort = mkOption {
-        type = types.port;
-        description = "Port of the server's RCON service.";
-        default = 25575;
-      };
-
       serverProperties = mkOption {
         type = with types; attrsOf (oneOf [ bool int str ]);
         default = { };
@@ -244,14 +227,6 @@ in {
   config = mkIf cfg.enable (mkMerge [
     # Common configuration that applies to both on-demand server management on or off.
     ({
-      icebox.static.system.minecraft-server.serverProperties = {
-        server-port = mkDefault cfg.serverPort;
-        max-players = mkDefault cfg.maxPlayers;
-        enable-rcon = true;
-        "rcon.port" = mkDefault cfg.rconPort;
-        "rcon.password" = mkDefault cfg.rconPassword;
-      };
-
       users.users.minecraft = {
         description = "Minecraft server service user";
         home = cfg.dataDir;
@@ -313,7 +288,6 @@ in {
         postStop = "${pkgs.coreutils}/bin/rm -f ./*/session.lock";
       };
 
-      # We don't use `cfg.serverPort` or something like that directly because it may be overridden by users in `serverProperties`.
       networking.firewall = mkIf cfg.openFirewall {
         allowedUDPPorts = [ cfg.serverProperties.server-port ];
         allowedTCPPorts =
@@ -330,16 +304,28 @@ in {
 
     })
 
-    (mkIf (!cfg.onDemand.enable) {
-      # If there is no on-demand server management, start minecraft-server on the actual server-ip.
-      icebox.static.system.minecraft-server.serverProperties.server-ip =
-        mkDefault cfg.serverIp;
-    })
-
     (mkIf (cfg.onDemand.enable) {
-      # We want to start the actual server on localhost so our on-demand server management mechanism can work as expected.
-      icebox.static.system.minecraft-server.serverProperties.server-ip =
-        "127.0.0.1";
+      assertions = [
+        {
+          assertion = (cfg.onDemand.serverPort != 25565)
+            && (cfg.onDemand.serverIp == null);
+          message =
+            "The `serverPort` must not be 25565 if server listens on all addresses.";
+        }
+        {
+          assertion = cfg.serverProperties.enable-rcon;
+          message = "rcon must be enabled for on-demand server management.";
+        }
+      ];
+
+      icebox.static.system.minecraft-server.serverProperties = {
+        # We want to start the actual server on localhost with default port so our on-demand server management mechanism can work as expected.
+        server-ip = "127.0.0.1";
+        server-port = 25565;
+        # Take official default values that are used latter.
+        "rcon.port" = mkDefault 25575;
+        max-players = mkDefault 20;
+      };
 
       systemd.services = {
         # This service serves as a bi-directional relay between the actual server and systemd socket
@@ -411,9 +397,15 @@ in {
       };
 
       systemd.sockets.proxy-minecraft-server = {
-        # We listen on the real address
-        listenStreams =
-          [ "${cfg.serverIp}:${toString cfg.serverProperties.server-port}" ];
+        # Listen on all addresses if `serverIp` is null, else listen on the specific one.
+        listenStreams = [
+          "${
+            if (cfg.onDemand.serverIp != null) then
+              (cfg.onDemand.serverIp + ":")
+            else
+              ""
+          }${toString cfg.onDemand.serverPort}"
+        ];
         # Start this socket on boot
         wantedBy = [ "sockets.target" ];
         # Don't start multiple instances of corresponding service.
