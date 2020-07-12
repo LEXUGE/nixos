@@ -32,20 +32,19 @@ let
   # These defaults are from https://minecraft.gamepedia.com/Server.properties#Java_Edition_3
   maxPlayers = 20;
 
-  # Followings are the values of ports exposed for external players regardless of whether on-demand server management is enabled.
+  # Server port exposed to external players
   serverPort = if (!cfg.onDemand.enable) then
     (cfg.serverProperties.server-port or 25565)
   else
     cfg.onDemand.serverPort;
 
-  rconPort = if (cfg.serverProperties.enable-rcon or false)
-  && (!cfg.onDemand.enable) then
+  # rcon and query port that the actual server is running on (minecraft-server.service)
+  rconPort = if cfg.serverProperties.enable-rcon or false then
     cfg.serverProperties."rcon.port" or 25575
   else
     null;
 
-  queryPort = if (cfg.serverProperties.enable-query or false)
-  && (!cfg.onDemand.enable) then
+  queryPort = if cfg.serverProperties.enable-query or false then
     cfg.serverProperties."query.port" or 25565
   else
     null;
@@ -303,13 +302,6 @@ in {
         postStop = "${pkgs.coreutils}/bin/rm -f ./*/session.lock";
       };
 
-      networking.firewall = mkIf cfg.openFirewall {
-        allowedUDPPorts = [ serverPort ];
-        allowedTCPPorts = [ serverPort ]
-          ++ optional (queryPort != null) queryPort
-          ++ optional (rconPort != null) rconPort;
-      };
-
       assertions = [{
         assertion = cfg.eula;
         message = "You must agree to Mojangs EULA to run minecraft-server."
@@ -317,6 +309,15 @@ in {
           + " set `services.minecraft-server.eula` to `true` if you agree.";
       }];
 
+    })
+
+    (mkIf (!cfg.onDemand.enable) {
+      networking.firewall = mkIf cfg.openFirewall {
+        allowedUDPPorts = [ serverPort ];
+        allowedTCPPorts = [ serverPort ]
+          ++ optional (queryPort != null) queryPort
+          ++ optional (rconPort != null) rconPort;
+      };
     })
 
     (mkIf (cfg.onDemand.enable) {
@@ -336,6 +337,12 @@ in {
         # We want to start the actual server on localhost with default port so our on-demand server management mechanism can work as expected.
         server-ip = "127.0.0.1";
         server-port = 25565;
+      };
+
+      # We don't expose rcon and query port because of the PrivateNetwork setting
+      networking.firewall = mkIf cfg.openFirewall {
+        allowedUDPPorts = [ serverPort ];
+        allowedTCPPorts = [ serverPort ];
       };
 
       systemd.services = {
