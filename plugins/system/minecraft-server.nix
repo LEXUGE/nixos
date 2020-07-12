@@ -30,7 +30,22 @@ let
   # To be able to open the firewall, we need to read out port values in the
   # server properties, but fall back to the defaults when those don't exist.
   # These defaults are from https://minecraft.gamepedia.com/Server.properties#Java_Edition_3
-  queryPort = if cfg.serverProperties.enable-query or false then
+  maxPlayers = 20;
+
+  # Followings are the values of ports exposed for external players regardless of whether on-demand server management is enabled.
+  serverPort = if (!cfg.onDemand.enable) then
+    (cfg.serverProperties.server-port or 25565)
+  else
+    cfg.onDemand.serverPort;
+
+  rconPort = if (cfg.serverProperties.enable-rcon or false)
+  && (!cfg.onDemand.enable) then
+    cfg.serverProperties."rcon.port" or 25575
+  else
+    null;
+
+  queryPort = if (cfg.serverProperties.enable-query or false)
+  && (!cfg.onDemand.enable) then
     cfg.serverProperties."query.port" or 25565
   else
     null;
@@ -289,10 +304,10 @@ in {
       };
 
       networking.firewall = mkIf cfg.openFirewall {
-        allowedUDPPorts = [ cfg.serverProperties.server-port ];
-        allowedTCPPorts =
-          [ cfg.serverProperties.server-port cfg.serverProperties."rcon.port" ]
-          ++ optional (queryPort != null) queryPort;
+        allowedUDPPorts = [ serverPort ];
+        allowedTCPPorts = [ serverPort ]
+          ++ optional (queryPort != null) queryPort
+          ++ optional (rconPort != null) rconPort;
       };
 
       assertions = [{
@@ -307,10 +322,9 @@ in {
     (mkIf (cfg.onDemand.enable) {
       assertions = [
         {
-          assertion = (cfg.onDemand.serverPort != 25565)
-            && (cfg.onDemand.serverIp == null);
+          assertion = (serverPort != 25565) && (cfg.onDemand.serverIp == null);
           message =
-            "The `serverPort` must not be 25565 if server listens on all addresses.";
+            "The `onDemand.serverPort` must not be 25565 if server listens on all addresses.";
         }
         {
           assertion = cfg.serverProperties.enable-rcon;
@@ -322,9 +336,6 @@ in {
         # We want to start the actual server on localhost with default port so our on-demand server management mechanism can work as expected.
         server-ip = "127.0.0.1";
         server-port = 25565;
-        # Take official default values that are used latter.
-        "rcon.port" = mkDefault 25575;
-        max-players = mkDefault 20;
       };
 
       systemd.services = {
@@ -342,7 +353,7 @@ in {
             ExecStart =
               "${config.systemd.package}/lib/systemd/systemd-socket-proxyd 127.0.0.1:${
                 toString cfg.serverProperties.server-port
-              } -c ${toString cfg.serverProperties.max-players}";
+              } -c ${toString maxPlayers}";
             PrivateTmp = true;
             PrivateNetwork = true;
           };
@@ -355,7 +366,7 @@ in {
               if [[ "$(${pkgs.mcrcon}/bin/mcrcon -H 127.0.0.1 -p ${
                 cfg.serverProperties."rcon.password"
               } -P ${
-                toString cfg.serverProperties."rcon.port"
+                toString rconPort
               } list 2>/dev/null | ${pkgs.gnugrep}/bin/grep "There are" | ${pkgs.gnused}/bin/sed -r -e 's/.*\: //' -e 's/^([^.]+).*$/\1/; s/^[^0-9]*([0-9]+).*$/\1/' | ${pkgs.coreutils}/bin/tr -d '\n')" == "0" ]]; then
                 echo "No players online currently."
                 exit 0
@@ -404,7 +415,7 @@ in {
               (cfg.onDemand.serverIp + ":")
             else
               ""
-          }${toString cfg.onDemand.serverPort}"
+          }${toString serverPort}"
         ];
         # Start this socket on boot
         wantedBy = [ "sockets.target" ];

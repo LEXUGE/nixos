@@ -222,6 +222,7 @@ in {
             level-type = "amplified";
             white-list = true;
             enable-rcon = true;
+            enable-query = true;
             "rcon.password" = "nixos";
             network-compression-threshold =
               64; # Compress any packets larger than 64 bytes
