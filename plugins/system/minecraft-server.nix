@@ -427,7 +427,11 @@ in {
         # Start this socket on boot
         wantedBy = [ "sockets.target" ];
         # Don't start multiple instances of corresponding service.
-        socketConfig.Accept = false;
+        socketConfig = {
+          Accept = false;
+          # Disable the trigger rate limiting, because currently our stopping model may query server when it is stopping, which causes rapid job cancelling. Future systemd v246 may solve this issue completely.
+          TriggerLimitBurst = 0;
+        };
       };
     })
   ]);
