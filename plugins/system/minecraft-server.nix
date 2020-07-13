@@ -444,7 +444,7 @@ in {
           '';
         in {
           description = "Minecraft Server Monitoring daemon";
-          after = [ "network.target" ];
+          after = [ "network.target" "minecraft-server.service" ];
           requires = [ "minecraft-server.service" ];
 
           # Share the same network namespace, so the network traffic could be reacheable.
