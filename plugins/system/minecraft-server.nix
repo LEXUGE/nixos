@@ -235,6 +235,36 @@ in {
           + "-XX:MinHeapFreeRatio=5 -XX:MaxHeapFreeRatio=10";
         description = "JVM options for the Minecraft server.";
       };
+
+      backup = mkOption {
+        type = with types;
+          submodule {
+            options = {
+              enable = mkOption {
+                type = bool;
+                default = false;
+                description = "Enable backup service and timer.";
+              };
+              keepNumber = mkOption {
+                type = ints.positive;
+                default = 5;
+                description = "numbers of backups to keep";
+              };
+              destDir = mkOption {
+                type = path;
+                default = "/var/lib/minecraft/backup";
+                description =
+                  "Directory to store Minecraft world backups. It must be accessible for user `minecraft` and should NOT end with `/`.";
+              };
+              worlds = mkOption {
+                type = listOf str;
+                default = [ "world" ];
+                description =
+                  "The name of the worlds to backup. It must be accessible for user `minecraft`";
+              };
+            };
+          };
+      };
     };
   };
 
@@ -320,6 +350,36 @@ in {
       };
     })
 
+    (mkIf (cfg.backup.enable) {
+      systemd.services.minecraft-backup = {
+        script = ''
+          mkdir -p ${cfg.backup.destDir}
+        '' + (strings.concatMapStrings (x: ''
+          ${pkgs.gnutar}/bin/tar -cf ${cfg.backup.destDir}/${x}_"$(${pkgs.coreutils}/bin/date +%Y_%m_%d_%H_%M_%S)".tar ${x}
+        '') cfg.backup.worlds);
+        postStop = ''
+          ls -tp | grep -v '/$' | tail -n +${
+            toString (cfg.backup.keepNumber + 1)
+          } | xargs -d '
+          ' -r rm --'';
+
+        serviceConfig = {
+          Type = "oneshot";
+          User = "minecraft";
+          WorkingDirectory = cfg.dataDir;
+        };
+      };
+
+      systemd.timers.minecraft-backup = {
+        timerConfig = {
+          OnCalendar = "daily";
+          AccuracySec = "5min";
+          Persistent = true;
+        };
+        wantedBy = [ "multi-user.target" ];
+      };
+    })
+
     (mkIf (cfg.onDemand.enable) {
       assertions = [
         {
@@ -348,10 +408,8 @@ in {
       systemd.services = {
         # This service serves as a bi-directional relay between the actual server and systemd socket
         proxy-minecraft-server = {
-          # If there is no one on the server, this proxy would stop as well since we explicitly stops minecraft-server.target .
-          requires =
-            [ "minecraft-server.target" "proxy-minecraft-server.socket" ];
-          after = [ "minecraft-server.target" "proxy-minecraft-server.socket" ];
+          requires = [ "minecraftd.service" "proxy-minecraft-server.socket" ];
+          after = [ "minecraftd.service" "proxy-minecraft-server.socket" ];
 
           # Share the same network namespace, so the network traffic could be reacheable.
           unitConfig.JoinsNamespaceOf = "minecraft-server.service";
@@ -370,11 +428,13 @@ in {
           # This script continuously tries to get the number of online players using RCON. If RCON fails to connect or there is at least one player, it would come to another loop, else it exits with 0.
           execScript = pkgs.writeShellScript "minecraftd" ''
             while true; do
-              if [[ "$(${pkgs.mcrcon}/bin/mcrcon -H 127.0.0.1 -p ${
+              players="$(${pkgs.mcrcon}/bin/mcrcon -H 127.0.0.1 -p ${
                 cfg.serverProperties."rcon.password"
               } -P ${
                 toString rconPort
-              } list 2>/dev/null | ${pkgs.gnugrep}/bin/grep "There are" | ${pkgs.gnused}/bin/sed -r -e 's/.*\: //' -e 's/^([^.]+).*$/\1/; s/^[^0-9]*([0-9]+).*$/\1/' | ${pkgs.coreutils}/bin/tr -d '\n')" == "0" ]]; then
+              } list 2>&1 | ${pkgs.gnugrep}/bin/grep "There are" | ${pkgs.gnused}/bin/sed -r -e 's/.*\: //' -e 's/^([^.]+).*$/\1/; s/^[^0-9]*([0-9]+).*$/\1/' | ${pkgs.coreutils}/bin/tr -d '\n')"
+              echo "$players"
+              if [[ "$players" == "0" ]]; then
                 echo "No players online currently."
                 exit 0
               fi
@@ -382,19 +442,15 @@ in {
               ${pkgs.coreutils}/bin/sleep ${toString cfg.onDemand.idleIfTime}
             done
           '';
-          # This script stops our target which propagates its state to minecraftd.service and the actual server service
-          postStopScript = pkgs.writeShellScript "minecraftd-poststop"
-            "${config.systemd.package}/bin/systemctl stop minecraft-server.target";
         in {
           description = "Minecraft Server Monitoring daemon";
           after = [ "network.target" ];
-          partOf = [ "minecraft-server.target" ];
+          requires = [ "minecraft-server.service" ];
 
           # Share the same network namespace, so the network traffic could be reacheable.
           unitConfig.JoinsNamespaceOf = "minecraft-server.service";
           serviceConfig = {
             ExecStart = execScript;
-            ExecStopPost = "+${postStopScript}";
             # Don't restart if it got a clean exit, else our script would run again after it exits if there is no player.
             Restart = "on-failure";
             User = "minecraft";
@@ -403,15 +459,6 @@ in {
             PrivateTmp = true;
           };
         };
-        # Group actual server into our target
-        minecraft-server.partOf = [ "minecraft-server.target" ];
-      };
-
-      systemd.targets.minecraft-server = {
-        # Therefore, starting this targets propagates to all services below.
-        requires = [ "minecraft-server.service" "minecraftd.service" ];
-        # Just be safe. reach the target after all the services are up.
-        after = [ "minecraft-server.service" "minecraftd.service" ];
       };
 
       systemd.sockets.proxy-minecraft-server = {
@@ -429,8 +476,8 @@ in {
         # Don't start multiple instances of corresponding service.
         socketConfig = {
           Accept = false;
-          # Disable the trigger rate limiting, because currently our stopping model may query server when it is stopping, which causes rapid job cancelling. Future systemd v246 may solve this issue completely.
-          TriggerLimitBurst = 0;
+          # Higher the trigger rate limiting, because currently our stopping model may query server when it is stopping, which causes rapid job cancelling. Future systemd v246 may solve this issue completely.
+          TriggerLimitBurst = 100;
         };
       };
     })
