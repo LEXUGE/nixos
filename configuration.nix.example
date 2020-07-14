@@ -224,11 +224,11 @@ in {
 
           serverProperties = {
             online-mode = false;
+            max-players = 30;
             level-name = "newera";
             level-type = "amplified";
             white-list = true;
             enable-rcon = true;
-            enable-query = true;
             "rcon.password" = "nixos";
             network-compression-threshold =
               64; # Compress any packets larger than 64 bytes

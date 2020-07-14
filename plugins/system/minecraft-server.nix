@@ -30,7 +30,7 @@ let
   # To be able to open the firewall, we need to read out port values in the
   # server properties, but fall back to the defaults when those don't exist.
   # These defaults are from https://minecraft.gamepedia.com/Server.properties#Java_Edition_3
-  maxPlayers = 20;
+  maxPlayers = cfg.serverProperties.max-players or 20;
 
   # Server port exposed to external players
   serverPort = if (!cfg.onDemand.enable) then
@@ -406,8 +406,8 @@ in {
         # Don't start multiple instances of corresponding service.
         socketConfig = {
           Accept = false;
-          # Higher the trigger rate limiting, because currently our stopping model may query server when it is stopping, which causes rapid job cancelling. Future systemd v246 may solve this issue completely.
-          TriggerLimitBurst = 100;
+          # Highten the trigger rate limiting, because currently our stopping model may query server when it is stopping, which causes rapid job cancelling. Future systemd v246 may solve this issue completely.
+          TriggerLimitBurst = maxPlayers * 2;
         };
       };
     })
