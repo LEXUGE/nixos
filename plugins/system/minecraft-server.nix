@@ -252,6 +252,8 @@ in {
         description = "Minecraft Server Service";
         after = [ "network.target" ];
 
+        # If server management is disabled, multi-user.target wants this service always, so this configuration is sound.
+        # If server management is enabled, the chain of "requires" is constructed, as intended.
         unitConfig.StopWhenUnneeded = true;
         serviceConfig = {
           ExecStart = "${cfg.package}/bin/minecraft-server ${cfg.jvmOpts}";
@@ -308,9 +310,18 @@ in {
           ++ optional (queryPort != null) queryPort
           ++ optional (rconPort != null) rconPort;
       };
+      # If there is no server management, start server on startup.
+      systemd.services.minecraft-server.wantedBy = [ "multi-user.target" ];
     })
 
     (mkIf (cfg.onDemand.enable) {
+      # Chain of "requires"
+      # proxy-minecraft-server -> minecraftd -> minecraft-server
+      # This means stopping any of one of them would stop everything on this chain.
+      # And, most importantly, after stopping any of them (which means the whole chain stops), starting any of them except the head will not bring it up.
+      # In other words, restarting anything except the head of this chain would stop the chain completely but not restart it.
+      # Conclusion: to manually restart our service, one must restart proxy-minecraft-server.
+
       assertions = [
         {
           assertion = (serverPort != 25565) && (cfg.onDemand.serverIp == null);
@@ -377,12 +388,14 @@ in {
           after = [ "network.target" "minecraft-server.service" ];
           requires = [ "minecraft-server.service" ];
 
-          # Share the same network namespace, so the network traffic could be reacheable.
-          unitConfig.JoinsNamespaceOf = "minecraft-server.service";
+          unitConfig = {
+            StopWhenUnneeded = true;
+            # Share the same network namespace, so the network traffic could be reacheable.
+            JoinsNamespaceOf = "minecraft-server.service";
+          };
+
           serviceConfig = {
             ExecStart = execScript;
-            # Don't restart if it got a clean exit, else our script would run again after it exits if there is no player.
-            Restart = "on-failure";
             User = "minecraft";
             # To use JoinsNamespaceOf, we have to set following protection flags.
             PrivateNetwork = true;
