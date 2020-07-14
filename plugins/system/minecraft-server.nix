@@ -260,8 +260,8 @@ in {
           # JVM exits 143 on SIGTERM after graceful shutdown, which is fine. See also: https://serverfault.com/questions/695849/services-remain-in-failed-state-after-stopped-with-systemctl
           SuccessExitStatus = 143;
           WorkingDirectory = cfg.dataDir;
-          PrivateNetwork = true;
-          PrivateTmp = true;
+          # PrivateNetwork = true;
+          # PrivateTmp = true;
           # Users Database is not available for within the unit, only root and minecraft is available, everybody else is nobody
           PrivateUsers = true;
           # Read only mapping of /usr /boot and /etc
@@ -342,15 +342,15 @@ in {
           after = [ "minecraftd.service" "proxy-minecraft-server.socket" ];
 
           # Share the same network namespace, so the network traffic could be reacheable.
-          unitConfig.JoinsNamespaceOf = "minecraft-server.service";
+          # unitConfig.JoinsNamespaceOf = "minecraft-server.service";
           serviceConfig = {
             # FIXME: Use --exit-idle-time after the release of systemd v246
             ExecStart =
               "${config.systemd.package}/lib/systemd/systemd-socket-proxyd 127.0.0.1:${
                 toString cfg.serverProperties.server-port
               } -c ${toString maxPlayers}";
-            PrivateTmp = true;
-            PrivateNetwork = true;
+            # PrivateTmp = true;
+            # PrivateNetwork = true;
           };
         };
 
@@ -362,9 +362,9 @@ in {
                 cfg.serverProperties."rcon.password"
               } -P ${
                 toString rconPort
-              } list 2>&1 | ${pkgs.gnugrep}/bin/grep "There are" | ${pkgs.gnused}/bin/sed -r -e 's/.*\: //' -e 's/^([^.]+).*$/\1/; s/^[^0-9]*([0-9]+).*$/\1/' | ${pkgs.coreutils}/bin/tr -d '\n')"
+              } list 2>&1 | ${pkgs.gnused}/bin/sed -e 's/ of.*//')"
               echo "$players"
-              if [[ "$players" == "0" ]]; then
+              if [[ "$players" == "There are 0" ]]; then
                 echo "No players online currently."
                 exit 0
               fi
@@ -378,15 +378,15 @@ in {
           requires = [ "minecraft-server.service" ];
 
           # Share the same network namespace, so the network traffic could be reacheable.
-          unitConfig.JoinsNamespaceOf = "minecraft-server.service";
+          # unitConfig.JoinsNamespaceOf = "minecraft-server.service";
           serviceConfig = {
             ExecStart = execScript;
             # Don't restart if it got a clean exit, else our script would run again after it exits if there is no player.
             Restart = "on-failure";
             User = "minecraft";
             # To use JoinsNamespaceOf, we have to set following protection flags.
-            PrivateNetwork = true;
-            PrivateTmp = true;
+            # PrivateNetwork = true;
+            # PrivateTmp = true;
           };
         };
       };
