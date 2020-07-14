@@ -186,15 +186,9 @@ in {
           eula = true;
           openFirewall = true;
 
-          backup = {
-            enable = true;
-            keepNumber = 5;
-            worlds = [ "newera" ];
-          };
-
           onDemand = {
             enable = true;
-            idleIfTime = 180;
+            idleIfTime = 60;
             serverPort = 33333;
           };
 
