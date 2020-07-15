@@ -309,8 +309,12 @@ in {
           ++ optional (queryPort != null) queryPort
           ++ optional (rconPort != null) rconPort;
       };
-      # If there is no server management, start server on startup.
-      systemd.services.minecraft-server.wantedBy = [ "multi-user.target" ];
+      systemd.services.minecraft-server = {
+        # If there is no server management, start server on startup.
+        wantedBy = [ "multi-user.target" ];
+        # Restart if server fails if there is no server management.
+        serviceConfig.Restart = "on-failure";
+      };
     })
 
     (mkIf (cfg.onDemand.enable) {
