@@ -16,6 +16,9 @@ in mkIf cfg.enable (mkMerge [
     # Enable GVFS, implementing "trash" and so on.
     services.gvfs.enable = true;
 
+    # Don't suspend if lid is closed with computer on power.
+    services.logind.lidSwitchExternalPower = "lock";
+
     # Enable GNU Agent in order to make GnuPG works.
     programs.gnupg.agent.enable = true;
 
