@@ -1,23 +1,12 @@
 { config, pkgs, lib, ... }:
 
-let
-  moz_overlay = import (builtins.fetchTarball
-    "https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz");
-  home-manager = builtins.fetchTarball
-    "https://github.com/rycee/home-manager/archive/master.tar.gz";
-  icebox = builtins.fetchTarball
-    "https://github.com/icebox-nix/icebox/archive/master.tar.gz";
-  netkit = builtins.fetchTarball
-    "https://github.com/icebox-nix/netkit.nix/archive/master.tar.gz";
-  std =
-    builtins.fetchurl "https://github.com/icebox-nix/std/raw/master/std.nix";
-in {
+{
   imports = [
     ./hardware-configuration.nix
-    "${icebox}"
-    "${netkit}"
+    <icebox>
+    <netkit>
     ./plugins
-    "${home-manager}/nixos"
+    <home-manager/nixos>
   ];
 
   home-manager.useUserPackages = true;
@@ -49,7 +38,7 @@ in {
             ash-profile = {
               enable = true;
               extraPackages = with pkgs; [
-                (python3.withPackages (ps: [ ps.tkinter ]))
+                #(python3.withPackages (ps: [ ps.tkinter ]))
                 htop
                 deluge
                 zoom-us
@@ -71,10 +60,10 @@ in {
                 pavucontrol
                 #calibre
                 tor-browser-bundle-bin
-                latest.rustChannels.stable.rust
+                #latest.rustChannels.stable.rust
                 ifuse
                 libimobiledevice
-                onlyoffice-desktop
+                # onlyoffice-desktop
               ];
             };
             ashde = {
@@ -103,7 +92,7 @@ in {
     };
 
     lib = {
-      modules = [ (import "${std}" { lib = lib; }) ];
+      modules = [ (import <std/std.nix> { lib = lib; }) ];
       configs = {
         system = {
           # Path to directories (always use absolute path to avoid trouble in nixos-install, because we will copy the whole configuration to the same folder under LiveCD).
@@ -239,6 +228,6 @@ in {
       };
     };
 
-    overlays = [ moz_overlay ];
+    overlays = [ (import <moz_overlay>) ];
   };
 }

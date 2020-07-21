@@ -13,9 +13,7 @@ in mkIf cfg.enable {
     git
     gnupg
     neofetch
-    bind
-    usbutils
-    pciutils
+    busybox
     shfmt
     shellcheck
     smartmontools

@@ -70,6 +70,11 @@ create_keyfile() {
 # NIXOS_INSTALL
 nixos_install() {
 	nix-channel --add https://nixos.org/channels/nixos-unstable nixos
+	nix-channel --add https://github.com/icebox-nix/std/archive/master.tar.gz std
+	nix-channel --add https://github.com/icebox-nix/netkit.nix/archive/master.tar.gz netkit
+	nix-channel --add https://github.com/icebox-nix/icebox/archive/master.tar.gz icebox
+	nix-channel --add https://github.com/rycee/home-manager/archive/master.tar.gz home-manager
+	nix-channel --add https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz moz_overlay
 	nix-channel --update
 
 	# Install git by using TUNA binary cache with fallback
