@@ -14,19 +14,25 @@ in {
       default = [ ];
       description = "Binary caches to use.";
     };
+    iwdConfig = mkOption {
+      type = with types; attrsOf (attrsOf (oneOf [ bool int str ]));
+      default = { };
+      description = "Configuratoin of iNet Wireless Daemon.";
+    };
   };
   config = mkIf cfg.enable {
     networking.hostName = cfg.hostname; # Define hostname
-
-    networking.firewall.allowedTCPPorts =
-      [ 57621 ]; # Allow Spotify Local discovery
 
     networking.networkmanager = {
       # Enable networkmanager. REMEMBER to add yourself to group in order to use nm related stuff.
       enable = true;
       # Don't use DNS advertised by connected network. Use local configuration
       dns = "none";
+      # Use iwd instead
+      wifi.backend = "iwd";
     };
+
+    environment.etc."iwd/main.conf".text = generators.toINI { } cfg.iwdConfig;
 
     # Customized binary caches list (with fallback to official binary cache)
     nix.binaryCaches = cfg.binaryCaches;

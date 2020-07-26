@@ -137,6 +137,7 @@
             [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
           # Choose ibus engines to apply
           ibus-engines = with pkgs.ibus-engines; [ libpinyin ];
+          iwdConfig = { General = { UseDefaultInterface = true; }; };
         };
 
         clash = {
