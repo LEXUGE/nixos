@@ -131,10 +131,9 @@
         x-os = {
           enable = true;
           hostname = "nixos";
-          # Use TUNA Mirror together with original cache because TUNA has better performance inside Mainland China.
+          # Use TUNA (BFSU) Mirror together with original cache because TUNA has better performance inside Mainland China.
           # Set the list to `[ ]` to use official cache only.
-          binaryCaches =
-            [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
+          binaryCaches = [ "https://mirrors.bfsu.edu.cn/nix-channels/store" ];
           # Choose ibus engines to apply
           ibus-engines = with pkgs.ibus-engines; [ libpinyin ];
           iwdConfig = { General = { UseDefaultInterface = true; }; };
