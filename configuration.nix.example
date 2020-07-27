@@ -48,22 +48,20 @@
                 tdesktop
                 minecraft
                 mcrcon
-                gnome3.gnome-boxes
                 (texlive.combine {
                   inherit (texlive) scheme-basic wrapfig ulem capt-of metafont;
                 })
                 steam
                 gparted
                 etcher
-                #vlc
+                gnome-podcasts
                 frp
                 pavucontrol
                 #calibre
-                tor-browser-bundle-bin
-                #latest.rustChannels.stable.rust
+                #tor-browser-bundle-bin
                 ifuse
                 libimobiledevice
-                # onlyoffice-desktop
+                #onlyoffice-desktop
               ];
             };
             ashde = {
