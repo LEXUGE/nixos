@@ -2,11 +2,9 @@
 
 with lib;
 
-let
-  inherit (config.icebox.static.lib.configs) system devices;
-  cfg = config.icebox.static.system.x-os;
+let cfg = config.x-os;
 in {
-  options.icebox.static.system.x-os.enable = mkOption {
+  options.x-os.enable = mkOption {
     type = types.bool;
     default = false;
   };
@@ -17,7 +15,7 @@ in {
     # Add swap file
     swapDevices = [{
       device = "/var/swapFile";
-      size = (devices.ramSize * 2);
+      size = (config.std.devices.ramSize * 2);
     }];
 
     # Support NTFS

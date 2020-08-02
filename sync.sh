@@ -1,26 +1,26 @@
 #!/usr/bin/env bash
 
 rm -rf ./dotfiles/ \
-	./plugins/ \
+	./modules/ \
+	./src/ \
 	./secrets/
-rm ./*.nix
-rm ./*.nix.example
+rm -f ./*.nix
+rm -f ./*.lock
 
 echo -n "Copying..."
 rsync -avP \
+	--exclude "secrets/" \
 	--include "*/" \
-	--include "*.*.example" \
 	--include "*.nix" \
 	--include "*.el" \
 	--include "*.ini" \
 	--include "*.patch" \
 	--include "*.json" \
+	--include "*.lock" \
 	--exclude "*" \
 	/etc/nixos/ .
 
-cp configuration.nix configuration.nix.example
 find . -type f -name '*.nix' -exec nixfmt {} +
-find . -type f -name '*.nix.example' -exec nixfmt {} +
 shellcheck ./*.sh
 shfmt -w ./*.sh
 echo "Done."

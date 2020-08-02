@@ -1,8 +1,8 @@
 { config, pkgs, lib, ... }:
 
 let
-  inherit (config.icebox.static.lib.configs) devices system;
-  cfg = config.icebox.static.system.x-os;
+  inherit (config.std) devices system;
+  cfg = config.x-os;
 in with lib;
 mkIf cfg.enable (mkMerge [
   ({

@@ -2,9 +2,9 @@
 
 with lib;
 
-let cfg = config.icebox.static.system.x-os;
+let cfg = config.x-os;
 in {
-  options.icebox.static.system.x-os.ibus-engines = mkOption {
+  options.x-os.ibus-engines = mkOption {
     type = types.listOf types.package;
     default = [ ];
     example = literalExample "with pkgs.ibus-engines; [ mozc hangul ]";

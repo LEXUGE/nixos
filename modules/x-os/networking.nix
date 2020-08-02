@@ -2,9 +2,9 @@
 
 with lib;
 
-let cfg = config.icebox.static.system.x-os;
+let cfg = config.x-os;
 in {
-  options.icebox.static.system.x-os = {
+  options.x-os = {
     hostname = mkOption {
       type = types.str;
       description = "The hostname of the system";

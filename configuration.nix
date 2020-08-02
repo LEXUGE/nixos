@@ -3,229 +3,49 @@
 {
   imports = [
     ./hardware-configuration.nix
-    <icebox>
-    <netkit>
-    ./plugins
-    <home-manager/nixos>
+    ./src/minecraft-server.nix
+    ./src/users.nix
+    ./src/networking.nix
   ];
 
   home-manager.useUserPackages = true;
 
-  icebox = {
-    users = {
-      plugins = [ "hm-fix" "ash-profile" ];
-      users = {
-        root = {
-          regular = {
-            hashedPassword =
-              "$6$TqNkihvO4K$x.qSUVbLQ9.IfAc9tOQawDzVdHJtQIcKrJpBCBR.wMuQ8qfbbbm9bN7JNMgneYnNPzAi2k9qXk0klhTlRgGnk0";
-          };
-          configs = { };
-        };
-        ash = {
-          regular = {
-            hashedPassword =
-              "$6$FAs.ZfxAkhAK0ted$/aHwa39iJ6wsZDCxoJVjedhfPZ0XlmgKcxkgxGDE.hw3JlCjPHmauXmQAZUlF8TTUGgxiOJZcbYSPsW.QBH5F.";
-            shell = pkgs.zsh;
-            isNormalUser = true;
-            # wheel - sudo
-            # networkmanager - manage network
-            # video - light control
-            # libvirtd - virtual manager controls.
-            extraGroups = [ "wheel" "networkmanager" "video" ];
-          };
-          configs = {
-            ash-profile = {
-              enable = true;
-              extraPackages = with pkgs; [
-                #(python3.withPackages (ps: [ ps.tkinter ]))
-                htop
-                deluge
-                zoom-us
-                thunderbird
-                spotify
-                firefox-wayland
-                tdesktop
-                minecraft
-                mcrcon
-                (texlive.combine {
-                  inherit (texlive) scheme-basic wrapfig ulem capt-of metafont;
-                })
-                steam
-                gparted
-                etcher
-                gnome-podcasts
-                frp
-                pavucontrol
-                #calibre
-                #tor-browser-bundle-bin
-                ifuse
-                libimobiledevice
-                #onlyoffice-desktop
-              ];
-            };
-            ashde = {
-              enable = false;
-              # Adapt followings to what your device profile supplied
-              battery = "BAT0";
-              power = "AC";
-              network-interface = "wlp0s20f3";
-            };
-          };
-        };
-      };
-    };
+  nix.package = pkgs.nixUnstable;
+  nix.extraOptions = ''
+    experimental-features = nix-command flakes
+  '';
 
-    devices = {
-      # Change the plugin list accordingly to the `bio-auth` option of `x1c7` plugin
-      plugins = [ "x1c7" ];
-      configs = {
-        x1c7 = {
-          # Choose "howdy", "fprintd", or null.
-          bio-auth = "fprintd";
-        };
-        # x1c7 would automatically enable howdy and set necessary configuratons.
-        howdy.pamServices = [ "sudo" "login" "polkit-1" ];
-      };
-    };
-
-    lib = {
-      modules = [ (import <std> { lib = lib; }) ];
-      configs = {
-        system = {
-          # Path to directories (always use absolute path to avoid trouble in nixos-install, because we will copy the whole configuration to the same folder under LiveCD).
-          # If you don't understand, just keep it as it is.
-          dirs = {
-            secrets = /etc/nixos/secrets; # Did you read the comments above?
-            dotfiles = /etc/nixos/dotfiles;
-          };
-          bluetooth = {
-            # Force enable/disable bluetooth
-            # enable = true;
-            # Choose default bluetooth service
-            service = null;
-          };
-        };
-        devices = {
-          # resume_offset value. Obtained by <literal>filefrag -v /var/swapFile | awk '{ if($1=="0:"){print $4} }'</literal>
-          # If you want to hibernate, you MUST set it properly.
-          swapResumeOffset = 13742080;
-        };
-      };
-    };
-
+  std = {
     system = {
-      plugins = [
-        "x-os"
-        "gnome"
-        "clash"
-        "onlyoffice-desktop"
-        "wifi-relay"
-        "minecraft-server"
-        "frpc"
-      ];
-      stateVersion = "19.09";
-      configs = {
-        x-os = {
-          enable = true;
-          hostname = "nixos";
-          # Use TUNA (BFSU) Mirror together with original cache because TUNA has better performance inside Mainland China.
-          # Set the list to `[ ]` to use official cache only.
-          binaryCaches = [ "https://mirrors.bfsu.edu.cn/nix-channels/store" ];
-          # Choose ibus engines to apply
-          ibus-engines = with pkgs.ibus-engines; [ libpinyin ];
-          # iwdConfig = { General = { UseDefaultInterface = true; }; };
-        };
-
-        clash = {
-          enable = true;
-          redirPort =
-            7892; # This must be the same with the one in your clash.yaml
-        };
-
-        wifi-relay = {
-          interface = "wlp0s20f3";
-          ssid = "AP-Freedom";
-          passphrase = "88888888";
-        };
-
-        frpc = {
-          frpcConfig = {
-            common = {
-              server_addr = "175.24.191.112";
-              server_port = 7000;
-              tls_enable = true;
-              authentication_method = "token";
-              token = "2007f015-fbae-438d-a348-73310678cd11";
-            };
-
-            minecraft-server = {
-              type = "tcp";
-              local_ip = "127.0.0.1";
-              local_port = 33333;
-              remote_port = 33333;
-              use_compression = true;
-            };
-          };
-        };
-
-        minecraft-server = {
-          eula = true;
-          openFirewall = true;
-
-          onDemand = {
-            enable = true;
-            idleIfTime = 60;
-            serverPort = 33333;
-          };
-
-          ops = [
-            {
-              # Offline UUID Generated for AshBreaker1: 94f4d16b-0e0b-39e3-9a92-a26bf4f7a0dc
-              uuid = "94f4d16b-0e0b-39e3-9a92-a26bf4f7a0dc";
-              name = "AshBreaker1";
-              level = 4;
-            }
-            {
-              # Official UUID issued by Mojang: 65bec9be-2cb8-46c8-bab5-2a5219759a4a
-              uuid = "65bec9be-2cb8-46c8-bab5-2a5219759a4a";
-              name = "AshBreaker1";
-              level = 4;
-            }
-          ];
-
-          whitelist = {
-            SIMON1314520 =
-              "5f18149d-a806-3491-b5fc-75fadee9154f"; # Simon Shu - Offline
-            btbtbt =
-              "36866b49-0e29-3b96-b80c-c8eda7cfe3ff"; # Newt Chen - Offline
-            AshBreaker1 = "94f4d16b-0e0b-39e3-9a92-a26bf4f7a0dc"; # Offline
-            Ju_Mao_Qiu =
-              "e50f94f7-9fe0-3b89-85fe-240964188a37"; # Cindy Fang - Offline
-            york_Ying =
-              "421a1e44-6280-3e85-97c9-e2029145b1c6"; # York Ying - Offline
-            Mac-GM =
-              "e261565d-0856-3d15-b3ae-401014fc10fd"; # Billy Xu - Offline
-            # AshBreaker1 = "65bec9be-2cb8-46c8-bab5-2a5219759a4a"; # Online
-          };
-
-          serverProperties = {
-            online-mode = false;
-            max-players = 30;
-            level-name = "newera";
-            level-type = "amplified";
-            white-list = true;
-            enable-rcon = true;
-            "rcon.password" = "nixos";
-            network-compression-threshold =
-              64; # Compress any packets larger than 64 bytes
-            motd =
-              "\\u00A76NewEra \\u00A77Vanilla \\u00A7cSurvival\\u00A7r\\n\\u00A7bt.me/NewEraMinecraft";
-          };
-        };
+      # Path to directories (always use absolute path to avoid trouble in nixos-install, because we will copy the whole configuration to the same folder under LiveCD).
+      # If you don't understand, just keep it as it is.
+      dirs = {
+        secrets = ./secrets; # Did you read the comments above?
+        dotfiles = ./dotfiles;
+      };
+      bluetooth = {
+        # Force enable/disable bluetooth
+        # enable = true;
+        # Choose default bluetooth service
+        service = null;
       };
     };
+    devices = {
+      # resume_offset value. Obtained by <literal>filefrag -v /var/swapFile | awk '{ if($1=="0:"){print $4} }'</literal>
+      # If you want to hibernate, you MUST set it properly.
+      swapResumeOffset = 13742080;
+    };
+  };
 
-    overlays = [ (import <moz_overlay>) ];
+  system.stateVersion = "19.09";
+
+  x-os = {
+    enable = true;
+    # Use TUNA (BFSU) Mirror together with original cache because TUNA has better performance inside Mainland China.
+    # Set the list to `[ ]` to use official cache only.
+    binaryCaches = [ "https://mirrors.bfsu.edu.cn/nix-channels/store" ];
+    # Choose ibus engines to apply
+    ibus-engines = with pkgs.ibus-engines; [ libpinyin ];
+    # iwdConfig = { General = { UseDefaultInterface = true; }; };
   };
 }

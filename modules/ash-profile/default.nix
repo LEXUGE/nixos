@@ -3,38 +3,26 @@
 with lib;
 
 let
-  inherit (config.icebox.static.lib.configs) system;
-  iceLib = config.icebox.static.lib;
+  inherit (config.std) system;
   gnomeEnable = config.services.xserver.desktopManager.gnome3.enable;
-  cfg = config.icebox.static.users.ash-profile;
+  cfg = config.ash-profile;
+  mkUserConfigs = f: (attrsets.mapAttrs (n: c: (f n c)) cfg);
 in {
-  options.icebox.static.users.ash-profile = with lib;
-    mkOption {
-      type = types.submodule {
+  options.ash-profile = mkOption {
+    type = with types;
+      attrsOf (submodule {
         options = {
-          enable = mkEnableOption
-            "the user tweaks flavoured by ash"; # If this is off, nothing should be configured at all.
-
-          configs = mkOption {
-            type = with types;
-              attrsOf (submodule {
-                options = {
-                  enable = mkEnableOption
-                    "the user tweaks flavoured by ash for certain user.";
-                  extraPackages = mkOption {
-                    type = with types; listOf package;
-                    description =
-                      "Extra packages to install for user <literal>ash</literal>.";
-                  };
-                };
-              });
-            default = { };
+          extraPackages = mkOption {
+            type = with types; listOf package;
+            description =
+              "Extra packages to install for user <literal>ash</literal>.";
           };
         };
-      };
-    };
+      });
+    default = { };
+  };
 
-  config.home-manager.users = iceLib.functions.mkUserConfigs' (n: c: {
+  config.home-manager.users = mkUserConfigs (n: c: {
     # Home-manager settings.
     # User-layer packages
     home.packages = with pkgs;
@@ -115,5 +103,5 @@ in {
         (system.dirs.dotfiles + "/${n}/emacs.d/init.el");
       ".emacs.d/elisp/".source = (system.dirs.dotfiles + "/${n}/emacs.d/elisp");
     };
-  }) cfg;
+  });
 }

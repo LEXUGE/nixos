@@ -2,9 +2,7 @@
 
 with lib;
 
-let
-  inherit (config.icebox.static.lib.configs) system;
-  cfg = config.icebox.static.system.x-os;
+let cfg = config.x-os;
 in mkIf cfg.enable (mkMerge [
   ({
     # Enable TRIM Service (May have security concern here)
@@ -53,9 +51,10 @@ in mkIf cfg.enable (mkMerge [
     # services.openssh.enable = true;
   })
 
-  (mkIf (system.bluetooth.enable) {
+  (mkIf (config.std.system.bluetooth.enable) {
     hardware.bluetooth.enable = true;
     # Whether enable blueman or not
-    services.blueman.enable = mkIf (system.bluetooth.service == "blueman") true;
+    services.blueman.enable =
+      mkIf (config.std.system.bluetooth.service == "blueman") true;
   })
 ])

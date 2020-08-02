@@ -2,7 +2,7 @@
 
 with lib;
 
-let cfg = config.icebox.static.system.x-os;
+let cfg = config.x-os;
 in mkIf cfg.enable {
   nixpkgs.config.allowUnfree = true;
   # List packages installed in system profile. To search, run:
