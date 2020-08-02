@@ -16,23 +16,42 @@
       ash-profile = (import ./modules/ash-profile);
       x-os = (import ./modules/x-os);
     };
-    nixosConfigurations.x1c7 = nixos.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        ./configuration.nix
-        ./src/devices/x1c7
-        std.nixosModule
-        self.nixosModules.x-os
-        self.nixosModules.ash-profile
-        home.nixosModules.home-manager
-        netkit.nixosModules.clash
-        netkit.nixosModules.wifi-relay
-        netkit.nixosModules.minecraft-server
-        netkit.nixosModules.frpc
-        # FIXME: Currently, nixos-generate-config by defualt writes out modulePath which is unsupported by flake.
-        # FIXME: This means on installation, we need to MANUALLY edit the generated hardware-configuration.nix
-        nixos.nixosModules.notDetected
-      ];
+    nixosConfigurations = {
+      x1c7 = nixos.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./configuration.nix
+          ./src/devices/x1c7
+          std.nixosModule
+          self.nixosModules.x-os
+          self.nixosModules.ash-profile
+          home.nixosModules.home-manager
+          netkit.nixosModules.clash
+          netkit.nixosModules.wifi-relay
+          netkit.nixosModules.minecraft-server
+          netkit.nixosModules.frpc
+          # FIXME: Currently, nixos-generate-config by defualt writes out modulePath which is unsupported by flake.
+          # FIXME: This means on installation, we need to MANUALLY edit the generated hardware-configuration.nix
+          nixos.nixosModules.notDetected
+        ];
+      };
+      niximg = nixos.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          {
+            imports = [
+              "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+              "${nixos}/nixos/modules/installer/cd-dvd/channel.nix"
+            ];
+          }
+          ./niximg.nix
+          std.nixosModule
+          self.nixosModules.x-os
+          self.nixosModules.ash-profile
+          home.nixosModules.home-manager
+          netkit.nixosModules.clash
+        ];
+      };
     };
   };
 }
