@@ -1,11 +1,4 @@
 # -*- mode: gitignore; -*-
-# ignore device specific file
-hardware-configuration.nix
-configuration.nix
-# Ignore secrets and personal options
-secrets/*
-!secrets/*.example
-
 # emacs gitignore
 *~
 \#*\#
