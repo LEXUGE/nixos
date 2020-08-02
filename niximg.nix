@@ -3,8 +3,6 @@
 {
   home-manager.useUserPackages = true;
 
-  networking.wireless.enable = lib.mkForce false;
-
   nix.package = pkgs.nixUnstable;
   nix.extraOptions = ''
     experimental-features = nix-command flakes
@@ -33,35 +31,25 @@
   };
 
   users = {
-    mutableUsers = false;
     users = {
       root.hashedPassword =
-        "$6$TqNkihvO4K$x.qSUVbLQ9.IfAc9tOQawDzVdHJtQIcKrJpBCBR.wMuQ8qfbbbm9bN7JNMgneYnNPzAi2k9qXk0klhTlRgGnk0";
-      ash = {
+        "$5$a5/kwPSEATbi09us$tFaomvn2aSyBp1YG.kMBKlp1s1qcya6/iK31hSkcFR1";
+      nixos = {
         hashedPassword =
-          "$6$FAs.ZfxAkhAK0ted$/aHwa39iJ6wsZDCxoJVjedhfPZ0XlmgKcxkgxGDE.hw3JlCjPHmauXmQAZUlF8TTUGgxiOJZcbYSPsW.QBH5F.";
+          "$5$9FOksW6qEC0Zjuc1$j92QwubbVg0qMgn6bRovVY5eIefyoPIXwN5CTP89yi.";
         shell = pkgs.zsh;
         isNormalUser = true;
         # wheel - sudo
         # networkmanager - manage network
         # video - light control
         # libvirtd - virtual manager controls.
-        extraGroups = [ "wheel" "networkmanager" "video" ];
+        extraGroups = [ "wheel" "networkmanager" ];
       };
     };
   };
 
-  ash-profile.ash = {
-    extraPackages = with pkgs; [
-      htop
-      deluge
-      thunderbird
-      firefox-wayland
-      tdesktop
-      gparted
-      etcher
-      pavucontrol
-    ];
+  ash-profile.nixos = {
+    extraPackages = with pkgs; [ tdesktop etcher pavucontrol ];
   };
 
   netkit.clash = {
