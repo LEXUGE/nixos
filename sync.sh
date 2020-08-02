@@ -22,6 +22,7 @@ rsync -avP \
 find . -type f -name '*.nix' -exec nixfmt {} +
 shellcheck ./*.sh
 shfmt -w ./*.sh
+nix flake check
 echo "Done."
 
 echo -n "Adding to git..."

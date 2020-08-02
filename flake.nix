@@ -48,8 +48,6 @@
           ./niximg.nix
           std.nixosModule
           self.nixosModules.x-os
-          self.nixosModules.ash-profile
-          home.nixosModules.home-manager
           netkit.nixosModules.clash
         ];
       };

@@ -1,20 +1,13 @@
 { config, pkgs, lib, ... }:
 
 {
-  home-manager.useUserPackages = true;
-
   nix.package = pkgs.nixUnstable;
   nix.extraOptions = ''
     experimental-features = nix-command flakes
   '';
 
   std = {
-    system = {
-      dirs = {
-        secrets = ./secrets;
-        dotfiles = ./dotfiles;
-      };
-    };
+    system = { dirs = { secrets = ./secrets; }; };
     devices = { ramSize = 4096; };
   };
 
@@ -46,10 +39,6 @@
         extraGroups = [ "wheel" "networkmanager" ];
       };
     };
-  };
-
-  ash-profile.nixos = {
-    extraPackages = with pkgs; [ tdesktop etcher pavucontrol ];
   };
 
   netkit.clash = {
