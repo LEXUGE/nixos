@@ -26,11 +26,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1596371445,
-        "narHash": "sha256-lZ1K+wlYtP34Dy/sU1wuqqb31y+E4lu3W4LI1ShRMSM=",
+        "lastModified": 1596377995,
+        "narHash": "sha256-LDLv7NsX99WzLfk3h+5C3PfZOiBUFJvVIBEmegppLfE=",
         "owner": "icebox-nix",
         "repo": "netkit.nix",
-        "rev": "95a5398ae6f0a21f3010f3fd76b97fb12994e547",
+        "rev": "f3f27f40e72e4289547281539cc4c67187aff498",
         "type": "github"
       },
       "original": {

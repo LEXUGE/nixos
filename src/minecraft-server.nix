@@ -1,5 +1,5 @@
 {
-  minecraft-server = {
+  netkit.minecraft-server = {
     enable = true;
     eula = true;
     openFirewall = true;
