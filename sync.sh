@@ -3,8 +3,7 @@
 rm -rf ./dotfiles/ \
 	./modules/ \
 	./src/ \
-	./secrets/
-rm -f ./*.nix
+	rm -f ./*.nix
 rm -f ./*.lock
 
 echo -n "Copying..."
