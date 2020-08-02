@@ -3,7 +3,7 @@ on:
   pull_request:
   push:
 jobs:
-  tests:
+  buildiso:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -19,5 +19,5 @@ jobs:
     - run: nix build ".#nixosConfigurations.niximg.config.system.build.isoImage"
     - uses: actions/upload-artifact@v2
       with:
-	name: nixos-iso
-    	path: ./result/
+        name: nixos-iso
+        path: ./result/
