@@ -85,8 +85,6 @@ nixos_install() {
 	read -n 1 -s -r -p "[CLASH] In the next step, you'd better set up the appropriate proxy if you are not in a free Internet. Press any key to continue"
 	nano ${MOUNTPOINT}/etc/nixos/secrets/clash.yaml
 	nixos-generate-config --root ${MOUNTPOINT}
-	read -n 1 -s -r -p "[HARDWARE] In the next step, you MUST comment out the import of not-detected.nix. Press any key to continue"
-	nano ${MOUNTPOINT}/etc/nixos/hardware-configuration.nix
 
 	# We need to copy one set of configuration else nixos-install would get us into folder problems.
 	# rm -rf /etc/nixos/

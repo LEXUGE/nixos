@@ -17,7 +17,10 @@ in with lib; {
       # Use Keyfile to unlock the root partition to avoid keying in twice.
       # Allow fstrim to work on it.
       boot.initrd = {
-        secrets = { "/keyfile.bin" = (system.dirs.secrets + /keyfile.bin); };
+        secrets = {
+          # We use "${ something }" here so that the file path would be coerced into a store path, which is accessible in target system.
+          "/keyfile.bin" = "${(system.dirs.secrets + /keyfile.bin)}";
+        };
         luks.devices."cryptroot" = {
           keyFile = "/keyfile.bin";
           allowDiscards = true;
