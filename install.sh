@@ -69,36 +69,33 @@ create_keyfile() {
 
 # NIXOS_INSTALL
 nixos_install() {
-	nix-channel --add https://nixos.org/channels/nixos-unstable nixos
-	nix-channel --add https://github.com/icebox-nix/std/archive/master.tar.gz std
-	nix-channel --add https://github.com/icebox-nix/netkit.nix/archive/master.tar.gz netkit
-	nix-channel --add https://github.com/icebox-nix/icebox/archive/master.tar.gz icebox
-	nix-channel --add https://github.com/rycee/home-manager/archive/master.tar.gz home-manager
-	nix-channel --add https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz moz_overlay
-	nix-channel --update
-
-	# Install git by using TUNA binary cache with fallback
-	nix-env -iA nixos.gitMinimal --option substituters "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store https://cache.nixos.org/"
 	git clone https://github.com/LEXUGE/nixos ${MOUNTPOINT}/etc/nixos/
-	# rm -rf ${MOUNTPOINT}/etc/nixos/.git/
+
+	rm ${MOUNTPOINT}/etc/nixos/secrets/keyfile.bin
+	rm ${MOUNTPOINT}/etc/nixos/hardware-configuration.nix
 
 	create_keyfile
 
 	# Create new options.nix and open it to let user customize.
 	echo "Generate and open build options for configuration..."
-	read -n 1 -s -r -p "Press any key to continue"
-	cp ${MOUNTPOINT}/etc/nixos/secrets/clash.yaml.example ${MOUNTPOINT}/etc/nixos/secrets/clash.yaml
-	cp ${MOUNTPOINT}/etc/nixos/configuration.nix.example ${MOUNTPOINT}/etc/nixos/configuration.nix
+	read -n 1 -s -r -p "[CONFIG] Adapt whatever on your needs. Press any key to continue"
 	nano ${MOUNTPOINT}/etc/nixos/configuration.nix
+	read -n 1 -s -r -p "[USERS] In the next step, you MUST change the user passwords, else you are gonna to be locked out. Press any key to continue"
+	nano ${MOUNTPOINT}/etc/nixos/src/users.nix
+	read -n 1 -s -r -p "[CLASH] In the next step, you'd better set up the appropriate proxy if you are not in a free Internet. Press any key to continue"
 	nano ${MOUNTPOINT}/etc/nixos/secrets/clash.yaml
+	nixos-generate-config --root ${MOUNTPOINT}
+	read -n 1 -s -r -p "[HARDWARE] In the next step, you MUST comment out the import of not-detected.nix. Press any key to continue"
+	nano ${MOUNTPOINT}/etc/nixos/hardware-configuration.nix
 
 	# We need to copy one set of configuration else nixos-install would get us into folder problems.
-	rm -rf /etc/nixos/
-	cp -a ${MOUNTPOINT}/etc/nixos/ /etc/nixos/
+	# rm -rf /etc/nixos/
+	# cp -a ${MOUNTPOINT}/etc/nixos/ /etc/nixos/
 
-	# Install NixOS using TUNA binary cache with fallback
-	nixos-generate-config --root /mnt
-	nixos-install --option substituters "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store https://cache.nixos.org/"
+	nix build "${MOUNTPOINT}/etc/nixos#x1c7-toplevel"
+
+	# Install NixOS. We don't need channel and root password
+	nixos-install --system "$(readlink ./result)" --no-channel-copy --no-root-passwd
 
 	reboot
 }

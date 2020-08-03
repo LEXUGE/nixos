@@ -12,6 +12,8 @@
   };
 
   outputs = { self, nixos, home, std, netkit }@inputs: {
+    x1c7-toplevel = self.nixosConfigurations.x1c7.config.system.build.toplevel;
+
     nixosModules = {
       ash-profile = (import ./modules/ash-profile);
       x-os = (import ./modules/x-os);
