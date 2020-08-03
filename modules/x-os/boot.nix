@@ -4,13 +4,12 @@ let
   inherit (config.std) devices system;
   cfg = config.x-os;
 in with lib; {
-  options.x-os.noBoot = mkOption {
+  options.x-os.enableBoot = mkOption {
     type = types.bool;
-    default = false;
-    description =
-      "Include no boot-related configuration. Useful in building ISO.";
+    default = true;
+    description = "Include boot-related configuration.";
   };
-  config = mkIf (cfg.enable && !cfg.noBoot) (mkMerge [
+  config = mkIf (cfg.enable && cfg.enableBoot) (mkMerge [
     ({
       # Enable plymouth for better experience of booting
       boot.plymouth.enable = true;

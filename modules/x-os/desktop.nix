@@ -24,5 +24,4 @@ in lib.mkIf cfg.enable {
   programs.geary.enable = false;
   environment.gnome3.excludePackages =
     [ pkgs.gnome3.epiphany pkgs.gnome3.gnome-software ];
-
 }

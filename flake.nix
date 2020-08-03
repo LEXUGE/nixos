@@ -38,13 +38,7 @@
       niximg = nixos.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          {
-            imports = [
-              "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-graphical-base.nix"
-              "${nixos}/nixos/modules/installer/cd-dvd/channel.nix"
-            ];
-            isoImage.edition = "gnome";
-          }
+          "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-base.nix"
           ./niximg.nix
           std.nixosModule
           self.nixosModules.x-os
