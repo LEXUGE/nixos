@@ -1,6 +1,8 @@
 # NixOS
 A fully automated replicable nixos configuration set. Tested on Virtualbox and ThinkPad X1 Carbon 7th Gen. It should be working on any x86 machine.
 
+# Currently, this README is OUTDATED because of the recent emigration to flake.
+
 # What does it do?
 It features:
 - typed configuration options for this configuration. (You could tune a little for this configuration set).
@@ -43,7 +45,7 @@ The system configuration could be split up into three pieces, system-wide, user-
 As for me, I am on my best to ensure that the system is convenient to use and secure. But here are some concerns:
 - `services.fstrim.enable` is set to `true` which means that attacker may be able to perceive the data usage of the fully encrypted disk.
 - `howdy` is not suggested to use if you need to ensure high level security due to the potentiality of spoofing.
-- There is keyfile added to `/` partition encryption in order to eliminate the twice keying in of the LUKS passphrase. This may imply security concerns.
+- There is keyfile added to `/` partition encryption in order to eliminate the twice keying in of the LUKS passphrase. This keyfile is under `/nix/store` because of the pure evaluation constraint. **This means it is readable for every local user!**.
 
 # How do I steal it?
 I have kept "stealing" in mind while I am writing the whole configuration. All the components have been written as plugins of [icebox](https://github.com/LEXUGE/icebox) toolkit.
