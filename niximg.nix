@@ -1,6 +1,15 @@
 { config, lib, pkgs, ... }:
 with lib; {
+
+  home-manager.useUserPackages = true;
+
+  nix.package = pkgs.nixUnstable;
+  nix.extraOptions = ''
+    experimental-features = nix-command flakes
+  '';
+
   isoImage.edition = "gnome";
+
   # Whitelist wheel users to do anything
   # This is useful for things like pkexec
   #
@@ -53,8 +62,21 @@ with lib; {
     };
   };
 
+  # Networking
   netkit.clash = {
     enable = true;
     redirPort = 7892; # This must be the same with the one in your clash.yaml
   };
+
+  # User related section.
+  hm-sanity.users = [ "nixos" ];
+  users.users.nixos.shell = pkgs.zsh;
+  ash-profile.nixos.extraPackages = with pkgs; [
+    htop
+    firefox-wayland
+    tdesktop
+    gparted
+    etcher
+    pavucontrol
+  ];
 }

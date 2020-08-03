@@ -15,6 +15,7 @@
     nixosModules = {
       ash-profile = (import ./modules/ash-profile);
       x-os = (import ./modules/x-os);
+      hm-sanity = (import ./modules/hm-sanity);
     };
     nixosConfigurations = {
       x1c7 = nixos.lib.nixosSystem {
@@ -25,6 +26,7 @@
           std.nixosModule
           self.nixosModules.x-os
           self.nixosModules.ash-profile
+          self.nixosModules.hm-sanity
           home.nixosModules.home-manager
           netkit.nixosModules.clash
           netkit.nixosModules.wifi-relay
@@ -42,6 +44,9 @@
           ./niximg.nix
           std.nixosModule
           self.nixosModules.x-os
+          self.nixosModules.ash-profile
+          self.nixosModules.hm-sanity
+          home.nixosModules.home-manager
           netkit.nixosModules.clash
         ];
       };

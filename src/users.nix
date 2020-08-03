@@ -17,6 +17,9 @@
       };
     };
   };
+
+  hm-sanity.users = [ "ash" ];
+
   ash-profile.ash = {
     extraPackages = with pkgs; [
       #(python3.withPackages (ps: [ ps.tkinter ]))
