@@ -1,0 +1,48 @@
+name: "Build customized NixOS LiveCD ISO"
+on:
+  push:
+    commits:
+    - 'buildiso*'
+  schedule:
+    - cron: '0 12 * * 1'
+jobs:
+  buildiso:
+    runs-on: ubuntu-latest
+    steps:
+    -name: Get current date
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y%m%d')"
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        # Nix Flakes doesn't work on shallow clones
+        fetch-depth: 0
+    - name: install nixFlake
+      uses: cachix/install-nix-action@v10
+      with:
+        install_url: https://github.com/numtide/nix-flakes-installer/releases/download/nix-2.4pre20200618_377345e/install
+    - name: Configure Nix to enable flakes
+      run: echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
+    - name: Build LiveCD ISO image
+      run: |
+        nix build ".#niximg"
+        cp "$(ls "$(readlink result)/iso/")" ./niximg.iso
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{steps.date.outputs.date}}
+        release_name: Automated release build ${{ steps.date.outputs.date }}
+        draft: false
+        prerelease: true
+    - name: Upload Release Asset
+      id: upload-release-asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./niximg.iso
+        asset_name: niximg-${{ steps.date.outputs.date }}.iso
