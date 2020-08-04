@@ -1,8 +1,6 @@
 name: "Build customized NixOS LiveCD ISO"
 on:
   push:
-    commits:
-    - 'buildiso*'
   schedule:
     - cron: '0 12 * * 1'
 jobs:
@@ -47,3 +45,4 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./niximg.iso
         asset_name: niximg-${{ steps.date.outputs.date }}.iso
+	asset_content_type: application/x-iso9660-image
