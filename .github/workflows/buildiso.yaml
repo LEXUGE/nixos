@@ -2,7 +2,7 @@ name: "Build customized NixOS LiveCD ISO"
 on:
   push:
   schedule:
-    - cron: '0 12 * * *'
+    - cron: '0 0 * * *'
 jobs:
   buildiso:
     if: startsWith(github.event.head_commit.message, 'buildiso:')
