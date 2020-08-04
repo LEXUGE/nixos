@@ -1,7 +1,7 @@
 name: "Build customized NixOS LiveCD ISO"
 on:
   schedule:
-    - cron: '0 12 * * */3'
+    - cron: '0 12 * * *'
 jobs:
   buildiso:
     runs-on: ubuntu-latest
@@ -33,7 +33,7 @@ jobs:
       with:
         tag_name: ${{steps.date.outputs.date}}
         release_name: ${{ steps.date.outputs.date }}
-        body: This is an automated NixOS LiveCD build built on ${{ steps.date.outputs.date }}. The build is triggered every 3 days. See [homepage](https://github.com/LEXUGE/nixos) for more information.
+        body: This is a nightly NixOS LiveCD build built on ${{ steps.date.outputs.date }}. See [homepage](https://github.com/LEXUGE/nixos) for more information.
         draft: false
         prerelease: false
     - name: Upload Release Asset
