@@ -5,7 +5,7 @@ on:
     - cron: '0 12 * * *'
 jobs:
   buildiso:
-    if: startWith(github.event.head_commit.message, 'buildiso:')
+    if: startsWith(github.event.head_commit.message, 'buildiso:')
     runs-on: ubuntu-latest
     steps:
     - name: Get current date
