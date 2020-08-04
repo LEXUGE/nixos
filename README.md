@@ -1,6 +1,5 @@
 # NixOS
-![Build customized NixOS LiveCD ISO](https://github.com/LEXUGE/nixos/workflows/Build%20customized%20NixOS%20LiveCD%20ISO/badge.svg) ![Nix Flake Check](https://github.com/LEXUGE/nixos/workflows/Nix%20Flake%20Check/badge.svg) ![Release status](https://img.shields.io/github/v/release/LEXUGE/nixos.svg)
-- A fully automated replicable nixos configuration flake that provides re-usable modules, and pre-configured system configuration.
+![Build customized NixOS LiveCD ISO](https://github.com/LEXUGE/nixos/workflows/Build%20customized%20NixOS%20LiveCD%20ISO/badge.svg) ![Nix Flake Check](https://github.com/LEXUGE/nixos/workflows/Nix%20Flake%20Check/badge.svg) ![Release status](https://img.shields.io/github/v/release/LEXUGE/nixos.svg)  A fully automated replicable nixos configuration flake that provides re-usable modules, and pre-configured system configuration.
 
 # Features
 - A customized LiveCD ISO that you can try environment out and speed up your installation!
@@ -45,6 +44,9 @@ github:LEXUGE/nixos/dd59c772a9bd0503da3c775427bbfed64d6dfc61
 - `ash-profile` is my user space configuration (stuff like zsh, git, emacs config, etc).
 - `hm-sanity` is a proper fix to first-time deployment issue in home-manager.
 - `x-os` my universal core system config.
+
+# CI
+I use GitHub Actions here to build nightly LiveCD actions (with all flake inputs up-to-date). This means by using the latest ISO image, you are likely to copy a trunk of stuff directly from CD (which is good because you don't need to download them!). After every successful build, my telegram bot would post newly built release to a [telegram channel](https://t.me/harry_nixosci_channel).
 
 # See also
 - [netkit.nix flake](https://github.com/icebox-nix/netkit.nix): Verstile tools for advanced networking scenarios in NixOS, including Clash, wifi-to-wifi hotspot, on demand minecraft server, frpc modules.

@@ -57,3 +57,4 @@ jobs:
         message: |
           The `${{ github.workflow }}` workflow triggered at `${{ steps.date.outputs.date }}` have created a new [release](${{ steps.create_release.outputs.html_url }}).
           See [homepage](https://github.com/LEXUGE/nixos) for more information.
+	  #niximg #nightly
