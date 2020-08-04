@@ -1,5 +1,6 @@
 name: "Build customized NixOS LiveCD ISO"
 on:
+  push:
   schedule:
     - cron: '0 12 * * *'
 jobs:
