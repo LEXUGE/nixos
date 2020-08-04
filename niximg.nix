@@ -56,8 +56,8 @@ with lib; {
   std = {
     system = {
       dirs = {
-        secrets = ./secrets;
-        dotfiles = ./dotfiles;
+        secrets.clash = "${./secrets/clash.yaml}";
+        dotfiles.nixos = ./dotfiles/nixos;
       };
     };
   };

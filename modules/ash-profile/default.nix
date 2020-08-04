@@ -98,10 +98,10 @@ in {
     # Handwritten configs
     home.file = {
       ".config/gtk-3.0/settings.ini".source =
-        (system.dirs.dotfiles + /ash/gtk-settings.ini);
+        (system.dirs.dotfiles."${n}" + /gtk-settings.ini);
       ".emacs.d/init.el".source =
-        (system.dirs.dotfiles + "/${n}/emacs.d/init.el");
-      ".emacs.d/elisp/".source = (system.dirs.dotfiles + "/${n}/emacs.d/elisp");
+        (system.dirs.dotfiles."${n}" + /emacs.d/init.el);
+      ".emacs.d/elisp/".source = (system.dirs.dotfiles."${n}" + /emacs.d/elisp);
     };
   });
 }

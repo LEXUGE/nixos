@@ -17,11 +17,12 @@
 
   std = {
     system = {
-      # Path to directories (always use absolute path to avoid trouble in nixos-install, because we will copy the whole configuration to the same folder under LiveCD).
-      # If you don't understand, just keep it as it is.
       dirs = {
-        secrets = ./secrets; # Did you read the comments above?
-        dotfiles = ./dotfiles;
+        secrets = {
+          clash = "/etc/nixos/secrets/clash.yaml";
+          keyfile = "/etc/nixos/secrets/keyfile.bin";
+        };
+        dotfiles.ash = ./dotfiles/ash;
       };
       bluetooth = {
         # Force enable/disable bluetooth
