@@ -1,4 +1,7 @@
 # NixOS
+- ![Build customized NixOS LiveCD ISO](https://github.com/LEXUGE/nixos/workflows/Build%20customized%20NixOS%20LiveCD%20ISO/badge.svg)
+- ![Nix Flake Check](https://github.com/LEXUGE/nixos/workflows/Nix%20Flake%20Check/badge.svg)
+- ![Release status](https://img.shields.io/github/v/release/LEXUGE/nixos.svg)
 A fully automated replicable nixos configuration flake that provides re-usable modules, and pre-configured system configuration.
 
 # Features
@@ -13,7 +16,7 @@ A fully automated replicable nixos configuration flake that provides re-usable m
 - GTK with builtin dark variant.
 
 # How do I install pre-configured?
-Download and boot in *customized* LiveCD, and then:
+[Download](https://github.com/LEXUGE/nixos/releases) and boot in *customized* LiveCD, and then:
 
 ``
 curl -Ls https://github.com/LEXUGE/nixos/raw/master/install.sh | bash
