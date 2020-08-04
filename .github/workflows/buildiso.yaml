@@ -5,6 +5,7 @@ on:
     - cron: '0 12 * * *'
 jobs:
   buildiso:
+    if: startWith(github.event.head_commit.message, 'buildiso:')
     runs-on: ubuntu-latest
     steps:
     - name: Get current date
@@ -47,12 +48,12 @@ jobs:
         asset_path: ./niximg.iso
         asset_name: niximg-${{ steps.date.outputs.date }}.iso
         asset_content_type: application/x-iso9660-image
-    - name: Push release to telegram channel
+    - name: Push release to the Telegram channel
       uses: appleboy/telegram-action@master
       with:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
         format: markdown
         message: |
-          The `${{ github.event_name }}` workflow triggered at `${{ steps.date.outputs.date }}` have created [release](${{ steps.create_release.outputs.html_url }}).
+          The `${{ github.workflow }}` workflow triggered at `${{ steps.date.outputs.date }}` have created a new [release](${{ steps.create_release.outputs.html_url }}).
           See [homepage](https://github.com/LEXUGE/nixos) for more information.
