@@ -83,7 +83,7 @@ jobs:
           See [homepage](https://github.com/LEXUGE/nixos) for more information.
           #niximg #release
     - name: Push cached message to the Telegram channel
-      if: steps.cache-flake.outputs.cache-hit = 'true'
+      if: steps.cache-flake.outputs.cache-hit == 'true'
       uses: appleboy/telegram-action@master
       with:
         to: ${{ secrets.TELEGRAM_TO }}
