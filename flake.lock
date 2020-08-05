@@ -23,14 +23,15 @@
     },
     "netkit": {
       "inputs": {
-        "nixos": "nixos"
+        "nixos": "nixos",
+        "std": "std"
       },
       "locked": {
-        "lastModified": 1596636029,
-        "narHash": "sha256-Om0SIDlKIhqJfx9MC9V/UrD2WPeu2vAJvNtEidZu0ts=",
+        "lastModified": 1596636556,
+        "narHash": "sha256-PrpsWfK8GUgAUwdG4aW5L2HfiQZu6w0u2l8vsJ48xsI=",
         "owner": "icebox-nix",
         "repo": "netkit.nix",
-        "rev": "eb59986ead4fb262072c3eb6c91a8805431c938e",
+        "rev": "f26130fd8822ee51f45e967b9119fbd075478d99",
         "type": "github"
       },
       "original": {
@@ -75,8 +76,7 @@
       "inputs": {
         "home": "home",
         "netkit": "netkit",
-        "nixos": "nixos_2",
-        "std": "std"
+        "nixos": "nixos_2"
       }
     },
     "std": {

@@ -8,10 +8,9 @@
       inputs.nixpkgs.follows = "nixos";
     };
     netkit.url = "github:icebox-nix/netkit.nix";
-    std.url = "github:icebox-nix/std";
   };
 
-  outputs = { self, nixos, home, std, netkit }@inputs: {
+  outputs = { self, nixos, home, netkit }@inputs: {
     x1c7-toplevel = self.nixosConfigurations.x1c7.config.system.build.toplevel;
     niximg = self.nixosConfigurations.niximg.config.system.build.isoImage;
 
@@ -26,7 +25,7 @@
         modules = [
           ./configuration.nix
           ./src/devices/x1c7
-          std.nixosModule
+          netkit.inputs.std.nixosModule
           self.nixosModules.x-os
           self.nixosModules.ash-profile
           self.nixosModules.hm-sanity
@@ -45,7 +44,7 @@
         modules = [
           "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-base.nix"
           ./niximg.nix
-          std.nixosModule
+          netkit.inputs.std.nixosModule
           self.nixosModules.x-os
           self.nixosModules.ash-profile
           self.nixosModules.hm-sanity
