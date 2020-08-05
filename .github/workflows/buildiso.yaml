@@ -22,13 +22,25 @@ jobs:
         install_url: https://github.com/numtide/nix-flakes-installer/releases/download/nix-2.4pre20200618_377345e/install
     - name: Configure Nix to enable flake
       run: echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
+    - name: Update flake.lock
+      run: nix flake update --recreate-lock-file
+    - name: Cache flake.lock
+      id: cache-flake
+      uses: actions/cache@v2
+      with:
+        path: |
+          /nix/store
+        key: ${{ runner.os }}-nix-${{ hashFiles('flake.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-nix-
     - name: Build LiveCD ISO image
+      if: steps.cache-flake.outputs.cache-hit != 'true'
       run: |
-        nix flake update --recreate-lock-file
         nix build ".#niximg"
         cp "result/iso/$(ls "$(readlink result)/iso/")" ./niximg.iso
     - name: Create Release
       id: create_release
+      if: steps.cache-flake.outputs.cache-hit != 'true'
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -40,6 +52,7 @@ jobs:
         prerelease: false
     - name: Upload Release Asset
       id: upload-release-asset
+      if: steps.cache-flake.outputs.cache-hit != 'true'
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -49,6 +62,7 @@ jobs:
         asset_name: niximg-${{ steps.date.outputs.date }}.iso
         asset_content_type: application/x-iso9660-image
     - name: Push release to the Telegram channel
+      if: steps.cache-flake.outputs.cache-hit != 'true'
       uses: appleboy/telegram-action@master
       with:
         to: ${{ secrets.TELEGRAM_TO }}
