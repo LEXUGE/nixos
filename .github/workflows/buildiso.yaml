@@ -31,7 +31,7 @@ jobs:
         token: ${{ secrets.TELEGRAM_TOKEN }}
         format: markdown
         message: |
-          The `${{ github.workflow }}` workflow triggered at `${{ steps.date.outputs.date }}` has started with `flake.lock` SHA-256 hash `${{ hashFiles('flake.lock') }}`.
+          The `${{ github.workflow }}` workflow (`flake.lock` SHA-256: `${{ hashFiles('flake.lock') }}`) triggered at `${{ steps.date.outputs.date }}` on `${{ github.event_name }}` has started.
           #niximg #started
     - name: Cache flake.lock
       id: cache-flake
@@ -78,17 +78,17 @@ jobs:
         token: ${{ secrets.TELEGRAM_TOKEN }}
         format: markdown
         message: |
-          The `${{ github.workflow }}` workflow triggered at `${{ steps.date.outputs.date }}` has created a new [release](${{ steps.create_release.outputs.html_url }}).
+          The `${{ github.workflow }}` workflow triggered at `${{ steps.date.outputs.date }}` on `${{ github.event_name }}` has created a new [release](${{ steps.create_release.outputs.html_url }}).
           The SHA-256 checksum of the image is `${{ hashFiles('niximg.iso') }}`.
           See [homepage](https://github.com/LEXUGE/nixos) for more information.
           #niximg #release
     - name: Push cached message to the Telegram channel
-      if: steps.cache-flake.outputs.cache-hit != 'true'
+      if: steps.cache-flake.outputs.cache-hit = 'true'
       uses: appleboy/telegram-action@master
       with:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
         format: markdown
         message: |
-          The `${{ github.workflow }}` workflow (`flake.lock` SHA-256: `${{ hashFiles('flake.lock') }}`) triggered at `${{ steps.date.outputs.date }}` hits a cache. No further build proceeds.
+          The `${{ github.workflow }}` workflow (`flake.lock` SHA-256: `${{ hashFiles('flake.lock') }}`) triggered at `${{ steps.date.outputs.date }}` on `${{ github.event_name }}` hits a cache. No further build proceeds.
           #niximg #cached
