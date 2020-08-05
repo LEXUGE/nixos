@@ -82,3 +82,13 @@ jobs:
           The SHA-256 checksum of the image is `${{ hashFiles('niximg.iso') }}`.
           See [homepage](https://github.com/LEXUGE/nixos) for more information.
           #niximg #release
+    - name: Push cached message to the Telegram channel
+      if: steps.cache-flake.outputs.cache-hit != 'true'
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        format: markdown
+        message: |
+          The `${{ github.workflow }}` workflow (`flake.lock` SHA-256: `${{ hashFiles('flake.lock') }}`) triggered at `${{ steps.date.outputs.date }}` hits a cache. No further build proceeds.
+          #niximg #cached
