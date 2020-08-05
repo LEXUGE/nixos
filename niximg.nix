@@ -57,7 +57,7 @@ with lib; {
     system = {
       dirs = {
         secrets.clash = "${./secrets/clash.yaml}";
-        dotfiles.nixos = ./dotfiles/nixos;
+        dotfiles.nixos = ./dotfiles/ash;
       };
     };
   };
