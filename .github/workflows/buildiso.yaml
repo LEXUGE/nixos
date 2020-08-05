@@ -22,8 +22,10 @@ jobs:
         install_url: https://github.com/numtide/nix-flakes-installer/releases/download/nix-2.4pre20200618_377345e/install
     - name: Configure Nix to enable flake
       run: echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
-    - name: Update flake.lock
-      run: nix flake update --recreate-lock-file
+    - name: Update flake.lock and build drv
+      run: |
+        nix flake update --recreate-lock-file
+        nix show-derivation ".#niximg" > niximg.drv
     - name: Send starting message to the telegram channel
       uses: appleboy/telegram-action@master
       with:
@@ -31,14 +33,17 @@ jobs:
         token: ${{ secrets.TELEGRAM_TOKEN }}
         format: markdown
         message: |
-          The `${{ github.workflow }}` workflow (`flake.lock` SHA-256: `${{ hashFiles('flake.lock') }}`) triggered at `${{ steps.date.outputs.date }}` on `${{ github.event_name }}` has started.
+          The `${{ github.workflow }}` workflow at `${{ steps.date.outputs.date }}` has started.
+          - triggered by `${{ github.event_name }}`
+          - `flake.lock` SHA-256: `${{ hashFiles('flake.lock') }}`
+          - derivation SHA-256: `${{ hashFiles('niximg.drv') }}`
           #niximg #started
     - name: Cache flake.lock
       id: cache-flake
       uses: actions/cache@v2
       with:
-        path: ./flake.lock
-        key: ${{ runner.os }}-nix-${{ hashFiles('flake.lock') }}
+        path: ./niximg.drv
+        key: ${{ runner.os }}-nix-${{ hashFiles('niximg.drv') }}
     - name: Build LiveCD ISO image
       if: steps.cache-flake.outputs.cache-hit != 'true'
       run: |
@@ -78,10 +83,11 @@ jobs:
         token: ${{ secrets.TELEGRAM_TOKEN }}
         format: markdown
         message: |
-          The `${{ github.workflow }}` workflow triggered at `${{ steps.date.outputs.date }}` on `${{ github.event_name }}` has created a new [release](${{ steps.create_release.outputs.html_url }}).
+          The `${{ github.workflow }}` workflow at `${{ steps.date.outputs.date }}` has created a new [release](${{ steps.create_release.outputs.html_url }}).
+          - triggered by `${{ github.event_name }}`
           The SHA-256 checksum of the image is `${{ hashFiles('niximg.iso') }}`.
           See [homepage](https://github.com/LEXUGE/nixos) for more information.
-          #niximg #release
+          #niximg #released
     - name: Push cached message to the Telegram channel
       if: steps.cache-flake.outputs.cache-hit == 'true'
       uses: appleboy/telegram-action@master
@@ -90,5 +96,8 @@ jobs:
         token: ${{ secrets.TELEGRAM_TOKEN }}
         format: markdown
         message: |
-          The `${{ github.workflow }}` workflow (`flake.lock` SHA-256: `${{ hashFiles('flake.lock') }}`) triggered at `${{ steps.date.outputs.date }}` on `${{ github.event_name }}` hits a cache. No further build proceeds.
+          The `${{ github.workflow }}` workflow at `${{ steps.date.outputs.date }}` hits a cache. No further build proceeds.
+          - triggered by `${{ github.event_name }}`
+          - `flake.lock` SHA-256: `${{ hashFiles('flake.lock') }}`
+          - derivation SHA-256: `${{ hashFiles('niximg.drv') }}`
           #niximg #cached
