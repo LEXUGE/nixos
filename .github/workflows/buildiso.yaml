@@ -79,6 +79,6 @@ jobs:
         format: markdown
         message: |
           The `${{ github.workflow }}` workflow triggered at `${{ steps.date.outputs.date }}` has created a new [release](${{ steps.create_release.outputs.html_url }}).
-	  The SHA-256 checksum of the image is `${{ hashFiles('niximg.iso') }}`.
+          The SHA-256 checksum of the image is `${{ hashFiles('niximg.iso') }}`.
           See [homepage](https://github.com/LEXUGE/nixos) for more information.
           #niximg #release
