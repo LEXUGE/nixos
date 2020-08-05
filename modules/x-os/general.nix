@@ -34,8 +34,8 @@ in {
 
       # Auto gc and optimise
       nix.optimise.automatic = true;
-      #nix.gc.automatic = true;
-      #nix.gc.options = "--delete-older-than 7d";
+      nix.gc.automatic = true;
+      nix.gc.options = "--delete-older-than 7d";
     })
     (mkIf (cfg.isoMode) {
       x-os = {

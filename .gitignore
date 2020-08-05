@@ -1,4 +1,6 @@
 # -*- mode: gitignore; -*-
+result
+
 # emacs gitignore
 *~
 \#*\#
