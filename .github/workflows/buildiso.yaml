@@ -22,10 +22,12 @@ jobs:
         install_url: https://github.com/numtide/nix-flakes-installer/releases/download/nix-2.4pre20200618_377345e/install
     - name: Configure Nix to enable flake
       run: echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
-    - name: Update flake.lock and build drv
+    - name: Update flake.lock and show drv
       run: |
         nix flake update --recreate-lock-file
         nix show-derivation ".#niximg" > niximg.drv
+        cat ./flake.lock
+        cat ./niximg.drv
     - name: Send starting message to the telegram channel
       uses: appleboy/telegram-action@master
       with:
