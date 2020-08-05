@@ -2,10 +2,10 @@ name: "Build customized NixOS LiveCD ISO"
 on:
   push:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 1 * * */3'
 jobs:
   buildiso:
-    if: startsWith(github.event.head_commit.message, 'buildiso:')
+    if: (startsWith(github.event.head_commit.message, 'buildiso:') || (github.event == 'schedule'))
     runs-on: ubuntu-latest
     steps:
     - name: Get current date
@@ -35,7 +35,7 @@ jobs:
       with:
         tag_name: ${{steps.date.outputs.date}}
         release_name: ${{ steps.date.outputs.date }}
-        body: This is a nightly NixOS LiveCD build built on ${{ steps.date.outputs.date }}. See [homepage](https://github.com/LEXUGE/nixos) for more information.
+        body: This is an automated LiveCD build built on ${{ steps.date.outputs.date }}. See [homepage](https://github.com/LEXUGE/nixos) for more information.
         draft: false
         prerelease: false
     - name: Upload Release Asset
@@ -57,4 +57,4 @@ jobs:
         message: |
           The `${{ github.workflow }}` workflow triggered at `${{ steps.date.outputs.date }}` have created a new [release](${{ steps.create_release.outputs.html_url }}).
           See [homepage](https://github.com/LEXUGE/nixos) for more information.
-          #niximg #nightly
+          #niximg
