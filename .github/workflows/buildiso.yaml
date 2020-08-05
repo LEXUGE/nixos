@@ -29,8 +29,8 @@ jobs:
         nix show-derivation ".#niximg" > niximg.drv
         cat ./flake.lock
         cat ./niximg.drv
-        echo "::set-output name=flake::$(sha256sum ./flake.lock)"
-        echo "::set-output name=niximg-drv::$(sha256sum ./niximg.drv)"
+        echo "::set-output name=flake::$(sha512sum ./flake.lock|cut -d " " -f 1)"
+        echo "::set-output name=niximg-drv::$(sha512sum ./niximg.drv|cut -d " " -f 1)"
     - name: Send starting message to the telegram channel
       uses: appleboy/telegram-action@master
       with:
@@ -40,8 +40,8 @@ jobs:
         message: |
           The `${{ github.workflow }}` workflow at `${{ steps.date.outputs.date }}` has started.
           - triggered by `${{ github.event_name }}`
-          - `flake.lock` SHA-256: `${{ steps.update.outputs.flake }}`
-          - derivation SHA-256: `${{ steps.update.outputs.niximg-drv }}`
+          - `flake.lock` SHA-512: `${{ steps.update.outputs.flake }}`
+          - derivation SHA-512: `${{ steps.update.outputs.niximg-drv }}`
           #niximg #started
     - name: Cache flake.lock
       id: cache-flake
@@ -55,7 +55,7 @@ jobs:
       run: |
         nix build ".#niximg"
         cp "result/iso/$(ls "$(readlink result)/iso/")" ./niximg.iso
-        echo "::set-output name=niximg-iso::$(sha256sum ./niximg.iso)"
+        echo "::set-output name=niximg-iso::$(sha512sum ./niximg.iso|cut -d " " -f 1)"
     - name: Create Release
       id: create_release
       if: steps.cache-flake.outputs.cache-hit != 'true'
@@ -67,7 +67,7 @@ jobs:
         release_name: ${{ steps.date.outputs.date }}
         body: |
           This is an automated LiveCD build built on ${{ steps.date.outputs.date }}.
-          The SHA-256 checksum of the image is ${{ steps.iso.outputs.niximg-iso }}.
+          The SHA-512 checksum of the image is ${{ steps.iso.outputs.niximg-iso }}.
           See [homepage](https://github.com/LEXUGE/nixos) for more information.
         draft: false
         prerelease: false
@@ -92,7 +92,7 @@ jobs:
         message: |
           The `${{ github.workflow }}` workflow at `${{ steps.date.outputs.date }}` has created a new [release](${{ steps.create_release.outputs.html_url }}).
           - triggered by `${{ github.event_name }}`
-          The SHA-256 checksum of the image is `${{ steps.iso.outputs.niximg-iso }}`.
+          The SHA-512 checksum of the image is `${{ steps.iso.outputs.niximg-iso }}`.
           See [homepage](https://github.com/LEXUGE/nixos) for more information.
           #niximg #released
     - name: Push cached message to the Telegram channel
@@ -105,6 +105,6 @@ jobs:
         message: |
           The `${{ github.workflow }}` workflow at `${{ steps.date.outputs.date }}` hits a cache. No further build proceeds.
           - triggered by `${{ github.event_name }}`
-          - `flake.lock` SHA-256: `${{ steps.update.outputs.flake }}`
-          - derivation SHA-256: `${{ steps.update.outputs.niximg-drv }}`
+          - `flake.lock` SHA-512: `${{ steps.update.outputs.flake }}`
+          - derivation SHA-512: `${{ steps.update.outputs.niximg-drv }}`
           #niximg #cached
