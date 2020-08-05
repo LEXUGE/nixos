@@ -28,7 +28,7 @@ jobs:
       id: cache-flake
       uses: actions/cache@v2
       with:
-        path: /nix/store
+        path: ./flake.lock
         key: ${{ runner.os }}-nix-${{ hashFiles('flake.lock') }}
     - name: Build LiveCD ISO image
       if: steps.cache-flake.outputs.cache-hit != 'true'
