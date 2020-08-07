@@ -42,7 +42,7 @@
       frp
       pavucontrol
       #calibre
-      #tor-browser-bundle-bin
+      torbrowser
       ifuse
       libimobiledevice
       #onlyoffice-desktop

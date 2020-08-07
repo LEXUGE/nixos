@@ -13,6 +13,7 @@ in mkIf cfg.enable {
     git
     gnupg
     neofetch
+    bind
     busybox
     shfmt
     shellcheck

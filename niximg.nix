@@ -77,6 +77,7 @@ with lib; {
     tdesktop
     gparted
     etcher
+    torbrowser
     pavucontrol
   ];
 }
