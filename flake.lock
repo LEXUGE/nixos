@@ -27,11 +27,11 @@
         "std": "std"
       },
       "locked": {
-        "lastModified": 1596646177,
-        "narHash": "sha256-EJZ0D1QnMc1OUXZt/IVjY/H50GkT0Urp0eTZ/3OcIu0=",
+        "lastModified": 1596857822,
+        "narHash": "sha256-vnxhYqlzoA5LGxufQN2qUKYFBoeI4ZEUhW70j03BYVE=",
         "owner": "icebox-nix",
         "repo": "netkit.nix",
-        "rev": "50852ed5ec08e790f9938865ed18c5a731eeccb3",
+        "rev": "5344ea459a24368288274c792bd095d558ab358f",
         "type": "github"
       },
       "original": {
@@ -42,11 +42,11 @@
     },
     "nixos": {
       "locked": {
-        "lastModified": 1596265691,
-        "narHash": "sha256-9ofCzFqttTsGrvTaS4RrDSTNQO9PFOz5uyn8V+2eA5M=",
+        "lastModified": 1596615455,
+        "narHash": "sha256-qOp3QRL7dUbN+Kus7tReThC5ZuIqG9fy7/nkqlO78n8=",
         "owner": "NixOS",
         "repo": "nixpkgs-channels",
-        "rev": "840c782d507d60aaa49aa9e3f6d0b0e780912742",
+        "rev": "8e2b14aceb1d40c7e8b84c03a7c78955359872bb",
         "type": "github"
       },
       "original": {

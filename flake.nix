@@ -15,9 +15,9 @@
     niximg = self.nixosConfigurations.niximg.config.system.build.isoImage;
 
     nixosModules = {
-      ash-profile = (import ./modules/ash-profile);
-      x-os = (import ./modules/x-os);
-      hm-sanity = (import ./modules/hm-sanity);
+      ash-profile = (import ./src/modules/ash-profile);
+      x-os = (import ./src/modules/x-os);
+      hm-sanity = (import ./src/modules/hm-sanity);
     };
     nixosConfigurations = {
       x1c7 = nixos.lib.nixosSystem {
