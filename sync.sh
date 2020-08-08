@@ -22,8 +22,8 @@ rsync -avP \
 find . -type f -name '*.nix' -exec nixfmt {} +
 shellcheck ./*.sh
 shfmt -w ./*.sh
-nix flake check
 nix flake update --recreate-lock-file
+nix flake check
 echo "Done."
 
 echo -n "Adding to git..."
