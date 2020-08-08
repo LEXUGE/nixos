@@ -29,7 +29,7 @@
       thunderbird-bin-78
       spotify
       firefox-wayland
-      #tdesktop
+      tdesktop
       minecraft
       mcrcon
       (texlive.combine {

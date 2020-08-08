@@ -2,7 +2,7 @@
   description = "Harry Ying's NixOS configuration";
 
   inputs = {
-    nixos.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixos.url = "github:NixOS/nixpkgs/6e4d33a0019282c1d3c1bcd5c2fb2a0dba43bb46";
     home = {
       url = "github:rycee/home-manager/bqv-flakes";
       inputs.nixpkgs.follows = "nixos";
@@ -19,6 +19,7 @@
       x-os = (import ./src/modules/x-os);
       hm-sanity = (import ./src/modules/hm-sanity);
     };
+
     nixosConfigurations = {
       x1c7 = nixos.lib.nixosSystem {
         system = "x86_64-linux";
