@@ -27,11 +27,11 @@
         "std": "std"
       },
       "locked": {
-        "lastModified": 1596888364,
-        "narHash": "sha256-h47hPBvdvMqh1unCAPKKYbUg223ozRCLxhTPxCAJ92U=",
+        "lastModified": 1596899961,
+        "narHash": "sha256-tEPCs5jlPCMZgAfNIF0KGoee4I4Vaiuhz+77DP1fDdg=",
         "owner": "icebox-nix",
         "repo": "netkit.nix",
-        "rev": "e72b516716d5c761db225814e788be10e7d2a55c",
+        "rev": "243e50127af8158f7b0ad588118ab033bace64fb",
         "type": "github"
       },
       "original": {
@@ -81,11 +81,11 @@
     },
     "std": {
       "locked": {
-        "lastModified": 1596640919,
-        "narHash": "sha256-6X/poT27NyD3rp7CW9OHc4qoyAFALUNxgFZfgH/vMCY=",
+        "lastModified": 1596888563,
+        "narHash": "sha256-nUHh7KgMBcs1dkLHriSrDCSrIVY4FAEWAScyK9+ByeA=",
         "owner": "icebox-nix",
         "repo": "std",
-        "rev": "7d98cd5eb33975408919a190b0e979f93575f645",
+        "rev": "9e04673472db2eb39ab4e94d94561bb0b92ba160",
         "type": "github"
       },
       "original": {
