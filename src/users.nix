@@ -30,7 +30,8 @@
       spotify
       firefox-wayland
       tdesktop
-      minecraft
+      #minecraft
+      multimc
       mcrcon
       (texlive.combine {
         inherit (texlive) scheme-basic wrapfig ulem capt-of metafont;

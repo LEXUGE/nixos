@@ -1,5 +1,20 @@
 {
   "nodes": {
+    "flake-utils": {
+      "locked": {
+        "lastModified": 1596290160,
+        "narHash": "sha256-QNXPeCiLKfLH6G6TtyuxZ14Zm+ZMxBaQ0Klccq+2RfM=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "0c686c77c4ac6f7add3262107685693ada8ae3b0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "home": {
       "inputs": {
         "nixpkgs": [
@@ -23,15 +38,16 @@
     },
     "netkit": {
       "inputs": {
+        "flake-utils": "flake-utils",
         "nixos": "nixos",
         "std": "std"
       },
       "locked": {
-        "lastModified": 1596935822,
-        "narHash": "sha256-IgEx5db1eB7iQELNURs0mA29d+bC94iIUuQVv6y6lLo=",
+        "lastModified": 1596966416,
+        "narHash": "sha256-y6/g92unFXByVeWDtbW0IDzSoX8+ymKiPI5blUDRAOw=",
         "owner": "icebox-nix",
         "repo": "netkit.nix",
-        "rev": "5bd88d2b8a3638100fc33f7d1d5037403278a62b",
+        "rev": "70fc9a5cb9e37251258edbf2ad741f064ac2d722",
         "type": "github"
       },
       "original": {

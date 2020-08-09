@@ -1,4 +1,4 @@
-{
+{ pkgs, ... }: {
   netkit.minecraft-server = {
     enable = true;
     eula = true;
