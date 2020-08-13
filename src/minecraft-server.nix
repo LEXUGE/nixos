@@ -35,15 +35,16 @@
       york_Ying = "421a1e44-6280-3e85-97c9-e2029145b1c6"; # York Ying - Offline
       Mac-GM = "e261565d-0856-3d15-b3ae-401014fc10fd"; # Billy Xu - Offline
       # AshBreaker1 = "65bec9be-2cb8-46c8-bab5-2a5219759a4a"; # Online
+      mick233 = "d32170e2-5cd8-35b5-9fac-2c71854318ef";
     };
 
     serverProperties = {
       online-mode = false;
       max-players = 30;
       level-name = "newera";
-      level-type = "amplified";
       white-list = true;
       enable-rcon = true;
+      difficulty = "hard";
       "rcon.password" = "nixos";
       network-compression-threshold =
         64; # Compress any packets larger than 64 bytes

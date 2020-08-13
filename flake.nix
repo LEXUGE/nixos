@@ -2,7 +2,7 @@
   description = "Harry Ying's NixOS configuration";
 
   inputs = {
-    nixos.url = "github:NixOS/nixpkgs/6e4d33a0019282c1d3c1bcd5c2fb2a0dba43bb46";
+    nixos.url = "github:NixOS/nixpkgs-channels/nixos-unstable";
     home = {
       url = "github:rycee/home-manager/bqv-flakes";
       inputs.nixpkgs.follows = "nixos";
