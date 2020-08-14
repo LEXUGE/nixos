@@ -24,7 +24,7 @@ in {
   config = mkIf cfg.enable (mkMerge [
     ({
       # Use the latest linux kernel (temporarily we are using 5.6 branch because swapfile fails on 5.7 https://bugzilla.kernel.org/show_bug.cgi?id=207585#c5)
-      boot.kernelPackages = pkgs.linuxPackages_latest;
+      boot.kernelPackages = pkgs.linuxPackages_latest_hardened;
 
       # Support NTFS
       boot.supportedFilesystems = [ "ntfs" ];
