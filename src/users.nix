@@ -13,7 +13,8 @@
         # networkmanager - manage network
         # video - light control
         # libvirtd - virtual manager controls.
-        extraGroups = [ "wheel" "networkmanager" "video" ];
+        # docker - Docker control
+        extraGroups = [ "wheel" "networkmanager" "docker" ];
       };
     };
   };
@@ -29,6 +30,7 @@
       thunderbird-bin-78
       spotify
       firefox-wayland
+      google-chrome
       tdesktop
       #minecraft
       multimc

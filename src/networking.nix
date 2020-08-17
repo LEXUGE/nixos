@@ -5,6 +5,8 @@
       redirPort = 7892; # This must be the same with the one in your clash.yaml
     };
 
+    snapdrop.enable = true;
+
     wifi-relay = {
       enable = true;
       interface = "wlp0s20f3";
