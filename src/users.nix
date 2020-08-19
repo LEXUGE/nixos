@@ -30,7 +30,7 @@
       thunderbird-bin-78
       spotify
       firefox-wayland
-      google-chrome
+      chromium
       tdesktop
       #minecraft
       multimc
