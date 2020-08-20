@@ -30,7 +30,7 @@
       thunderbird-bin-78
       spotify
       firefox-wayland
-      chromium
+      (chromium.override { enableVaapi = true; })
       tdesktop
       #minecraft
       multimc
