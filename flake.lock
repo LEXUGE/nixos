@@ -36,6 +36,22 @@
         "type": "github"
       }
     },
+    "mozilla": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1594829078,
+        "narHash": "sha256-yRCkO499a5gucHmxgWb/QDqPt/UBTbuPURuPZ9DLmIc=",
+        "owner": "mozilla",
+        "repo": "nixpkgs-mozilla",
+        "rev": "efda5b357451dbb0431f983cca679ae3cd9b9829",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mozilla",
+        "repo": "nixpkgs-mozilla",
+        "type": "github"
+      }
+    },
     "netkit": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -74,11 +90,11 @@
     },
     "nixos_2": {
       "locked": {
-        "lastModified": 1597682354,
-        "narHash": "sha256-6J4Q9gYzIuYUjn9MLJvte5KY2ZBpQ+3prsSz+r/8le0=",
+        "lastModified": 1597943282,
+        "narHash": "sha256-G/VQBlqO7YeFOSvn29RqdvABZxmQBtiRYVA6kjqWZ6o=",
         "owner": "NixOS",
         "repo": "nixpkgs-channels",
-        "rev": "1e3f09feaa5667be4ed6eca96a984b4642420b83",
+        "rev": "c59ea8b8a0e7f927e7291c14ea6cd1bd3a16ff38",
         "type": "github"
       },
       "original": {
@@ -91,6 +107,7 @@
     "root": {
       "inputs": {
         "home": "home",
+        "mozilla": "mozilla",
         "netkit": "netkit",
         "nixos": "nixos_2"
       }

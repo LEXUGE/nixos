@@ -19,6 +19,7 @@ in mkIf cfg.enable {
     shellcheck
     smartmontools
     efibootmgr
+    rsync
     ncdu
   ];
 

@@ -8,9 +8,14 @@
       inputs.nixpkgs.follows = "nixos";
     };
     netkit.url = "github:icebox-nix/netkit.nix";
+
+    mozilla = {
+      url = "github:mozilla/nixpkgs-mozilla";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixos, home, netkit }@inputs: {
+  outputs = { self, nixos, home, netkit, mozilla }@inputs: {
     x1c7-toplevel = self.nixosConfigurations.x1c7.config.system.build.toplevel;
     niximg = self.nixosConfigurations.niximg.config.system.build.isoImage;
 
@@ -24,6 +29,7 @@
       x1c7 = nixos.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
+          { nixpkgs.overlays = [ (import mozilla) ]; }
           ./configuration.nix
           ./src/devices/x1c7
           netkit.inputs.std.nixosModule
