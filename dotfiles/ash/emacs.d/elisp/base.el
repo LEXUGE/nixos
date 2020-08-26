@@ -1,7 +1,6 @@
 (package-initialize)
-(add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/")
-             '("elpy" . "https://jorgenschaefer.github.io/packages/"))
+(setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                         ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
 
 (when (not package-archive-contents)
   (package-refresh-contents))
@@ -28,7 +27,7 @@
 (setq confirm-kill-emacs                  'y-or-n-p
       confirm-nonexistent-file-or-buffer  t
       save-interprogram-paste-before-kill t
-      mouse-yank-at-point                 t
+      mouse-yank-at-point                 t ; Paste at where cursor points in whatever cases
       require-final-newline               t
       visible-bell                        nil
       ring-bell-function                  'ignore
@@ -40,8 +39,6 @@
       ;; Disable non selected window highlight
       cursor-in-non-selected-windows     nil
       highlight-nonselected-windows      nil
-      ;; PATH
-      exec-path                          (append exec-path '("/usr/local/bin/"))
       indent-tabs-mode                   nil
       inhibit-startup-message            t
       fringes-outside-margins            t
@@ -64,25 +61,34 @@
  make-backup-files                  t
  create-lockfiles                   nil
  backup-directory-alist            `((".*" . ,(concat temp-dir "/backup/")))
+ tramp-backup-directory-alist       backup-directory-alist
  auto-save-file-name-transforms    `((".*" ,(concat temp-dir "/auto-save-list/") t)))
 
 (unless (file-exists-p (concat temp-dir "/auto-save-list"))
-		       (make-directory (concat temp-dir "/auto-save-list") :parents))
+  (make-directory (concat temp-dir "/auto-save-list") :parents))
 
+;; Set yes-or-no-p to y-or-n-p
 (fset 'yes-or-no-p 'y-or-n-p)
+
+;; Auto revert everything
 (global-auto-revert-mode t)
 
 ;; Disable toolbar & menubar
 (menu-bar-mode -1)
+;; Disable toolbar if corresponding mode is available
 (when (fboundp 'tool-bar-mode)
   (tool-bar-mode -1))
 (when (  fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
 
+;; Enable global current line highlight
+(global-hl-line-mode t)
+
+;; Show parens
 (show-paren-mode 1)
 
-;; Delete trailing whitespace before save
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+;; Behaviors regarding trailing whitespaces
+(add-hook 'before-save-hook #'enable-trailing-whitespace)
 
 (provide 'base)
 ;;; base ends here

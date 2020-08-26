@@ -44,10 +44,10 @@
       gnome-podcasts
       frp
       pavucontrol
-      #calibre
       torbrowser
       ifuse
       libimobiledevice
+      emacs-all-the-icons-fonts
       #onlyoffice-desktop
     ];
   };

@@ -1,15 +1,14 @@
-;; Ivy and other completion tools
+;; Completion tools
 
+;; Setup ivy-powered emacs commands counterparts
 (use-package counsel
   :bind
   ("M-x" . counsel-M-x)
   ("C-x C-m" . counsel-M-x)
-  ("C-x C-f" . counsel-find-file)
-  ("C-x c k" . counsel-yank-pop))
+  ("C-x C-f" . counsel-find-file))
 
 (use-package ivy
   :bind
-  ("C-x s" . swiper)
   ("C-x C-r" . ivy-resume)
   :config
   (ivy-mode 1)
@@ -19,6 +18,8 @@
 
 (use-package company
   :config
-  (add-hook 'after-init-hook 'global-company-mode))
+  (add-hook 'after-init-hook 'global-company-mode)
+  :custom
+  (company-idle-delay 0.0 "Complete instantly"))
 
 (provide 'ext-completion)

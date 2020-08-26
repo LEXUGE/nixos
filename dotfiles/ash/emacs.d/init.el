@@ -1,4 +1,4 @@
-;;; package --- Main init file
+;;; Harry Ying's emacs configuration
 ;;; Commentary:
 ;;; This is my init file
 
@@ -20,15 +20,4 @@
 (require 'base-global-keys)
 
 (require 'lang-nix)
-
-(require 'lang-markdown)
-
-(require 'lang-python)
-
-(require 'lang-web)
-
 (require 'lang-haskell)
-
-(require 'lang-rust)
-
-(require 'lang-c)

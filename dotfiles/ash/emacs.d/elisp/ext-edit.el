@@ -1,5 +1,6 @@
 ;; Extensions that enhance the edit experience
 
+;; Expand region increases the selected region by semantic units
 (use-package expand-region
   :bind
   ("C-=" . er/expand-region))
@@ -8,11 +9,8 @@
   :bind
   ("C-c SPC" . avy-goto-char))
 
-(use-package yasnippet
-  :config
-  (yas-global-mode 1))
-
-(use-package smartparens)
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package undo-tree
   :config
@@ -38,7 +36,7 @@
 (use-package flyspell
   :if (executable-find "hunspell")
   :hook (((text-mode org-mode) . flyspell-mode)
-         (rust-mode . flyspell-prog-mode)
+         (haskell-mode . flyspell-prog-mode)
          )
   :init
   (setq ispell-program-name "hunspell")

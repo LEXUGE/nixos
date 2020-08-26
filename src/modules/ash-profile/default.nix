@@ -28,6 +28,9 @@ in {
     home.packages = with pkgs;
       [ hunspell hunspellDicts.en-us-large emacs ] ++ c.extraPackages;
 
+    # Allow fonts to be discovered
+    fonts.fontconfig.enable = true;
+
     # Package settings
     programs = {
       # GnuPG
