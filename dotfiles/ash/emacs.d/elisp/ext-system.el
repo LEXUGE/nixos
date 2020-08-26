@@ -1,14 +1,5 @@
 ;; Basic stuff that makes a functional emacs
 
-;; Emacs dashboard
-(use-package dashboard
-  :config
-  (dashboard-setup-startup-hook)
-  (setq dashboard-startup-banner 'logo)
-  (setq dashboard-center-content t)
-  (setq dashboard-set-heading-icons t)
-  (setq dashboard-set-file-icons t))
-
 ;; Ensure environment variables inside Emacs look the same as in the user's shell.
 (use-package exec-path-from-shell
   :config
