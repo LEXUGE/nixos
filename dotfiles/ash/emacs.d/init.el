@@ -8,6 +8,8 @@
 
 (require 'base)
 (require 'base-theme)
+(require 'base-functions)
+(require 'base-global-keys)
 
 (require 'ext-completion)
 (require 'ext-system)
@@ -16,8 +18,6 @@
 (require 'ext-org)
 (require 'ext-tex)
 
-(require 'base-functions)
-(require 'base-global-keys)
-
 (require 'lang-nix)
 (require 'lang-haskell)
+(require 'lang-markdown)

@@ -17,9 +17,13 @@
   (define-key read-expression-map (kbd "C-r") 'counsel-expression-history))
 
 (use-package company
-  :config
-  (add-hook 'after-init-hook 'global-company-mode)
+  :hook (after-init . global-company-mode)
   :custom
-  (company-idle-delay 0.0 "Complete instantly"))
+  (company-idle-delay 0.0 "Complete instantly")
+  ;; Use standard C-n, C-p for company candidates selection
+  :bind
+  (:map company-active-map
+	("C-n" . company-select-next)
+	("C-p" . 'company-select-previous)))
 
 (provide 'ext-completion)
