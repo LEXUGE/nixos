@@ -72,6 +72,7 @@ with lib; {
   hm-sanity.users = [ "nixos" ];
   users.users.nixos.shell = pkgs.zsh;
   ash-profile.nixos.extraPackages = with pkgs; [
+    emacs-all-the-icons-fonts
     htop
     firefox-wayland
     tdesktop
