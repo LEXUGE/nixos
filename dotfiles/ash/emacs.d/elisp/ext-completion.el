@@ -10,6 +10,7 @@
 (use-package ivy
   :bind
   ("C-x C-r" . ivy-resume)
+  ("C-x b" . ivy-switch-buffer)
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers nil)

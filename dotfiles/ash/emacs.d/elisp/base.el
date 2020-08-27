@@ -51,14 +51,18 @@
  bookmark-save-flag                      t
  bookmark-default-file              (concat temp-dir "/bookmarks"))
 
+;; Don't enable backup matching these regex patterns
+(defvar my-backup-ignore-regexps (list "recentf")
+  "*List of filename regexps to not backup")
+
 ;; Backups enabled, use nil to disable
 (setq
  history-length                     1000
  backup-inhibited                   nil
- make-backup-files                  t
  auto-save-default                  t
  auto-save-list-file-name           (concat temp-dir "/autosave")
  make-backup-files                  t
+ backup-enable-predicate            'my-backup-enable-p ; Custom predicate function for filtering functionality
  create-lockfiles                   nil
  backup-directory-alist            `((".*" . ,(concat temp-dir "/backup/")))
  tramp-backup-directory-alist       backup-directory-alist

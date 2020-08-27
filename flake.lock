@@ -2,11 +2,11 @@
   "nodes": {
     "flake-utils": {
       "locked": {
-        "lastModified": 1597053966,
-        "narHash": "sha256-f9lbPS/GJ1His8fsDqM6gfa8kSqREU4eKiMCS5hrKg4=",
+        "lastModified": 1598466101,
+        "narHash": "sha256-JPhv+Ay98KMWRVRFlLEK9+eLpvNjhTBGWdFKZsE97ck=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "ec20f52e2ff61e9c36c2b894b62fc1b4bd04c71b",
+        "rev": "a586a6b966d59f53f45a04f8891fbc017dc09dbe",
         "type": "github"
       },
       "original": {
@@ -59,11 +59,11 @@
         "std": "std"
       },
       "locked": {
-        "lastModified": 1597628455,
-        "narHash": "sha256-kD29Ltw+9Irf3Yp506Xry1FgvHoY2rj7mDBwXmOIN8A=",
+        "lastModified": 1598488717,
+        "narHash": "sha256-DAX3GYlunKA0MkY6n5ABg9u/V6nP5MQOXSU4Cr9j1z8=",
         "owner": "icebox-nix",
         "repo": "netkit.nix",
-        "rev": "adb7022b0cfd9ae1958ac1faf15b23216e4fa5a4",
+        "rev": "7ce1a19276d4897774c13c68e563f39b278126e1",
         "type": "github"
       },
       "original": {
@@ -74,11 +74,11 @@
     },
     "nixos": {
       "locked": {
-        "lastModified": 1597596130,
-        "narHash": "sha256-CnRN6vIcPm5O+Piw9Nw+n9CFrvtXUc18Az7B6NqVgWM=",
+        "lastModified": 1597943282,
+        "narHash": "sha256-G/VQBlqO7YeFOSvn29RqdvABZxmQBtiRYVA6kjqWZ6o=",
         "owner": "NixOS",
         "repo": "nixpkgs-channels",
-        "rev": "16fc531784ac226fb268cc59ad573d2746c109c1",
+        "rev": "c59ea8b8a0e7f927e7291c14ea6cd1bd3a16ff38",
         "type": "github"
       },
       "original": {
