@@ -3,10 +3,11 @@
 (use-package org
   :config
   (setq org-directory "~/org-files"
-        org-default-notes-file (concat org-directory "/todo.org"))
+        org-default-notes-file (concat org-directory "/note/")
+        org-agenda-files (list (concat org-directory "/agenda/")))
   (setq org-startup-indented t)
-  (setq TeX-auto-untabify 't) ;; Convert tabs properly into PDF
-  (setq org-latex-toc-command "\\tableofcontents \\clearpage") ;; Force page break after TOC
+  (setq TeX-auto-untabify 't) ; Convert tabs properly into PDF
+  (setq org-latex-toc-command "\\tableofcontents \\clearpage") ; Force page break after TOC
   :hook (org-mode . org-cdlatex-mode)
         (org-mode . visual-line-mode)
   :bind
