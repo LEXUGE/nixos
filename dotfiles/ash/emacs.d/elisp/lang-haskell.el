@@ -23,6 +23,8 @@
   ;; https://github.com/chrisdone/hindent
   (when (executable-find "hindent")
     (use-package hindent
+      ;; FIXME: hindent is broken on nixpkgs now.
+      :ensure nil
       :diminish hindent-mode
       :config
       (add-hook 'haskell-mode-hook #'hindent-mode)

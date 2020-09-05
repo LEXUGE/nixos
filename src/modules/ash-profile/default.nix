@@ -18,6 +18,11 @@ in {
             description =
               "Extra packages to install for user <literal>ash</literal>.";
           };
+          emacsPackages = mkOption {
+            type = with types; listOf package;
+            default = [ pkgs.emacs ];
+            description = "Packages being installed for Emacs.";
+          };
         };
       });
     default = { };
@@ -27,8 +32,7 @@ in {
     # Home-manager settings.
     # User-layer packages
     home.packages = with pkgs;
-      [ hunspell hunspellDicts.en-us-large emacs ]
-      ++ optionals (c.extraPackages != null) c.extraPackages;
+      c.emacsPackages ++ optionals (c.extraPackages != null) c.extraPackages;
 
     # Allow fonts to be discovered
     fonts.fontconfig.enable = true;

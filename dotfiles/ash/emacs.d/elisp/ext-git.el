@@ -1,6 +1,7 @@
 ;; Great git extensions
 
 (use-package ediff
+  :ensure nil
   :config
   (setq ediff-window-setup-function 'ediff-setup-windows-plain)
   (setq-default ediff-highlight-all-diffs 'nil)

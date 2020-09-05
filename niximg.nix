@@ -76,14 +76,21 @@ with lib; {
   # User related section.
   hm-sanity.users = [ "nixos" ];
   users.users.nixos.shell = pkgs.zsh;
-  ash-profile.nixos.extraPackages = with pkgs; [
-    emacs-all-the-icons-fonts
-    htop
-    firefox-wayland
-    tdesktop
-    gparted
-    etcher
-    torbrowser
-    pavucontrol
-  ];
+  ash-profile.nixos = {
+    extraPackages = with pkgs; [
+      htop
+      firefox-wayland
+      tdesktop
+      gparted
+      etcher
+      torbrowser
+      pavucontrol
+    ];
+    emacsPackages = with pkgs; [
+      hunspell
+      hunspellDicts.en-us-large
+      emacs-all-the-icons-fonts
+      ash-emacs-x86_64-linux
+    ];
+  };
 }

@@ -22,6 +22,12 @@
   hm-sanity.users = [ "ash" ];
 
   ash-profile.ash = {
+    emacsPackages = with pkgs; [
+      hunspell
+      hunspellDicts.en-us-large
+      emacs-all-the-icons-fonts
+      ash-emacs-x86_64-linux
+    ];
     extraPackages = with pkgs; [
       #(python3.withPackages (ps: [ ps.tkinter ]))
       htop
@@ -32,7 +38,6 @@
       firefox-wayland
       (chromium.override { enableVaapi = true; })
       tdesktop
-      #minecraft
       multimc
       mcrcon
       (texlive.combine {
@@ -47,7 +52,6 @@
       torbrowser
       ifuse
       libimobiledevice
-      emacs-all-the-icons-fonts
       #onlyoffice-desktop
     ];
   };

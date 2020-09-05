@@ -13,6 +13,7 @@
 
 ;; Better numbering
 (use-package linum
+  :ensure nil
   :config
   (setq linum-format " %3d ")
   :hook (prog-mode . display-line-numbers-mode))
@@ -35,6 +36,7 @@
 
 ;; Move around windows fast
 (use-package windmove
+  :ensure nil
   :bind
   ("C-s-p" . windmove-up)
   ("C-s-n" . windmove-down)
@@ -42,10 +44,12 @@
   ("C-s-f" . windmove-right))
 
 (use-package flycheck
+  :ensure nil
   :init (global-flycheck-mode))
 
 ;; Recent files
 (use-package recentf
+  :ensure nil
   :hook (after-init . recentf-mode)
   :init (setq recentf-max-saved-items 300
               recentf-exclude

@@ -34,6 +34,7 @@
 
 ;; On-the-fly spell checker
 (use-package flyspell
+  :ensure nil
   :if (executable-find "hunspell")
   :hook (((text-mode org-mode) . flyspell-mode)
          (haskell-mode . flyspell-prog-mode)

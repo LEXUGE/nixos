@@ -8,16 +8,17 @@
       inputs.nixpkgs.follows = "nixos";
     };
     netkit.url = "github:icebox-nix/netkit.nix";
-
-    mozilla = {
-      url = "github:mozilla/nixpkgs-mozilla";
-      flake = false;
-    };
+    flake-utils.url = "github:numtide/flake-utils";
+    emacs-overlay.url = "github:nix-community/emacs-overlay";
   };
 
-  outputs = { self, nixos, home, netkit, mozilla }@inputs: {
+  outputs = { self, nixos, home, netkit, emacs-overlay, flake-utils }@inputs: {
     x1c7-toplevel = self.nixosConfigurations.x1c7.config.system.build.toplevel;
     niximg = self.nixosConfigurations.niximg.config.system.build.isoImage;
+
+    overlays.ash-emacs = (import ./src/overlays/ash-emacs {
+      inherit nixos emacs-overlay flake-utils;
+    });
 
     nixosModules = {
       ash-profile = (import ./src/modules/ash-profile);
@@ -29,7 +30,7 @@
       x1c7 = nixos.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          { nixpkgs.overlays = [ (import mozilla) ]; }
+          { nixpkgs.overlays = [ self.overlays.ash-emacs ]; }
           ./configuration.nix
           ./src/devices/x1c7
           netkit.inputs.std.nixosModule
