@@ -20,7 +20,7 @@ A fully automated replicable nixos configuration flake that provides re-usable m
 [Download](https://github.com/LEXUGE/nixos/releases) and boot in *customized* LiveCD, and then:
 
 ``
-curl -Ls https://github.com/LEXUGE/nixos/raw/master/install.sh | bash
+sudo install-script
 ``
 
 Follow the instructions and there you go. Above installation script will automatically install ThinkPad X1 Carbon 7th Gen specified configuration, but it should be fine for modern laptops.
