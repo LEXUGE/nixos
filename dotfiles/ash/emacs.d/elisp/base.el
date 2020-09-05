@@ -1,13 +1,8 @@
+;; optional. makes unpure packages archives unavailable
+(setq package-archives nil)
+
+(setq package-enable-at-startup nil)
 (package-initialize)
-(setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-                         ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
-
-(when (not package-archive-contents)
-  (package-refresh-contents))
-
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
-(require 'use-package)
 
 (defconst private-dir  (expand-file-name "private" user-emacs-directory))
 (defconst temp-dir (format "%s/cache" private-dir)

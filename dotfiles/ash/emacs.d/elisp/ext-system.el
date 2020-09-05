@@ -65,13 +65,4 @@
 
 ;; (use-package vterm)
 
-;; Automatically update packages installed
-(use-package auto-package-update
-  :config
-  (auto-package-update-maybe)
-  :custom
-  (auto-package-update-delete-old-versions t "Delete the old versions if present on update")
-  (auto-package-update-hide-results t "Don't show results of the update")
-  (auto-package-update-prompt-before-update t "Prompt before update"))
-
 (provide 'ext-system)
