@@ -13,7 +13,8 @@ in {
       attrsOf (submodule {
         options = {
           extraPackages = mkOption {
-            type = with types; listOf package;
+            type = with types; nullOr (listOf package);
+            default = null;
             description =
               "Extra packages to install for user <literal>ash</literal>.";
           };
@@ -26,7 +27,8 @@ in {
     # Home-manager settings.
     # User-layer packages
     home.packages = with pkgs;
-      [ hunspell hunspellDicts.en-us-large emacs ] ++ c.extraPackages;
+      [ hunspell hunspellDicts.en-us-large emacs ]
+      ++ optionals (c.extraPackages != null) c.extraPackages;
 
     # Allow fonts to be discovered
     fonts.fontconfig.enable = true;

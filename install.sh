@@ -75,15 +75,19 @@ nixos_install() {
 	rm ${MOUNTPOINT}/etc/nixos/hardware-configuration.nix
 
 	create_keyfile
+	reset
 
 	# Create new options.nix and open it to let user customize.
 	echo "Generate and open build options for configuration..."
 	read -n 1 -s -r -p "[CONFIG] Adapt whatever on your needs. Press any key to continue"
 	nano ${MOUNTPOINT}/etc/nixos/configuration.nix
+	reset
 	read -n 1 -s -r -p "[USERS] In the next step, you MUST change the user passwords, else you are gonna to be locked out. Press any key to continue"
 	nano ${MOUNTPOINT}/etc/nixos/src/users.nix
+	reset
 	read -n 1 -s -r -p "[CLASH] In the next step, you'd better set up the appropriate proxy if you are not in a free Internet. Press any key to continue"
 	nano ${MOUNTPOINT}/etc/nixos/secrets/clash.yaml
+	reset
 	nixos-generate-config --root ${MOUNTPOINT}
 
 	# We need to copy one set of configuration else nixos-install would get us into folder problems.

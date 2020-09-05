@@ -51,6 +51,11 @@ with lib; {
     binaryCaches = [ "https://mirrors.bfsu.edu.cn/nix-channels/store" ];
     # Choose ibus engines to apply
     ibus-engines = with pkgs.ibus-engines; [ libpinyin ];
+    # Add installation script into LiveCD.
+    extraPackages = [
+      (pkgs.writeShellScriptBin "install-script"
+        (builtins.readFile ./install.sh))
+    ];
   };
 
   std = {
