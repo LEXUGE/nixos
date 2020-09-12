@@ -72,6 +72,7 @@ nixos_install() {
 	git clone https://github.com/LEXUGE/nixos ${MOUNTPOINT}/etc/nixos/
 
 	rm ${MOUNTPOINT}/etc/nixos/secrets/keyfile.bin
+	rm ${MOUNTPOINT}/etc/nixos/hardware-configuration.nix
 
 	create_keyfile
 	reset
