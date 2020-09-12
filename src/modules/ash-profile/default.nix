@@ -34,6 +34,9 @@ in {
     home.packages = with pkgs;
       c.emacsPackages ++ optionals (c.extraPackages != null) c.extraPackages;
 
+    # FIXME: manpage is blocking niximg building
+    manual.manpages.enable = false;
+
     # Allow fonts to be discovered
     fonts.fontconfig.enable = true;
 
@@ -91,6 +94,22 @@ in {
         disable-while-typing = false;
         tap-to-click = true;
         two-finger-scrolling-enabled = true;
+      };
+      # Always show logout
+      "org/gnome/shell".always-show-log-out = true;
+      # Keybindings
+      "org/gnome/settings-daemon/plugins/media-keys".custom-keybindings = [
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+      ];
+      "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" =
+        {
+          binding = "<Super>Return";
+          command = "gnome-terminal";
+          name = "Open Terminal";
+        };
+      "org/gnome/desktop/wm/keybindings" = {
+        close = [ "<Shift><Super>q" ];
+        show-desktop = [ "<Super>d" ];
       };
       # Favorite apps
       "org/gnome/shell" = {

@@ -4,7 +4,7 @@
   inputs = {
     nixos.url = "github:NixOS/nixpkgs-channels/nixos-unstable";
     home = {
-      url = "github:rycee/home-manager/bqv-flakes";
+      url = "github:nix-community/home-manager/bqv-flakes";
       inputs.nixpkgs.follows = "nixos";
     };
     netkit.url = "github:icebox-nix/netkit.nix";
