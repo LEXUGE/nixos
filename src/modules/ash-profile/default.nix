@@ -95,6 +95,9 @@ in {
         tap-to-click = true;
         two-finger-scrolling-enabled = true;
       };
+      # Don't suspend on power
+      "org/gnome/settings-daemon/plugins/power".sleep-inactive-ac-type =
+        "nothing";
       # Always show logout
       "org/gnome/shell".always-show-log-out = true;
       # Keybindings
