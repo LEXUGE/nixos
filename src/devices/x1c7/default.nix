@@ -9,7 +9,7 @@ with lib; {
     boot.extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
 
     # Set hardware related attributes
-    std = {
+    std.interface = {
       devices = {
         power = [ "AC" ];
         battery = [ "BAT0" ];

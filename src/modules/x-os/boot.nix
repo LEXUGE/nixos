@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 let
-  inherit (config.std) devices system;
+  inherit (config.std.interface) devices system;
   cfg = config.x-os;
 in with lib; {
   options.x-os.enableBoot = mkOption {

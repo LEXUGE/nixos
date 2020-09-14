@@ -58,7 +58,7 @@ with lib; {
     ];
   };
 
-  std = {
+  std.interface = {
     system = {
       dirs = {
         secrets.clash = "${./secrets/clash.yaml}";

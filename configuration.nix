@@ -15,7 +15,7 @@
     experimental-features = nix-command flakes
   '';
 
-  std = {
+  std.interface = {
     system = {
       dirs = {
         secrets = {

@@ -67,11 +67,12 @@ in {
         # Enable the OpenSSH daemon.
         # services.openssh.enable = true;
       })
-      (mkIf (config.std.system.bluetooth.enable) {
+      (mkIf (config.std.interface.system.bluetooth.enable) {
         hardware.bluetooth.enable = true;
         # Whether enable blueman or not
         services.blueman.enable =
-          mkIf (config.std.system.bluetooth.service == "blueman") true;
+          mkIf (config.std.interface.system.bluetooth.service == "blueman")
+          true;
       })
 
       (mkIf (cfg.enableVirtualisation) {

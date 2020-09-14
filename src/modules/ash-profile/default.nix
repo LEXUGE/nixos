@@ -3,7 +3,7 @@
 with lib;
 
 let
-  inherit (config.std) system;
+  inherit (config.std.interface) system;
   gnomeEnable = config.services.xserver.desktopManager.gnome3.enable;
   cfg = config.ash-profile;
   mkUserConfigs = f: (attrsets.mapAttrs (n: c: (f n c)) cfg);

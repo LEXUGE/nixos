@@ -47,7 +47,7 @@ in {
       # Add swap file
       swapDevices = [{
         device = "/var/swapFile";
-        size = (config.std.devices.ramSize * 2);
+        size = (config.std.interface.devices.ramSize * 2);
       }];
     })
   ]);
