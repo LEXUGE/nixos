@@ -11,7 +11,10 @@
     std.url = "github:icebox-nix/std";
     netkit = {
       url = "github:icebox-nix/netkit.nix";
-      inputs.std.follows = "std";
+      inputs = {
+        std.follows = "std";
+        nixos.follows = "nixos";
+      };
     };
     flake-utils.url = "github:numtide/flake-utils";
     emacs-overlay.url = "github:nix-community/emacs-overlay";

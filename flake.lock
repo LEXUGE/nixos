@@ -69,7 +69,9 @@
     "netkit": {
       "inputs": {
         "flake-utils": "flake-utils_2",
-        "nixos": "nixos",
+        "nixos": [
+          "nixos"
+        ],
         "std": [
           "std"
         ]
@@ -104,29 +106,13 @@
         "type": "github"
       }
     },
-    "nixos_2": {
-      "locked": {
-        "lastModified": 1599858719,
-        "narHash": "sha256-CwcBj3hB5+xdAQigGDTTTynubj+fAFLEr2vXtrKLytI=",
-        "owner": "NixOS",
-        "repo": "nixpkgs-channels",
-        "rev": "e0759a49733dfc3aa225b8a7423c00da6e1ecb67",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs-channels",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "emacs-overlay": "emacs-overlay",
         "flake-utils": "flake-utils",
         "home": "home",
         "netkit": "netkit",
-        "nixos": "nixos_2",
+        "nixos": "nixos",
         "std": "std"
       }
     },
