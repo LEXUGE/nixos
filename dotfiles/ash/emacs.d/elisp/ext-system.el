@@ -57,7 +57,9 @@
                 "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\|bmp\\|xpm\\)$"
                 "\\.?ido\\.last$" "\\.revive$" "/G?TAGS$" "/.elfeed/"
                 "^/tmp/" "^/var/folders/.+$" ; "^/ssh:"
-                (lambda (file) (file-in-directory-p file package-user-dir))))
+                (lambda (file) (file-in-directory-p file package-user-dir)))
+	      ;; Don't check remote files' presences
+              recentf-keep '(file-remote-p file-readable-p))
   :config
   (setq recentf-save-file (recentf-expand-file-name "~/.emacs.d/private/cache/recentf"))
   (setq recentf-auto-cleanup 'never) ; Don't conflict with tramp!

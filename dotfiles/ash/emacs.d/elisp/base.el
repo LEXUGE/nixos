@@ -8,9 +8,6 @@
 (defconst temp-dir (format "%s/cache" private-dir)
   "Hostname-based elisp temp directories")
 
-;; enable just-in-time native compilation
-(setq comp-deferred-compilation t)
-
 ;; Core settings
 ;; UTF-8 please
 (set-charset-priority 'unicode)
