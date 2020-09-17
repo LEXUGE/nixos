@@ -17,5 +17,6 @@ in (final: prev:
     attrsets.nameValuePair ("ash-emacs-${system}")
     ((importer system).emacsWithPackagesFromUsePackage {
       config = concatEmacsConfig ../../../dotfiles/ash/emacs.d/elisp;
+      package = (importer system).pkgs.emacsGcc;
       alwaysEnsure = true;
     })) flake-utils.lib.defaultSystems))
