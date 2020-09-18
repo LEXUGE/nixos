@@ -47,6 +47,7 @@
       gparted
       etcher
       gnome-podcasts
+      gnome3.gnome-sound-recorder
       frp
       pavucontrol
       torbrowser

@@ -22,6 +22,9 @@ in lib.mkIf cfg.enable {
 
   # Some of the GNOME Packages are unwanted
   programs.geary.enable = false;
-  environment.gnome3.excludePackages =
-    [ pkgs.gnome3.epiphany pkgs.gnome3.gnome-software ];
+  environment.gnome3.excludePackages = with pkgs.gnome3; [
+    epiphany
+    gnome-software
+    gnome-characters
+  ];
 }
