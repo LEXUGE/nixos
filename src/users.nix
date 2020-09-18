@@ -31,7 +31,7 @@
     extraPackages = with pkgs; [
       #(python3.withPackages (ps: [ ps.tkinter ]))
       htop
-      deluge
+      qbittorrent
       zoom-us
       thunderbird-bin-78
       spotify
