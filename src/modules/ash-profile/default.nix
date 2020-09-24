@@ -29,6 +29,9 @@ in {
   };
 
   config.home-manager.users = mkUserConfigs (n: c: {
+    # Use 20.09 as stateVersion in order to use flake functionality
+    home.stateVersion = "20.09";
+
     # Home-manager settings.
     # User-layer packages
     home.packages = with pkgs;

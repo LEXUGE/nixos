@@ -4,7 +4,7 @@
   inputs = {
     nixos.url = "github:NixOS/nixpkgs-channels/nixos-unstable";
     home = {
-      url = "github:nix-community/home-manager/bqv-flakes";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixos";
     };
     # We may have multiple flakes using std, but we only may use one version of std. So we declare it here and let others which depend on it follow.
