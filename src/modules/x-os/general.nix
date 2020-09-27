@@ -23,7 +23,7 @@ in {
   };
   config = mkIf cfg.enable (mkMerge [
     ({
-      boot.kernelPackages = pkgs.linuxPackages_latest;
+      boot.kernelPackages = pkgs.linuxPackages_5_7;
 
       # Support NTFS
       boot.supportedFilesystems = [ "ntfs" ];

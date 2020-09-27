@@ -39,7 +39,6 @@
       (chromium.override { enableVaapi = true; })
       tdesktop
       multimc
-      mcrcon
       (texlive.combine {
         inherit (texlive) scheme-basic wrapfig ulem capt-of metafont;
       })

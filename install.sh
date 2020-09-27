@@ -26,8 +26,15 @@ select_device() {
 			exit 1
 		fi
 	done
-	ROOT_PARTITION="${device}p2"
-	ESP_PARTITION="${device}p1"
+	if [ "$1" = "-n" ]; then
+		ROOT_PARTITION="${device}p2"
+		ESP_PARTITION="${device}p1"
+	else
+		ROOT_PARTITION="${device}2"
+		ESP_PARTITION="${device}1"
+	fi
+	echo "Root partition: ${ROOT_PARTITION}"
+	echo "ESP partition: ${ESP_PARTITION}"
 }
 
 #CREATE_PARTITION
@@ -90,20 +97,20 @@ nixos_install() {
 	reset
 	nixos-generate-config --root ${MOUNTPOINT}
 
-	# We need to copy one set of configuration else nixos-install would get us into folder problems.
-	# rm -rf /etc/nixos/
-	# cp -a ${MOUNTPOINT}/etc/nixos/ /etc/nixos/
+	# FIXME: Don't know why we need no-check-sigs
+	nix copy --to ${MOUNTPOINT} "nixpkgs#nixFlakes" --no-check-sigs
 
-	nix build "${MOUNTPOINT}/etc/nixos#x1c7-toplevel"
+	# Impure flag is needed because nix thinks `/mnt/nix/store` as a non-store path
+	nix build "${MOUNTPOINT}/etc/nixos#x1c7-toplevel" --option store ${MOUNTPOINT} --impure
 
-	# Install NixOS. We don't need channel and root password
-	nixos-install --system "$(readlink ./result)" --no-channel-copy --no-root-passwd
+	# Install NixOS. We don't need root password
+	nixos-install --system "$(readlink ./result)" --no-root-passwd
 
 	reboot
 }
 
 # INSTALLATION
-select_device
+select_device "$@"
 create_partition
 format_partition
 mount_partition
