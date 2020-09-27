@@ -100,6 +100,9 @@ nixos_install() {
 	# FIXME: Don't know why we need no-check-sigs
 	nix copy --to ${MOUNTPOINT} "nixpkgs#nixFlakes" --no-check-sigs
 
+	# We need to have both source in /nix/store and /mnt/nixos/store due to current buggy implementation of upstream tools.
+	nix flake archive "${MOUNTPOINT}/etc/nixos"
+
 	# Impure flag is needed because nix thinks `/mnt/nix/store` as a non-store path
 	nix build "${MOUNTPOINT}/etc/nixos#x1c7-toplevel" --option store ${MOUNTPOINT} --impure
 
