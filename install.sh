@@ -106,8 +106,10 @@ nixos_install() {
 	# Impure flag is needed because nix thinks `/mnt/nix/store` as a non-store path
 	nix build "${MOUNTPOINT}/etc/nixos#x1c7-toplevel" --option store ${MOUNTPOINT} --impure
 
-	# Install NixOS. We don't need root password
-	nixos-install --system "$(readlink ./result)" --no-root-passwd
+	# Install NixOS. We don't need root password.
+	# Use `-f` to follow the coding style in `nixos-install`.
+	# The `nixos-install`'s implementation has already specified `--store /mnt` for us.
+	nixos-install --system "$(readlink -f ./result)" --no-root-passwd
 
 	reboot
 }
