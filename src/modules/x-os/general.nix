@@ -23,6 +23,7 @@ in {
   };
   config = mkIf cfg.enable (mkMerge [
     ({
+      # Temporarily switch back to kernel 5.7 branch for virtualbox
       boot.kernelPackages = pkgs.linuxPackages_5_7;
 
       # Support NTFS

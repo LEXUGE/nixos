@@ -42,7 +42,6 @@
 
   x-os = {
     enable = true;
-    # Temporarily disable swap and virtualisation due to kernel issue
     enableSwap = false;
     enableVirtualisation = true;
     # Use TUNA (BFSU) Mirror together with original cache because TUNA has better performance inside Mainland China.
