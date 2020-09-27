@@ -26,7 +26,7 @@ sudo install-script
 Follow the instructions and there you go. Above installation script will automatically install ThinkPad X1 Carbon 7th Gen specified configuration, but it should be fine for modern laptops.
 
 ## Notes
-If you are not on a NVMe SSD, please edit the script to fit `"${device}p2"` into `"${device}2"` (so does `"${device}p1"`).
+If you are on a NVMe SSD, use `sudo install-script -n` instead.
 
 If you are **outside** of Mainland China, please edit the `configuration.nix` to use official binary cache only instead of TUNA's. You may also need to adapt the `binaryCaches` setting in `system/options.nix` to your own network.
 
