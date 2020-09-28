@@ -8,6 +8,19 @@ with lib; {
     # Activate acpi_call module for TLP ThinkPad features
     boot.extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
 
+    netkit.xmm7360 = {
+      enable = true;
+      autoStart = true;
+      config = {
+        mycard = {
+          apn = "3gnet";
+          nodefaultroute = false;
+          noresolv = true;
+        };
+      };
+      package = pkgs.xmm7360-pci_5_7;
+    };
+
     # Set hardware related attributes
     std.interface = {
       devices = {

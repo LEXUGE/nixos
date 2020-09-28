@@ -40,7 +40,7 @@
       tdesktop
       multimc
       (texlive.combine {
-        inherit (texlive) scheme-basic wrapfig ulem capt-of metafont;
+        inherit (texlive) scheme-basic wrapfig ulem capt-of metafont setspace;
       })
       steam
       gparted
