@@ -81,12 +81,15 @@ with lib; {
       settings = {
         bind = "[::]:53";
         cache-size = 4096;
-        server-tls = [ "8.8.8.8:853" "1.1.1.1:853" ];
-        server-https = "https://cloudflare-dns.com/dns-query";
+        server-https = [
+          "https://cloudflare-dns.com/dns-query"
+          "https://1.1.1.1/dns-query"
+          "https://1.0.0.1/dns-query"
+        ];
         server = [
-          "114.114.114.114 -group china"
-          "10.20.0.233 -group china"
-          "223.5.5.5 -group china"
+          "114.114.114.114 -group china -exclude-default-group"
+          "10.20.0.233 -group china -exclude-default-group"
+          "223.5.5.5 -group china -exclude-default-group"
         ]; # Server for China-list
         prefetch-domain = true;
         speed-check-mode = "ping,tcp:80";
