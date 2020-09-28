@@ -68,9 +68,30 @@ with lib; {
   };
 
   # Networking
-  netkit.clash = {
-    enable = true;
-    redirPort = 7892; # This must be the same with the one in your clash.yaml
+  netkit = {
+    clash = {
+      enable = true;
+      redirPort = 7892; # This must be the same with the one in your clash.yaml
+      afterUnits = [ "smartdns.service" ];
+    };
+
+    smartdns = {
+      enable = true;
+      china-list = true;
+      settings = {
+        bind = "[::]:53";
+        cache-size = 4096;
+        server-tls = [ "8.8.8.8:853" "1.1.1.1:853" ];
+        server-https = "https://cloudflare-dns.com/dns-query";
+        server = [
+          "114.114.114.114 -group china"
+          "10.20.0.233 -group china"
+          "223.5.5.5 -group china"
+        ]; # Server for China-list
+        prefetch-domain = true;
+        speed-check-mode = "ping,tcp:80";
+      };
+    };
   };
 
   # User related section.

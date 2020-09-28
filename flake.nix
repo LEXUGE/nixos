@@ -49,6 +49,7 @@
             self.nixosModules.hm-sanity
             home.nixosModules.home-manager
             netkit.nixosModules.clash
+            netkit.nixosModules.smartdns
             netkit.nixosModules.wifi-relay
             netkit.nixosModules.minecraft-server
             netkit.nixosModules.frpc
@@ -71,6 +72,7 @@
             self.nixosModules.hm-sanity
             home.nixosModules.home-manager
             netkit.nixosModules.clash
+            netkit.nixosModules.smartdns
           ];
         };
       };
