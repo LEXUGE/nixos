@@ -37,13 +37,6 @@ in {
       # Use local DNS server all the time
       networking.resolvconf.useLocalResolver = true;
 
-      # SmartDNS doesn't seem to be working when networking environment is changed. Therefore, we have to restart it automatically.
-      networking.networkmanager.dispatcherScripts = [{
-        source = pkgs.writeShellScript "1-smartdns-restart"
-          "${config.systemd.package}/bin/systemctl try-restart smartdns";
-        type = "basic";
-      }];
-
       # Setup our local DNS
       netkit.smartdns = {
         enable = true;
