@@ -6,27 +6,6 @@
       afterUnits = [ "smartdns.service" ];
     };
 
-    smartdns = {
-      enable = true;
-      china-list = true;
-      settings = {
-        bind = "[::]:53";
-        cache-size = 4096;
-        server-https = [
-          "https://cloudflare-dns.com/dns-query"
-          "https://1.1.1.1/dns-query"
-          "https://1.0.0.1/dns-query"
-        ];
-        server = [
-          "114.114.114.114 -group china -exclude-default-group"
-          "10.20.0.233 -group china -exclude-default-group"
-          "223.5.5.5 -group china -exclude-default-group"
-        ]; # Server for China-list
-        prefetch-domain = true;
-        speed-check-mode = "ping,tcp:80";
-      };
-    };
-
     snapdrop.enable = true;
 
     wifi-relay = {

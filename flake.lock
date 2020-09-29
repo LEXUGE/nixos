@@ -76,11 +76,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1601348172,
-        "narHash": "sha256-CIF4pAn8bxIjCo4biFZ1zd8um2j+jXvxZ6gszENRXqs=",
+        "lastModified": 1601353747,
+        "narHash": "sha256-9U8PZDoCINzIU1VSWfyVF3Xe0IJro2eEidpz0fPt3kg=",
         "owner": "icebox-nix",
         "repo": "netkit.nix",
-        "rev": "0e9f1c1fd0417e69ee1989ad0988655daa1d5389",
+        "rev": "0997c69bef9c23f9ca238c19822fa0e94780d5c9",
         "type": "github"
       },
       "original": {

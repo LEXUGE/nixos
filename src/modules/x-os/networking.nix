@@ -36,6 +36,35 @@ in {
 
       # Use local DNS server all the time
       networking.resolvconf.useLocalResolver = true;
+
+      # SmartDNS doesn't seem to be working when networking environment is changed. Therefore, we have to restart it automatically.
+      networking.networkmanager.dispatcherScripts = [{
+        source = pkgs.writeShellScript "1-smartdns-restart"
+          "${config.systemd.package}/bin/systemctl try-restart smartdns";
+        type = "basic";
+      }];
+
+      # Setup our local DNS
+      netkit.smartdns = {
+        enable = true;
+        china-list = true;
+        settings = {
+          bind = "[::]:53";
+          cache-size = 4096;
+          server-https = [
+            "https://cloudflare-dns.com/dns-query"
+            "https://1.1.1.1/dns-query"
+            "https://1.0.0.1/dns-query"
+          ];
+          server = [
+            "114.114.114.114 -group china -exclude-default-group"
+            "10.20.0.233 -group china -exclude-default-group"
+            "223.5.5.5 -group china -exclude-default-group"
+          ]; # Server for China-list
+          prefetch-domain = true;
+          speed-check-mode = "ping,tcp:80";
+        };
+      };
     })
 
     (mkIf (cfg.iwdConfig != null) {
