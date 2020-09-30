@@ -45,7 +45,6 @@ github:LEXUGE/nixos/dd59c772a9bd0503da3c775427bbfed64d6dfc61
 │   └───x-os: NixOS module
 ```
 - `ash-profile` is my user space configuration (stuff like zsh, git, emacs config, etc).
-- `hm-sanity` is a proper fix to first-time deployment issue in home-manager.
 - `x-os` my universal core system config.
 Also, you can check out related flake repos ([netkit.nix](https://github.com/icebox-nix/netkit.nix), [std](https://github.com/icebox-nix/std)) which I use a lot here as well.
 

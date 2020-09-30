@@ -18,7 +18,7 @@ with lib; {
           noresolv = true;
         };
       };
-      package = pkgs.xmm7360-pci_5_7;
+      package = pkgs.xmm7360-pci_latest;
     };
 
     # Set hardware related attributes
