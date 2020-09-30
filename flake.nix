@@ -62,7 +62,7 @@
             "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-base.nix"
             { nixpkgs.overlays = [ self.overlays.ash-emacs ]; }
             ./niximg.nix
-            netkit.inputs.std.nixosModule
+            std.nixosModule
             self.nixosModules.x-os
             self.nixosModules.ash-profile
             home.nixosModules.home-manager
