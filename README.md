@@ -42,7 +42,6 @@ I have kept "stealing" in mind while I am writing the whole configuration. Use `
 ```
 github:LEXUGE/nixos/dd59c772a9bd0503da3c775427bbfed64d6dfc61
 │   ├───ash-profile: NixOS module
-│   ├───hm-sanity: NixOS module
 │   └───x-os: NixOS module
 ```
 - `ash-profile` is my user space configuration (stuff like zsh, git, emacs config, etc).
