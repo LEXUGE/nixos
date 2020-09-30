@@ -19,8 +19,6 @@
     };
   };
 
-  hm-sanity.users = [ "ash" ];
-
   ash-profile.ash = {
     emacsPackages = with pkgs; [
       hunspell

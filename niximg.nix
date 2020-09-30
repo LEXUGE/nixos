@@ -77,7 +77,6 @@ with lib; {
   };
 
   # User related section.
-  hm-sanity.users = [ "nixos" ];
   users.users.nixos.shell = pkgs.zsh;
   ash-profile.nixos = {
     extraPackages = with pkgs; [

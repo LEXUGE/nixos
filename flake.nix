@@ -33,7 +33,6 @@
       nixosModules = {
         ash-profile = (import ./src/modules/ash-profile);
         x-os = (import ./src/modules/x-os);
-        hm-sanity = (import ./src/modules/hm-sanity);
       };
 
       nixosConfigurations = {
@@ -46,7 +45,6 @@
             std.nixosModule
             self.nixosModules.x-os
             self.nixosModules.ash-profile
-            self.nixosModules.hm-sanity
             home.nixosModules.home-manager
             netkit.nixosModules.clash
             netkit.nixosModules.smartdns
@@ -69,7 +67,6 @@
             netkit.inputs.std.nixosModule
             self.nixosModules.x-os
             self.nixosModules.ash-profile
-            self.nixosModules.hm-sanity
             home.nixosModules.home-manager
             netkit.nixosModules.clash
             netkit.nixosModules.smartdns
