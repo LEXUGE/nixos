@@ -14,6 +14,7 @@
 (require 'ext-completion)
 (require 'ext-system)
 (require 'ext-edit)
+(require 'ext-pyim)
 (require 'ext-git)
 (require 'ext-org)
 (require 'ext-tex)
