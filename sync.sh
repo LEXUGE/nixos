@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-rm -rf ./dotfiles/ \
-	./modules/ \
+rm -rf ./modules/ \
 	./src/ \
 	rm -f ./*.nix
 rm -f ./*.lock
@@ -11,8 +10,6 @@ rsync -avP \
 	--exclude "secrets/" \
 	--include "*/" \
 	--include "*.nix" \
-	--include "*.el" \
-	--include "*.ini" \
 	--include "*.patch" \
 	--include "*.json" \
 	--include "*.lock" \

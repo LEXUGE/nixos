@@ -12,11 +12,9 @@ with lib; {
       enable = true;
       autoStart = true;
       config = {
-        mycard = {
-          apn = "3gnet";
-          nodefaultroute = false;
-          noresolv = true;
-        };
+        apn = "3gnet";
+        nodefaultroute = false;
+        noresolv = true;
       };
       package = pkgs.xmm7360-pci_latest;
     };

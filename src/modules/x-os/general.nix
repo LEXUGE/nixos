@@ -31,6 +31,12 @@ in {
       # Auto upgrade
       system.autoUpgrade.enable = true;
 
+      # Use nixUnstable
+      nix.package = pkgs.nixUnstable;
+      nix.extraOptions = ''
+        experimental-features = nix-command flakes
+      '';
+
       # Auto gc and optimise
       nix.optimise.automatic = true;
       nix.gc.automatic = true;

@@ -10,11 +10,6 @@
 
   home-manager.useUserPackages = true;
 
-  nix.package = pkgs.nixUnstable;
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-  '';
-
   std.interface = {
     system = {
       dirs = {
@@ -22,7 +17,6 @@
           clash = "/etc/nixos/secrets/clash.yaml";
           keyfile = "/etc/nixos/secrets/keyfile.bin";
         };
-        dotfiles.ash = ./dotfiles/ash;
       };
       bluetooth = {
         # Force enable/disable bluetooth

@@ -13,63 +13,56 @@
       url = "github:icebox-nix/netkit.nix";
       inputs.nixos.follows = "nixos";
     };
-    flake-utils.url = "github:numtide/flake-utils";
-    emacs-overlay.url = "github:nix-community/emacs-overlay";
+    ash-emacs.url = "github:LEXUGE/emacs.d";
   };
 
-  outputs =
-    { self, nixos, home, std, netkit, emacs-overlay, flake-utils }@inputs: {
-      x1c7-toplevel =
-        self.nixosConfigurations.x1c7.config.system.build.toplevel;
-      niximg = self.nixosConfigurations.niximg.config.system.build.isoImage;
+  outputs = { self, nixos, home, std, netkit, ash-emacs }@inputs: {
+    x1c7-toplevel = self.nixosConfigurations.x1c7.config.system.build.toplevel;
+    niximg = self.nixosConfigurations.niximg.config.system.build.isoImage;
 
-      overlays.ash-emacs = (import ./src/overlays/ash-emacs {
-        inherit nixos emacs-overlay flake-utils;
-      });
+    nixosModules = {
+      ash-profile = (import ./src/modules/ash-profile);
+      x-os = (import ./src/modules/x-os);
+    };
 
-      nixosModules = {
-        ash-profile = (import ./src/modules/ash-profile);
-        x-os = (import ./src/modules/x-os);
+    nixosConfigurations = {
+      x1c7 = nixos.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          { nixpkgs.overlays = [ ash-emacs.overlay ]; }
+          ./configuration.nix
+          ./src/devices/x1c7
+          std.nixosModule
+          self.nixosModules.x-os
+          self.nixosModules.ash-profile
+          home.nixosModules.home-manager
+          netkit.nixosModules.clash
+          netkit.nixosModules.smartdns
+          netkit.nixosModules.wifi-relay
+          netkit.nixosModules.minecraft-server
+          netkit.nixosModules.frpc
+          netkit.nixosModules.snapdrop
+          netkit.nixosModules.xmm7360
+          # FIXME: Currently, nixos-generate-config by defualt writes out modulePath which is unsupported by flake.
+          # FIXME: This means on installation, we need to MANUALLY edit the generated hardware-configuration.nix
+          # COMMENT: Seems like it is causing no problem.
+          nixos.nixosModules.notDetected
+        ];
       };
-
-      nixosConfigurations = {
-        x1c7 = nixos.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            { nixpkgs.overlays = [ self.overlays.ash-emacs ]; }
-            ./configuration.nix
-            ./src/devices/x1c7
-            std.nixosModule
-            self.nixosModules.x-os
-            self.nixosModules.ash-profile
-            home.nixosModules.home-manager
-            netkit.nixosModules.clash
-            netkit.nixosModules.smartdns
-            netkit.nixosModules.wifi-relay
-            netkit.nixosModules.minecraft-server
-            netkit.nixosModules.frpc
-            netkit.nixosModules.snapdrop
-            netkit.nixosModules.xmm7360
-            # FIXME: Currently, nixos-generate-config by defualt writes out modulePath which is unsupported by flake.
-            # FIXME: This means on installation, we need to MANUALLY edit the generated hardware-configuration.nix
-            # COMMENT: Seems like it is causing no problem.
-            nixos.nixosModules.notDetected
-          ];
-        };
-        niximg = nixos.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-base.nix"
-            { nixpkgs.overlays = [ self.overlays.ash-emacs ]; }
-            ./niximg.nix
-            std.nixosModule
-            self.nixosModules.x-os
-            self.nixosModules.ash-profile
-            home.nixosModules.home-manager
-            netkit.nixosModules.clash
-            netkit.nixosModules.smartdns
-          ];
-        };
+      niximg = nixos.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-base.nix"
+          { nixpkgs.overlays = [ ash-emacs.overlay ]; }
+          ./niximg.nix
+          std.nixosModule
+          self.nixosModules.x-os
+          self.nixosModules.ash-profile
+          home.nixosModules.home-manager
+          netkit.nixosModules.clash
+          netkit.nixosModules.smartdns
+        ];
       };
     };
+  };
 }

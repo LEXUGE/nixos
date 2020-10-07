@@ -5,6 +5,10 @@ with lib;
 let
   inherit (config.std.interface) system;
   gnomeEnable = config.services.xserver.desktopManager.gnome3.enable;
+  gtkSettings = pkgs.writeText "gtk-settings.ini" ''
+    [Settings]
+    gtk-application-prefer-dark-theme = true
+  '';
   cfg = config.ash-profile;
   mkUserConfigs = f: (attrsets.mapAttrs (n: c: (f n c)) cfg);
 in {
@@ -131,11 +135,9 @@ in {
 
     # Handwritten configs
     home.file = {
-      ".config/gtk-3.0/settings.ini".source =
-        (system.dirs.dotfiles."${n}" + /gtk-settings.ini);
-      ".emacs.d/init.el".source =
-        (system.dirs.dotfiles."${n}" + /emacs.d/init.el);
-      ".emacs.d/elisp/".source = (system.dirs.dotfiles."${n}" + /emacs.d/elisp);
+      ".config/gtk-3.0/settings.ini".source = gtkSettings;
+      ".emacs.d/init.el".source = "${pkgs.ash-emacs-source}/init.el";
+      ".emacs.d/elisp/".source = "${pkgs.ash-emacs-source}/elisp";
     };
   });
 }

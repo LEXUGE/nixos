@@ -3,11 +3,6 @@ with lib; {
 
   home-manager.useUserPackages = true;
 
-  nix.package = pkgs.nixUnstable;
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-  '';
-
   isoImage.edition = "gnome";
 
   # Whitelist wheel users to do anything
@@ -59,12 +54,7 @@ with lib; {
   };
 
   std.interface = {
-    system = {
-      dirs = {
-        secrets.clash = "${./secrets/clash.yaml}";
-        dotfiles.nixos = ./dotfiles/ash;
-      };
-    };
+    system = { dirs = { secrets.clash = "${./secrets/clash.yaml}"; }; };
   };
 
   # Networking

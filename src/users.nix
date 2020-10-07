@@ -33,12 +33,17 @@
       #zoom-us
       thunderbird-bin-78
       spotify
-      firefox-wayland
+      firefox-bin
       (chromium.override { enableVaapi = true; })
       tdesktop
       multimc
       (texlive.combine {
-        inherit (texlive) scheme-basic wrapfig ulem capt-of metafont setspace;
+        inherit (texlive)
+          scheme-basic chktex
+          # org-mode
+          wrapfig ulem capt-of metafont
+          # MLA Formatted Paper
+          setspace mla-paper thumbpdf times;
       })
       steam
       gparted
