@@ -43,7 +43,7 @@ in {
         china-list = true;
         settings = {
           bind = "[::]:53";
-          log-level = "info";
+          log-level = "debug";
           cache-size = 4096;
           server-https = [
             "https://cloudflare-dns.com/dns-query"

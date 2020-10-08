@@ -7,11 +7,11 @@
         "nixos": "nixos"
       },
       "locked": {
-        "lastModified": 1602074398,
-        "narHash": "sha256-8pNOPop721vyvhMV7WbjtHR9cd1uoovh7TJFGN81bt4=",
+        "lastModified": 1602078003,
+        "narHash": "sha256-j4UxYcbmSdsTtlJzbTwcRYSp6X4HRgWAdr4sIiFDkeI=",
         "owner": "LEXUGE",
         "repo": "emacs.d",
-        "rev": "c843e8d7754f0475c4b08c4aa483ec4986e3c869",
+        "rev": "50ab8b1ef630a6cb43e4ee99dd0fa3c5b539a5f6",
         "type": "github"
       },
       "original": {
