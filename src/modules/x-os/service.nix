@@ -44,6 +44,12 @@ in {
     })
     (mkIf (cfg.enableExtraServices) (mkMerge [
       ({
+        # Enable WireShark
+        programs.wireshark = {
+          enable = true;
+          package = pkgs.wireshark-qt;
+        };
+
         # Enable TRIM Service (May have security concern here)
         services.fstrim.enable = true;
 

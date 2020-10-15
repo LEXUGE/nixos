@@ -47,8 +47,20 @@ in {
           cache-size = 4096;
           server-https = [
             "https://cloudflare-dns.com/dns-query"
+            "https://dns.google/dns-query"
             "https://1.1.1.1/dns-query"
             "https://1.0.0.1/dns-query"
+            "https://9.9.9.9/dns-query"
+            "https://dnsforge.de/dns-query"
+            "https://dns.dnshome.de/dns-query"
+            "https://ordns.he.net/dns-query" # HE
+          ];
+          server-tls = [
+            "8.8.8.8:853"
+            "1.1.1.1:853"
+            "9.9.9.9:853"
+            "96.113.151.145:853" # Comcast
+            "185.228.168.9:853" # CleanBrowsering
           ];
           server = [
             "114.114.114.114 -group china -exclude-default-group"

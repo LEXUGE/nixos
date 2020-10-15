@@ -14,7 +14,7 @@
         # video - light control
         # libvirtd - virtual manager controls.
         # docker - Docker control
-        extraGroups = [ "wheel" "networkmanager" "docker" ];
+        extraGroups = [ "wheel" "networkmanager" "wireshark" ];
       };
     };
   };
