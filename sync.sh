@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 rm -rf ./modules/ \
 	./src/ \
 	rm -f ./*.nix
@@ -17,7 +19,7 @@ rsync -avP \
 	/etc/nixos/ .
 
 find . -type f -name '*.nix' -exec nixfmt {} +
-shellcheck ./*.sh
+shellcheck ./*.sh || true
 shfmt -w ./*.sh
 nix flake update --recreate-lock-file
 nix flake check

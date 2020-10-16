@@ -55,7 +55,7 @@
       torbrowser
       ifuse
       libimobiledevice
-      #onlyoffice-desktop
+      libreoffice-fresh
     ];
   };
 }
