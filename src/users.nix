@@ -56,6 +56,7 @@
       ifuse
       libimobiledevice
       libreoffice-fresh
+      fawkes
     ];
   };
 }

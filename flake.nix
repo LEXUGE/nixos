@@ -14,9 +14,10 @@
       inputs.nixos.follows = "nixos";
     };
     ash-emacs.url = "github:LEXUGE/emacs.d";
+    iceberg.url = "github:icebox-nix/iceberg";
   };
 
-  outputs = { self, nixos, home, std, netkit, ash-emacs }@inputs: {
+  outputs = { self, nixos, home, std, netkit, ash-emacs, iceberg }@inputs: {
     x1c7-toplevel = self.nixosConfigurations.x1c7.config.system.build.toplevel;
     niximg = self.nixosConfigurations.niximg.config.system.build.isoImage;
 
@@ -29,7 +30,7 @@
       x1c7 = nixos.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          { nixpkgs.overlays = [ ash-emacs.overlay ]; }
+          { nixpkgs.overlays = [ ash-emacs.overlay iceberg.overlay ]; }
           ./configuration.nix
           ./src/devices/x1c7
           std.nixosModule

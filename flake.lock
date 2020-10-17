@@ -7,11 +7,11 @@
         "nixos": "nixos"
       },
       "locked": {
-        "lastModified": 1602807277,
-        "narHash": "sha256-1ZP5kfs6lvcNfE7uJZOrxNpmu/VgKBLYZGqjsdqWgAU=",
+        "lastModified": 1602893670,
+        "narHash": "sha256-MGt4r0IKG2TavOasFV/5kFlXCpYKatOUIA38Kaco0nQ=",
         "owner": "LEXUGE",
         "repo": "emacs.d",
-        "rev": "de32d033d4fcfc3fc431ffb1b790d8090d9f51b1",
+        "rev": "3577add78f25e87ac21cc330c11bdfb22dde35bd",
         "type": "github"
       },
       "original": {
@@ -22,11 +22,11 @@
     },
     "emacs-overlay": {
       "locked": {
-        "lastModified": 1602794082,
-        "narHash": "sha256-s7PSb3ZJ4ol6QXhRjV33WQx0bPomh+HYxwyvhNqda8E=",
+        "lastModified": 1602880352,
+        "narHash": "sha256-TwDgDAOU9Zz6qdzP6sYpfFr//s/wPPbPb7phiLq/et8=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "f721bd158d49681113221e6407b208594602121c",
+        "rev": "92ba64e520238c52c2961f7ad7be9c93a53687be",
         "type": "github"
       },
       "original": {
@@ -65,6 +65,21 @@
         "type": "github"
       }
     },
+    "flake-utils_3": {
+      "locked": {
+        "lastModified": 1601282935,
+        "narHash": "sha256-WQAFV6sGGQxrRs3a+/Yj9xUYvhTpukQJIcMbIi7LCJ4=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "588973065fce51f4763287f0fda87a174d78bf48",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "home": {
       "inputs": {
         "nixpkgs": [
@@ -85,9 +100,28 @@
         "type": "github"
       }
     },
-    "netkit": {
+    "iceberg": {
       "inputs": {
         "flake-utils": "flake-utils_2",
+        "nixos": "nixos_2"
+      },
+      "locked": {
+        "lastModified": 1602902168,
+        "narHash": "sha256-xevE+O7fegq60gsWdQN3EwtkMaISCcHGWKS10qq2NjU=",
+        "owner": "icebox-nix",
+        "repo": "iceberg",
+        "rev": "ac7303517f16857de8bc1176a93cdf6c3c215318",
+        "type": "github"
+      },
+      "original": {
+        "owner": "icebox-nix",
+        "repo": "iceberg",
+        "type": "github"
+      }
+    },
+    "netkit": {
+      "inputs": {
+        "flake-utils": "flake-utils_3",
         "nixos": [
           "nixos"
         ]
@@ -138,12 +172,29 @@
         "type": "github"
       }
     },
+    "nixos_3": {
+      "locked": {
+        "lastModified": 1602425900,
+        "narHash": "sha256-Ixb5QOYXVq/vkkPdc7Yl7mk5bcYlfjTx3/vnkFr/has=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "24c9b05ac53e422f1af81a156f1fd58499eb27fb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "ash-emacs": "ash-emacs",
         "home": "home",
+        "iceberg": "iceberg",
         "netkit": "netkit",
-        "nixos": "nixos_2",
+        "nixos": "nixos_3",
         "std": "std"
       }
     },
