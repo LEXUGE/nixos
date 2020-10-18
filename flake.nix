@@ -44,6 +44,7 @@
           netkit.nixosModules.frpc
           netkit.nixosModules.snapdrop
           netkit.nixosModules.xmm7360
+          iceberg.nixosModules.wolfram-jupyter
           # FIXME: Currently, nixos-generate-config by defualt writes out modulePath which is unsupported by flake.
           # FIXME: This means on installation, we need to MANUALLY edit the generated hardware-configuration.nix
           # COMMENT: Seems like it is causing no problem.

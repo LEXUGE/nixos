@@ -6,6 +6,7 @@
     ./src/minecraft-server.nix
     ./src/users.nix
     ./src/networking.nix
+    ./src/jupyter.nix
   ];
 
   home-manager.useUserPackages = true;
