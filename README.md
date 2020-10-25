@@ -49,7 +49,7 @@ github:LEXUGE/nixos/dd59c772a9bd0503da3c775427bbfed64d6dfc61
 Also, you can check out related flake repos ([netkit.nix](https://github.com/icebox-nix/netkit.nix), [std](https://github.com/icebox-nix/std)) which I use a lot here as well.
 
 # CI
-I use GitHub Actions here to build nightly LiveCD actions (with all flake inputs up-to-date). This means by using the latest ISO image, you are likely to copy a trunk of stuff directly from CD (which is good because you don't need to download them!). After every successful build, my telegram bot would post newly-built release to the [CI telegram channel](https://t.me/harry_nixosci_channel).
+I use GitHub Actions here to build LiveCD actions third times a week (with all flake inputs up-to-date). This means by using the latest ISO image, you are likely to copy a trunk of stuff directly from CD (which is good because you don't need to download them!). After every successful build, my telegram bot would post newly-built release to the [CI telegram channel](https://t.me/harry_nixosci_channel). To save storage that others could otherwise use, only last three images are kept.
 
 # See also
 - [netkit.nix flake](https://github.com/icebox-nix/netkit.nix): Verstile tools for advanced networking scenarios in NixOS, including Clash, wifi-to-wifi hotspot, on demand minecraft server, frpc modules.

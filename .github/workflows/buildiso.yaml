@@ -83,10 +83,9 @@ jobs:
         asset_name: niximg-${{ steps.date.outputs.date }}.iso
         asset_content_type: application/x-iso9660-image
     - name: Clean-up releases
-      if: steps.cache-flake.outputs.cache-hit != 'true'
       uses: dev-drprasad/delete-older-releases@v0.1.0
       with:
-        keep_latest: 10
+        keep_latest: 3
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Push release to the Telegram channel

@@ -1,4 +1,11 @@
 {
+  # Lower down the timeout values to reduce stress on conntrack.
+  # https://security.stackexchange.com/questions/43205/nf-conntrack-table-full-dropping-packet
+  boot.kernel.sysctl = {
+    "net.netfilter.nf_conntrack_generic_timeout" = 60;
+    "net.netfilter.nf_conntrack_tcp_timeout_established" = 54000;
+  };
+
   netkit = {
     clash = {
       enable = true;
