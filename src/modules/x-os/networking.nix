@@ -38,38 +38,43 @@ in {
       networking.resolvconf.useLocalResolver = true;
 
       # Setup our local DNS
-      netkit.smartdns = {
+      netkit.atomdns = {
         enable = true;
-        china-list = true;
-        settings = {
-          bind = "[::]:53";
-          log-level = "debug";
-          cache-size = 4096;
-          server-https = [
-            "https://cloudflare-dns.com/dns-query"
-            "https://dns.google/dns-query"
-            "https://1.1.1.1/dns-query"
-            "https://1.0.0.1/dns-query"
-            "https://9.9.9.9/dns-query"
-            "https://dnsforge.de/dns-query"
-            "https://dns.dnshome.de/dns-query"
-            "https://ordns.he.net/dns-query" # HE
-          ];
-          server-tls = [
-            "8.8.8.8:853"
-            "1.1.1.1:853"
-            "9.9.9.9:853"
-            "96.113.151.145:853" # Comcast
-            "185.228.168.9:853" # CleanBrowsering
-          ];
-          server = [
-            "114.114.114.114 -group china -exclude-default-group"
-            "10.20.0.233 -group china -exclude-default-group"
-            "223.5.5.5 -group china -exclude-default-group"
-          ]; # Server for China-list
-          prefetch-domain = true;
-          speed-check-mode = "ping,tcp:80";
-        };
+        settings = ''
+          listen = "0.0.0.0:53"
+
+          upstream "oversea" {
+            type = "dot"
+            addr = "9.9.9.9:853"
+          }
+
+          upstream "mainland" {
+            type = "udp"
+            addr = "114.114.114.114:53"
+          }
+
+          match "accelerated" {
+            type = "in_domain_list"
+            path = "${pkgs.chinalist-raw}/accelerated-domains.china.raw.txt"
+          }
+
+          match "google" {
+            type = "in_domain_list"
+            path = "${pkgs.chinalist-raw}/google.china.raw.txt"
+          }
+
+          match "apple" {
+            type = "in_domain_list"
+            path = "${pkgs.chinalist-raw}/apple.china.raw.txt"
+          }
+
+          rules = {
+            accelerated: "mainland",
+            google: "mainland",
+            apple: "mainland",
+            default: "oversea"
+          }
+        '';
       };
     })
 

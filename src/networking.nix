@@ -10,7 +10,7 @@
     clash = {
       enable = true;
       redirPort = 7892; # This must be the same with the one in your clash.yaml
-      afterUnits = [ "smartdns.service" ];
+      afterUnits = [ "atomdns.service" ];
     };
 
     snapdrop.enable = true;

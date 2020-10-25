@@ -2,7 +2,8 @@
   description = "Harry Ying's NixOS configuration";
 
   inputs = {
-    nixos.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # nixos.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixos.url = "github:NixOS/nixpkgs/24c9b05ac53e422f1af81a156f1fd58499eb27fb";
     home = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixos";
@@ -38,7 +39,7 @@
           self.nixosModules.ash-profile
           home.nixosModules.home-manager
           netkit.nixosModules.clash
-          netkit.nixosModules.smartdns
+          netkit.nixosModules.atomdns
           netkit.nixosModules.wifi-relay
           netkit.nixosModules.minecraft-server
           netkit.nixosModules.frpc
@@ -62,7 +63,7 @@
           self.nixosModules.ash-profile
           home.nixosModules.home-manager
           netkit.nixosModules.clash
-          netkit.nixosModules.smartdns
+          netkit.nixosModules.atomdns
         ];
       };
     };
