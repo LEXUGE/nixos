@@ -31,7 +31,10 @@
       x1c7 = nixos.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          { nixpkgs.overlays = [ ash-emacs.overlay iceberg.overlay ]; }
+          {
+            nixpkgs.overlays =
+              [ ash-emacs.overlay iceberg.overlay netkit.overlay ];
+          }
           ./configuration.nix
           ./src/devices/x1c7
           std.nixosModule
@@ -56,7 +59,7 @@
         system = "x86_64-linux";
         modules = [
           "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-base.nix"
-          { nixpkgs.overlays = [ ash-emacs.overlay ]; }
+          { nixpkgs.overlays = [ ash-emacs.overlay netkit.overlay ]; }
           ./niximg.nix
           std.nixosModule
           self.nixosModules.x-os
