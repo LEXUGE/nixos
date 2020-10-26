@@ -45,7 +45,7 @@ in {
             pkgs.writeText "overture-domain-alternative-rule" ".*";
           empty-ip-rules = pkgs.writeText "overture-ip-rules" "";
         in {
-          BindAddress = "127.0.0.1:53";
+          BindAddress = "0.0.0.0:53";
           DebugHTTPAddress = "127.0.0.1:5555";
           PrimaryDNS = [
             {
@@ -133,7 +133,7 @@ in {
           };
           # Alternative Rules would match everything, while the primary rule set is the domestic domain list. Therefore, domestic query would go via prmiary servers (domestic servers), and anything other than that would match alternative rules and go.
           DomainFile = {
-            Primary = "${pkgs.chinalist-raw}/accelerated-domains.china.raw.txt";
+            Primary = "${pkgs.chinalist-overture}/overture-regex-rules.txt";
             Alternative = "${domain-alternative}";
             Matcher = "regex-list";
           };
