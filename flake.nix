@@ -42,7 +42,7 @@
           self.nixosModules.ash-profile
           home.nixosModules.home-manager
           netkit.nixosModules.clash
-          netkit.nixosModules.atomdns
+          netkit.nixosModules.overture
           netkit.nixosModules.wifi-relay
           netkit.nixosModules.minecraft-server
           netkit.nixosModules.frpc
@@ -66,7 +66,7 @@
           self.nixosModules.ash-profile
           home.nixosModules.home-manager
           netkit.nixosModules.clash
-          netkit.nixosModules.atomdns
+          netkit.nixosModules.overture
         ];
       };
     };
