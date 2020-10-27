@@ -40,12 +40,13 @@ in {
       # Setup our local DNS
       netkit.overture = {
         enable = true;
+        processors = 2;
         settings = let
           domain-alternative =
             pkgs.writeText "overture-domain-alternative-rule" ".*";
           empty-ip-rules = pkgs.writeText "overture-ip-rules" "";
         in {
-          BindAddress = "0.0.0.0:53";
+          BindAddress = "127.0.0.1:53";
           DebugHTTPAddress = "127.0.0.1:5555";
           PrimaryDNS = [
             {
