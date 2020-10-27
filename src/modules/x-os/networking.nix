@@ -42,11 +42,11 @@ in {
         enable = true;
         processors = 2;
         settings = let
-          domain-alternative =
-            pkgs.writeText "overture-domain-alternative-rule" ".*";
+          domain-alternative = pkgs.writeText "overture-domain-alternative-rule"
+            "regex:[A-Za-z0-9.]+";
           empty-ip-rules = pkgs.writeText "overture-ip-rules" "";
         in {
-          BindAddress = "127.0.0.1:53";
+          BindAddress = "0.0.0.0:53";
           DebugHTTPAddress = "127.0.0.1:5555";
           PrimaryDNS = [
             {
@@ -134,9 +134,9 @@ in {
           };
           # Alternative Rules would match everything, while the primary rule set is the domestic domain list. Therefore, domestic query would go via prmiary servers (domestic servers), and anything other than that would match alternative rules and go.
           DomainFile = {
-            Primary = "${pkgs.chinalist-overture}/overture-regex-rules.txt";
+            Primary = "${pkgs.chinalist-overture}/overture-rules.txt";
             Alternative = "${domain-alternative}";
-            Matcher = "regex-list";
+            Matcher = "mix-list";
           };
           HostsFile = { Finder = "full-map"; };
           CacheSize = 4096;

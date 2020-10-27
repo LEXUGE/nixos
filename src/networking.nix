@@ -20,7 +20,6 @@
       interface = "wlp0s20f3";
       ssid = "AP-Freedom";
       passphrase = "88888888";
-      dns = "114.114.114.114, 8.8.8.8, 1.1.1.1";
     };
 
     frpc = {
