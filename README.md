@@ -54,6 +54,7 @@ I use GitHub Actions here to build LiveCD actions third times a week (with all f
 # See also
 - [netkit.nix flake](https://github.com/icebox-nix/netkit.nix): Verstile tools for advanced networking scenarios in NixOS, including Clash, wifi-to-wifi hotspot, on demand minecraft server, frpc modules.
 - [std](https://github.com/icebox-nix/std): Standard library used by my flakes.
+- [iceberg](https://github.com/icebox-nix/iceberg): My personal package collection. Currently, it includes Wolfram Engine package and modules.
 
 # Acknowledgments
 Thanks to following repositories:
