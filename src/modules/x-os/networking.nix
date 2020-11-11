@@ -38,109 +38,75 @@ in {
       networking.resolvconf.useLocalResolver = true;
 
       # Setup our local DNS
-      netkit.overture = {
+      netkit.dcompass = {
         enable = true;
-        processors = 2;
-        settings = let
-          domain-alternative = pkgs.writeText "overture-domain-alternative-rule"
-            "regex:[A-Za-z0-9.]+";
-          empty-ip-rules = pkgs.writeText "overture-ip-rules" "";
-        in {
-          BindAddress = "0.0.0.0:53";
-          DebugHTTPAddress = "127.0.0.1:5555";
-          PrimaryDNS = [
+        settings = {
+          upstreams = [
             {
-              Name = "114DNS";
-              Address = "114.114.114.114:53";
-              Protocol = "udp";
-              Timeout = 6;
-              SOCKS5Address = "";
-              EDNSClientSubnet = {
-                Policy = "disable";
-                ExternalIP = "";
-                NoCookie = true;
-              };
+              tag = "domestic";
+              method = { Hybrid = [ "114DNS" "ali" ]; };
+              timeout = 2;
+            }
+
+            {
+              tag = "secure";
+              method = { Hybrid = [ "cloudflare" "quad9" ]; };
+              timeout = 5;
+            }
+
+            {
+              tag = "114DNS";
+              method = { Udp = "114.114.114.114:53"; };
+              timeout = 1;
             }
             {
-              Name = "School DNS";
-              Address = "10.20.0.233:53";
-              Protocol = "udp";
-              Timeout = 6;
-              SOCKS5Address = "";
-              EDNSClientSubnet = {
-                Policy = "disable";
-                ExternalIP = "";
-                NoCookie = true;
-              };
-            }
-          ];
-          AlternativeDNS = [
-            {
-              Name = "TLS-CleanBrowsering";
-              Address = "whatever.com:853@185.228.168.9";
-              Protocol = "tcp-tls";
-              Timeout = 6;
-              SOCKS5Address = "";
-              EDNSClientSubnet = {
-                Policy = "disable";
-                ExternalIP = "";
-                NoCookie = true;
-              };
+              tag = "ali";
+              method = { Udp = "223.5.5.5:53"; };
+              timeout = 1;
             }
             {
-              Name = "TLS-Comcast";
-              Address = "whatever.com:853@96.113.151.145";
-              Protocol = "tcp-tls";
-              Timeout = 6;
-              SOCKS5Address = "";
-              EDNSClientSubnet = {
-                Policy = "disable";
-                ExternalIP = "";
-                NoCookie = true;
+              tag = "cloudflare";
+              method = {
+                Https = {
+                  no_sni = true;
+                  name = "cloudflare-dns.com";
+                  addr = "1.1.1.1:443";
+                };
               };
+              timeout = 4;
             }
+
             {
-              Name = "TLS-Google";
-              Address = "whatever.com:853@8.8.8.8";
-              Protocol = "tcp-tls";
-              Timeout = 6;
-              SOCKS5Address = "";
-              EDNSClientSubnet = {
-                Policy = "disable";
-                ExternalIP = "";
-                NoCookie = true;
+              tag = "quad9";
+              method = {
+                Https = {
+                  no_sni = true;
+                  name = "dns.quad9.net";
+                  addr = "9.9.9.9:443";
+                };
               };
-            }
-            {
-              Name = "HTTPS-Cloudflare";
-              Address = "https://cloudflare-dns.com/dns-query";
-              Protocol = "https";
-              SOCKS5Address = "";
-              Timeout = 6;
-              EDNSClientSubnet = {
-                Policy = "disable";
-                ExternalIP = "";
-                NoCookie = true;
-              };
+              timeout = 4;
             }
           ];
-          OnlyPrimaryDNS = false;
-          AlternativeDNSConcurrent = true;
-          WhenPrimaryDNSAnswerNoneUse = "AlternativeDNS";
-          # Empty rule placeholders to cease the complaints.
-          IPNetworkFile = {
-            "Primary" = "${empty-ip-rules}";
-            "Alternative" = "${empty-ip-rules}";
-          };
-          # Alternative Rules would match everything, while the primary rule set is the domestic domain list. Therefore, domestic query would go via prmiary servers (domestic servers), and anything other than that would match alternative rules and go.
-          DomainFile = {
-            Primary = "${pkgs.chinalist-overture}/overture-rules.txt";
-            Alternative = "${domain-alternative}";
-            Matcher = "mix-list";
-          };
-          HostsFile = { Finder = "full-map"; };
-          CacheSize = 4096;
-          RejectQType = [ 255 ];
+          rules = [
+            {
+              dst = "domestic";
+              path = "${pkgs.chinalist-raw}/accelerated-domains.china.raw.txt";
+            }
+            {
+              dst = "domestic";
+              path = "${pkgs.chinalist-raw}/google.china.raw.txt";
+            }
+            {
+              dst = "domestic";
+              path = "${pkgs.chinalist-raw}/apple.china.raw.txt";
+            }
+          ];
+          default_tag = "secure";
+          address = "0.0.0.0:53";
+          cache_size = 4096;
+          verbosity = "Info";
+          disable_ipv6 = true;
         };
       };
     })

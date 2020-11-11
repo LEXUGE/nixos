@@ -62,7 +62,7 @@ with lib; {
     clash = {
       enable = true;
       redirPort = 7892; # This must be the same with the one in your clash.yaml
-      afterUnits = [ "overture.service" ];
+      afterUnits = [ "dcompass.service" ];
     };
   };
 

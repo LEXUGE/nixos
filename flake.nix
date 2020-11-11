@@ -14,7 +14,7 @@
       url = "github:icebox-nix/netkit.nix";
       inputs.nixos.follows = "nixos";
     };
-    ash-emacs.url = "github:LEXUGE/emacs.d";
+    ash-emacs.url = "/home/ash/Documents/git/emacs.d";
     iceberg.url = "github:icebox-nix/iceberg";
   };
 
@@ -42,7 +42,7 @@
           self.nixosModules.ash-profile
           home.nixosModules.home-manager
           netkit.nixosModules.clash
-          netkit.nixosModules.overture
+          netkit.nixosModules.dcompass
           netkit.nixosModules.wifi-relay
           netkit.nixosModules.minecraft-server
           netkit.nixosModules.frpc
@@ -66,7 +66,7 @@
           self.nixosModules.ash-profile
           home.nixosModules.home-manager
           netkit.nixosModules.clash
-          netkit.nixosModules.overture
+          netkit.nixosModules.dcompass
         ];
       };
     };

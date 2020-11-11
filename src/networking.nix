@@ -10,7 +10,7 @@
     clash = {
       enable = true;
       redirPort = 7892; # This must be the same with the one in your clash.yaml
-      afterUnits = [ "overture.service" ];
+      afterUnits = [ "dcompass.service" ];
     };
 
     snapdrop.enable = true;
@@ -20,6 +20,7 @@
       interface = "wlp0s20f3";
       ssid = "AP-Freedom";
       passphrase = "88888888";
+      dns = "114.114.114.114, 8.8.8.8, 223.5.5.5";
     };
 
     frpc = {
