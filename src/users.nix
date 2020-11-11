@@ -58,6 +58,7 @@
       libreoffice-fresh
       fawkes
       wolfram-engine
+      dnsperf
     ];
   };
 }
