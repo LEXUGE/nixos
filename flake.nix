@@ -2,8 +2,7 @@
   description = "Harry Ying's NixOS configuration";
 
   inputs = {
-    # nixos.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixos.url = "github:NixOS/nixpkgs/24c9b05ac53e422f1af81a156f1fd58499eb27fb";
+    nixos.url = "github:NixOS/nixpkgs/nixos-unstable";
     home = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixos";

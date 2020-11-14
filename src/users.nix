@@ -52,7 +52,7 @@
       gnome3.gnome-sound-recorder
       frp
       pavucontrol
-      torbrowser
+      # torbrowser
       ifuse
       libimobiledevice
       libreoffice-fresh

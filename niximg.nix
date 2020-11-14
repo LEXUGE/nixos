@@ -75,7 +75,7 @@ with lib; {
       tdesktop
       gparted
       etcher
-      torbrowser
+      # torbrowser
       pavucontrol
     ];
     emacsPackages = with pkgs; [
