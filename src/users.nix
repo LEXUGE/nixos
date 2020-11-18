@@ -33,7 +33,9 @@
       #zoom-us
       thunderbird-bin-78
       spotify
-      firefox-bin
+      remmina
+      firefox-wayland
+      aria2
       (chromium.override { enableVaapi = true; })
       tdesktop
       multimc

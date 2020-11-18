@@ -64,7 +64,10 @@ in {
           signByDefault = true;
           key = "0xAE53B4C2E58EDD45";
         };
-        extraConfig = { credential = { helper = "store"; }; };
+        extraConfig = {
+          credential = { helper = "store"; };
+          pull.ff = "only"; # Use fast-forward only for git pull.
+        };
       };
 
       gnome-terminal = mkIf (gnomeEnable) {

@@ -7,6 +7,24 @@
   };
 
   netkit = {
+    # Testing purpose only
+    smartdns = {
+      enable = true;
+      china-list = true;
+      settings = {
+        bind = "[::]:3053";
+        log-level = "debug";
+        cache-size = 4096;
+        server-https =
+          [ "https://1.1.1.1/dns-query" "https://9.9.9.9/dns-query" ];
+        server = [
+          "114.114.114.114 -group china -exclude-default-group"
+          "223.5.5.5 -group china -exclude-default-group"
+        ]; # Server for China-list
+        prefetch-domain = true;
+      };
+    };
+
     clash = {
       enable = true;
       redirPort = 7892; # This must be the same with the one in your clash.yaml

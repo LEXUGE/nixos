@@ -45,6 +45,7 @@
           netkit.nixosModules.wifi-relay
           netkit.nixosModules.minecraft-server
           netkit.nixosModules.frpc
+          netkit.nixosModules.smartdns
           netkit.nixosModules.snapdrop
           netkit.nixosModules.xmm7360
           iceberg.nixosModules.wolfram-jupyter
