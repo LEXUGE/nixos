@@ -13,7 +13,8 @@
       url = "github:icebox-nix/netkit.nix";
       inputs.nixos.follows = "nixos";
     };
-    ash-emacs.url = "github:LEXUGE/emacs.d";
+    ash-emacs.url = "/home/ash/Documents/git/emacs.d";
+    #ash-emacs.url = "github:LEXUGE/emacs.d";
     iceberg.url = "github:icebox-nix/iceberg";
   };
 

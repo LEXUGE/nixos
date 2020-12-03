@@ -44,6 +44,7 @@
       max-players = 30;
       level-name = "newera2";
       white-list = true;
+      level-type = "amplified";
       #enable-rcon = true;
       difficulty = "normal";
       #"rcon.password" = "nixos";

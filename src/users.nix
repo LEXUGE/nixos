@@ -32,6 +32,7 @@
       qbittorrent
       #zoom-us
       thunderbird-bin-78
+      tor-browser-bundle-bin
       spotify
       remmina
       firefox-wayland
