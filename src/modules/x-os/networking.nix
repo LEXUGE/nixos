@@ -44,30 +44,30 @@ in {
           upstreams = [
             {
               tag = "domestic";
-              method = { Hybrid = [ "114DNS" "ali" ]; };
+              method = { hybrid = [ "114DNS" "ali" ]; };
               timeout = 2;
             }
 
             {
               tag = "secure";
-              method = { Hybrid = [ "cloudflare" "quad9" ]; };
+              method = { hybrid = [ "cloudflare" "quad9" ]; };
               timeout = 5;
             }
 
             {
               tag = "114DNS";
-              method = { Udp = "114.114.114.114:53"; };
+              method = { udp = "114.114.114.114:53"; };
               timeout = 1;
             }
             {
               tag = "ali";
-              method = { Udp = "223.5.5.5:53"; };
+              method = { udp = "223.5.5.5:53"; };
               timeout = 1;
             }
             {
               tag = "cloudflare";
               method = {
-                Https = {
+                https = {
                   no_sni = true;
                   name = "cloudflare-dns.com";
                   addr = "1.1.1.1:443";
@@ -75,11 +75,10 @@ in {
               };
               timeout = 4;
             }
-
             {
               tag = "quad9";
               method = {
-                Https = {
+                https = {
                   no_sni = true;
                   name = "dns.quad9.net";
                   addr = "9.9.9.9:443";
@@ -88,25 +87,27 @@ in {
               timeout = 4;
             }
           ];
-          rules = [
+          table = [
             {
-              dst = "domestic";
-              path = "${pkgs.chinalist-raw}/accelerated-domains.china.raw.txt";
+              tag = "start";
+              "if" = { qtype = [ "AAAA" ]; };
+              "then" = [ "disable" "end" ];
+              "else" = [ "skip" "domestic" ];
             }
             {
-              dst = "domestic";
-              path = "${pkgs.chinalist-raw}/google.china.raw.txt";
+              tag = "domestic";
+              "if" = "any";
+              "then" = [ { query = "domestic"; } "check_secure" ];
             }
             {
-              dst = "domestic";
-              path = "${pkgs.chinalist-raw}/apple.china.raw.txt";
+              tag = "check_secure";
+              "if" = { geoip = [ "CN" ]; };
+              "else" = [ { query = "secure"; } "end" ];
             }
           ];
-          default_tag = "secure";
           address = "0.0.0.0:53";
           cache_size = 4096;
-          verbosity = "Info";
-          disable_ipv6 = true;
+          verbosity = "info";
         };
       };
     })

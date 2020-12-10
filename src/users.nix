@@ -30,7 +30,7 @@
       #(python3.withPackages (ps: [ ps.tkinter ]))
       htop
       qbittorrent
-      #zoom-us
+      zoom-us
       thunderbird-bin-78
       tor-browser-bundle-bin
       spotify

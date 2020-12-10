@@ -11,6 +11,7 @@
     std.url = "github:icebox-nix/std";
     netkit = {
       url = "github:icebox-nix/netkit.nix";
+      # url = "/home/ash/Documents/git/netkit.nix";
       inputs.nixos.follows = "nixos";
     };
     # ash-emacs.url = "/home/ash/Documents/git/emacs.d";
