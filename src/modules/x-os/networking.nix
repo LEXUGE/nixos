@@ -45,63 +45,58 @@ in {
             {
               tag = "domestic";
               method = { hybrid = [ "114DNS" "ali" ]; };
-              timeout = 2;
             }
 
             {
               tag = "secure";
               method = { hybrid = [ "cloudflare" "quad9" ]; };
-              timeout = 5;
             }
 
             {
               tag = "114DNS";
-              method = { udp = "114.114.114.114:53"; };
-              timeout = 1;
+              method = { udp = { addr = "114.114.114.114:53"; }; };
             }
             {
               tag = "ali";
-              method = { udp = "223.5.5.5:53"; };
-              timeout = 1;
+              method = { udp = { addr = "223.5.5.5:53"; }; };
             }
             {
               tag = "cloudflare";
               method = {
                 https = {
+                  timeout = 4;
                   no_sni = true;
                   name = "cloudflare-dns.com";
                   addr = "1.1.1.1:443";
                 };
               };
-              timeout = 4;
             }
             {
               tag = "quad9";
               method = {
                 https = {
+                  timeout = 4;
                   no_sni = true;
                   name = "dns.quad9.net";
                   addr = "9.9.9.9:443";
                 };
               };
-              timeout = 4;
             }
           ];
           table = [
             {
               tag = "start";
-              "if" = { qtype = [ "AAAA" ]; };
-              "then" = [ "disable" "end" ];
-              "else" = [ "skip" "domestic" ];
-            }
-            {
-              tag = "domestic";
               "if" = "any";
               "then" = [ { query = "domestic"; } "check_secure" ];
             }
             {
               tag = "check_secure";
-              "if" = { geoip = [ "CN" ]; };
+              "if" = {
+                geoip = {
+                  on = "resp";
+                  codes = [ "CN" ];
+                };
+              };
               "else" = [ { query = "secure"; } "end" ];
             }
           ];
