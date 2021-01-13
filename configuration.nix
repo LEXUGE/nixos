@@ -38,7 +38,7 @@
   x-os = {
     enable = true;
     enableSwap = false;
-    enableVirtualisation = true;
+    enableVirtualisation = false;
     # Use TUNA (BFSU) Mirror together with original cache because TUNA has better performance inside Mainland China.
     # Set the list to `[ ]` to use official cache only.
     binaryCaches = [ "https://mirrors.bfsu.edu.cn/nix-channels/store" ];

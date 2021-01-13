@@ -23,12 +23,19 @@
         name = "AshBreaker1";
         level = 4;
       }
+      {
+        uuid = "5f18149d-a806-3491-b5fc-75fadee9154f"; # Simon Shu - Offline
+        name = "SIMON1314520";
+        level = 4;
+      }
     ];
 
     whitelist = {
+      TonyChen1926 =
+        "afc9fb43-68de-36a9-b7c3-d317a4098bb1"; # Tony Chen - Offline
       SIMON1314520 =
         "5f18149d-a806-3491-b5fc-75fadee9154f"; # Simon Shu - Offline
-      btbtbt = "36866b49-0e29-3b96-b80c-c8eda7cfe3ff"; # Newt Chen - Offline
+      # btbtbt = "36866b49-0e29-3b96-b80c-c8eda7cfe3ff"; # Newt Chen - Offline
       AshBreaker1 = "94f4d16b-0e0b-39e3-9a92-a26bf4f7a0dc"; # Offline
       Ju_Mao_Qiu =
         "e50f94f7-9fe0-3b89-85fe-240964188a37"; # Cindy Fang - Offline
@@ -42,15 +49,15 @@
     serverProperties = {
       online-mode = false;
       max-players = 30;
-      level-name = "newera2";
+      level-name = "newera3";
       white-list = true;
       level-type = "amplified";
       #enable-rcon = true;
-      difficulty = "normal";
+      difficulty = "hard";
       #"rcon.password" = "nixos";
       network-compression-threshold =
         64; # Compress any packets larger than 64 bytes
-      max-world-size = 2000;
+      # max-world-size = 2000;
       motd =
         "\\u00A76NewEra \\u00A77Vanilla \\u00A7cSurvival\\u00A7r\\n\\u00A7bt.me/NewEraMinecraft";
     };

@@ -41,12 +41,12 @@ in {
       netkit.dcompass = {
         enable = true;
         settings = {
+          ratelimit = 150;
           upstreams = [
             {
               tag = "domestic";
               method = { hybrid = [ "114DNS" "ali" ]; };
             }
-
             {
               tag = "secure";
               method = { hybrid = [ "cloudflare" "quad9" ]; };
@@ -86,17 +86,18 @@ in {
           table = [
             {
               tag = "start";
-              "if" = "any";
-              "then" = [ { query = "domestic"; } "check_secure" ];
+              "if".qtype = [ "AAAA" ];
+              "then" = [ "disable" "end" ];
+              "else" = [ "dispatch" ];
             }
             {
-              tag = "check_secure";
-              "if" = {
-                geoip = {
-                  on = "resp";
-                  codes = [ "CN" ];
-                };
-              };
+              tag = "dispatch";
+              "if".domain = [
+                "${pkgs.chinalist-raw}/google.china.raw.txt"
+                "${pkgs.chinalist-raw}/apple.china.raw.txt"
+                "${pkgs.chinalist-raw}/accelerated-domains.china.raw.txt"
+              ];
+              "then" = [ { query = "domestic"; } "end" ];
               "else" = [ { query = "secure"; } "end" ];
             }
           ];

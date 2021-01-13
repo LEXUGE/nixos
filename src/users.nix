@@ -39,7 +39,7 @@
       aria2
       (chromium.override { enableVaapi = true; })
       tdesktop
-      multimc
+      minecraft
       (texlive.combine {
         inherit (texlive)
           scheme-basic chktex
@@ -54,11 +54,13 @@
       gnome-podcasts
       gnome3.gnome-sound-recorder
       frp
+      vlc
+      dogdns
       pavucontrol
       # torbrowser
       ifuse
       libimobiledevice
-      libreoffice-fresh
+      onlyoffice-bin
       fawkes
       wolfram-engine
       dnsperf
