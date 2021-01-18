@@ -27,4 +27,7 @@ in lib.mkIf cfg.enable {
     gnome-software
     gnome-characters
   ];
+  # Fix "a stop job is runnig" issue, see also https://gitlab.gnome.org/GNOME/gnome-session/-/merge_requests/55/diffs. This should be removed once `gnome-session is upgraded.
+  systemd.user.services.gnome-session-restart-dbus.serviceConfig.Slice =
+    "-.slice";
 }

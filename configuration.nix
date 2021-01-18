@@ -43,7 +43,7 @@
     # Set the list to `[ ]` to use official cache only.
     binaryCaches = [ "https://mirrors.bfsu.edu.cn/nix-channels/store" ];
     # Choose ibus engines to apply
-    ibus-engines = with pkgs.ibus-engines; [ libpinyin ];
+    ibus-engines = with pkgs.ibus-engines; [ libpinyin typing-booster ];
     # iwdConfig = { General = { UseDefaultInterface = true; }; };
   };
 }

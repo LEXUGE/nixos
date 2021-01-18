@@ -103,8 +103,11 @@ in {
       # Setting GNOME Dconf settings
       dconf.settings = mkIf (gnomeEnable) {
         # Input sources
-        "org/gnome/desktop/input-sources".sources =
-          map mkTuple [ [ "xkb" "us" ] [ "ibus" "libpinyin" ] ];
+        "org/gnome/desktop/input-sources".sources = map mkTuple [
+          [ "xkb" "us" ]
+          [ "ibus" "libpinyin" ]
+          [ "ibus" "typing-booster" ]
+        ];
         # Touchpad settings
         "org/gnome/desktop/peripherals/touchpad" = {
           disable-while-typing = false;
