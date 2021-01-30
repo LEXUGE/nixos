@@ -12,7 +12,7 @@ in lib.mkIf cfg.enable {
     # Configure touchpad
     libinput = {
       enable = true;
-      naturalScrolling = true;
+      touchpad.naturalScrolling = true;
     };
   };
   services.xserver = {
