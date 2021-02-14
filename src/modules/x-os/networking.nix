@@ -14,6 +14,11 @@ in {
       default = [ ];
       description = "Binary caches to use.";
     };
+    publicKeys = mkOption {
+      type = types.listOf types.str;
+      default = [ ];
+      description = "Public keys of binary caches.";
+    };
     iwdConfig = mkOption {
       type = with types; nullOr (attrsOf (attrsOf (oneOf [ bool int str ])));
       default = null;
@@ -33,6 +38,7 @@ in {
 
       # Customized binary caches list (with fallback to official binary cache)
       nix.binaryCaches = cfg.binaryCaches;
+      nix.binaryCachePublicKeys = cfg.publicKeys;
 
       # Use local DNS server all the time
       networking.resolvconf.useLocalResolver = true;
@@ -40,6 +46,7 @@ in {
       # Setup our local DNS
       netkit.dcompass = {
         enable = true;
+        package = pkgs.dcompass.dcompass-maxmind;
         settings = {
           ratelimit = 150;
           upstreams = [
@@ -93,9 +100,9 @@ in {
             {
               tag = "dispatch";
               "if".domain = [
-                "${pkgs.chinalist-raw}/google.china.raw.txt"
-                "${pkgs.chinalist-raw}/apple.china.raw.txt"
-                "${pkgs.chinalist-raw}/accelerated-domains.china.raw.txt"
+                "${pkgs.netkit.chinalist}/google.china.raw.txt"
+                "${pkgs.netkit.chinalist}/apple.china.raw.txt"
+                "${pkgs.netkit.chinalist}/accelerated-domains.china.raw.txt"
               ];
               "then" = [ { query = "domestic"; } "end" ];
               "else" = [ { query = "secure"; } "end" ];

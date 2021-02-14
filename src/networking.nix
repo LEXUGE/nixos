@@ -1,4 +1,4 @@
-{
+{ pkgs, ... }: {
   # Lower down the timeout values to reduce stress on conntrack.
   # https://security.stackexchange.com/questions/43205/nf-conntrack-table-full-dropping-packet
   boot.kernel.sysctl = {
@@ -13,7 +13,10 @@
       afterUnits = [ "dcompass.service" ];
     };
 
-    snapdrop.enable = true;
+    snapdrop = {
+      enable = true;
+      package = pkgs.nixoscn.snapdrop;
+    };
 
     wifi-relay = {
       enable = true;
