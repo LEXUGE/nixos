@@ -9,20 +9,18 @@
     };
     # We may have multiple flakes using std, but we only may use one version of std. So we declare it here and let others which depend on it follow.
     std.url = "github:icebox-nix/std";
-    netkit = {
-      url = "github:icebox-nix/netkit.nix";
-      #url = "/home/ash/Documents/git/netkit.nix";
-      inputs.nixos.follows = "nixos";
-    };
+    #url = "/home/ash/Documents/git/netkit.nix";
+    netkit.url = "github:icebox-nix/netkit.nix";
     dcompass.url = "github:LEXUGE/dcompass";
     nixos-cn.url = "github:nixos-cn/flakes";
     # ash-emacs.url = "/home/ash/Documents/git/emacs.d";
     ash-emacs.url = "github:LEXUGE/emacs.d";
     iceberg.url = "github:icebox-nix/iceberg";
+    nix-dram.url = "github:dramforever/nix-dram";
   };
 
   outputs = { self, nixos, home, std, netkit, ash-emacs, iceberg, nixos-cn
-    , dcompass, ... }@inputs: {
+    , nix-dram, dcompass, ... }@inputs: {
       x1c7-toplevel =
         self.nixosConfigurations.x1c7.config.system.build.toplevel;
       niximg = self.nixosConfigurations.niximg.config.system.build.isoImage;
@@ -37,12 +35,17 @@
           system = "x86_64-linux";
           modules = [
             {
-              x-os.publicKeys = [ dcompass.publicKey netkit.publicKey ];
+              x-os.publicKeys = [
+                dcompass.publicKey
+                netkit.publicKey
+                "dram.cachix.org-1:baoy1SXpwYdKbqdTbfKGTKauDDeDlHhUpC+QuuILEMY="
+              ];
               nixpkgs.overlays = [
                 ash-emacs.overlay
                 iceberg.overlay
                 nixos-cn.overlay
                 dcompass.overlay
+                nix-dram.overlay
               ];
             }
             ./configuration.nix
@@ -64,7 +67,8 @@
           modules = [
             "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-base.nix"
             {
-              nixpkgs.overlays = [ ash-emacs.overlay dcompass.overlay ];
+              nixpkgs.overlays =
+                [ ash-emacs.overlay dcompass.overlay nix-dram.overlay ];
               x-os.publicKeys = [ dcompass.publicKey netkit.publicKey ];
             }
             ./niximg.nix

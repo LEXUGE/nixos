@@ -7,11 +7,11 @@
         "nixos": "nixos"
       },
       "locked": {
-        "lastModified": 1614039098,
-        "narHash": "sha256-KP3W1QBQuZbi8OfftciJiWgbphHeqVhLRzvC9vR3+kk=",
+        "lastModified": 1614054311,
+        "narHash": "sha256-TZCh2i4Na9qrdhNjsCbhiOct68l8mrHHD/e35bl46OA=",
         "owner": "LEXUGE",
         "repo": "emacs.d",
-        "rev": "c15d2dcc58043fafbe7100fb54d5a0d4c13ba56e",
+        "rev": "645c582dcecaadb35b6339890b9832b2fe934b50",
         "type": "github"
       },
       "original": {
@@ -131,6 +131,21 @@
         "type": "github"
       }
     },
+    "flake-utils_6": {
+      "locked": {
+        "lastModified": 1610051610,
+        "narHash": "sha256-U9rPz/usA1/Aohhk7Cmc2gBrEEKRzcW4nwPWMPwja4Y=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "3982c9903e93927c2164caa727cd3f6a0e6d14cc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "home": {
       "inputs": {
         "nixpkgs": [
@@ -157,11 +172,11 @@
         "nixos": "nixos_2"
       },
       "locked": {
-        "lastModified": 1613868905,
-        "narHash": "sha256-YGY4slIoxqS8ahFmilSmIaRDT5biT+5ilAoAofdB1d0=",
+        "lastModified": 1614053613,
+        "narHash": "sha256-xIPMqqCM+w9ufwvXuqHM84Bgqj0z05inpMwlOhB35Wg=",
         "owner": "icebox-nix",
         "repo": "iceberg",
-        "rev": "3927368df5d86cfadd6ed53f0177e08e9db2f625",
+        "rev": "a49fa345b53cdf51a480cb53623a8194fb2d4b56",
         "type": "github"
       },
       "original": {
@@ -194,16 +209,35 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1613695468,
-        "narHash": "sha256-lPemCnw00lY+oYcgBwzk+wZUUgZt8+kV39FwD14TWU0=",
+        "lastModified": 1614051490,
+        "narHash": "sha256-2l369cRzkz1hBaOpCakEKz3DFc8b1ZKmjlKrcXr0S8Y=",
         "owner": "icebox-nix",
         "repo": "netkit.nix",
-        "rev": "ee6293f0eed7db312cdfdc0ef14560a5f282991e",
+        "rev": "0f78c34d0574b6256b27cf3b675eeea9213a745a",
         "type": "github"
       },
       "original": {
         "owner": "icebox-nix",
         "repo": "netkit.nix",
+        "type": "github"
+      }
+    },
+    "nix-dram": {
+      "inputs": {
+        "flake-utils": "flake-utils_5",
+        "nixpkgs": "nixpkgs_5"
+      },
+      "locked": {
+        "lastModified": 1613792661,
+        "narHash": "sha256-gtHRvYS7JvBk5/Zn09O3kIhNSbhSQljAv35NvfiRebQ=",
+        "owner": "dramforever",
+        "repo": "nix-dram",
+        "rev": "0523cbc4e21c69d1cd6b9cd6c09634957d11e1cc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dramforever",
+        "repo": "nix-dram",
         "type": "github"
       }
     },
@@ -225,8 +259,8 @@
     },
     "nixos-cn": {
       "inputs": {
-        "flake-utils": "flake-utils_5",
-        "nixpkgs": "nixpkgs_5"
+        "flake-utils": "flake-utils_6",
+        "nixpkgs": "nixpkgs_6"
       },
       "locked": {
         "lastModified": 1613869116,
@@ -319,11 +353,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1613582597,
-        "narHash": "sha256-6LvipIvFuhyorHpUqK3HjySC5Y6gshXHFBhU9EJ4DoM=",
+        "lastModified": 1613761605,
+        "narHash": "sha256-lUF6UPR96ZzQC0faNXBHLoLhNAdxZqYqDwz0PaIZ/7Y=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "6b1057b452c55bb3b463f0d7055bc4ec3fd1f381",
+        "rev": "9816b99e71c3504b0b4c1f8b2e004148460029d4",
         "type": "github"
       },
       "original": {
@@ -334,6 +368,22 @@
       }
     },
     "nixpkgs_5": {
+      "locked": {
+        "lastModified": 1612996220,
+        "narHash": "sha256-l2kzWXxL3vXr8VxUzRtORPJS0nFQ3E5kBPF/AYAK0wI=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "758b29b5a28b818e311ad540637a5c1e40867489",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_6": {
       "locked": {
         "lastModified": 1613761605,
         "narHash": "sha256-lUF6UPR96ZzQC0faNXBHLoLhNAdxZqYqDwz0PaIZ/7Y=",
@@ -356,6 +406,7 @@
         "home": "home",
         "iceberg": "iceberg",
         "netkit": "netkit",
+        "nix-dram": "nix-dram",
         "nixos": "nixos_3",
         "nixos-cn": "nixos-cn",
         "std": "std"

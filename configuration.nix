@@ -46,6 +46,7 @@
       "https://mirrors.bfsu.edu.cn/nix-channels/store"
       "https://dcompass.cachix.org/"
       "https://lexuge.cachix.org/"
+      "https://dram.cachix.org"
     ];
     # Choose ibus engines to apply
     ibus-engines = with pkgs.ibus-engines; [ libpinyin typing-booster ];
