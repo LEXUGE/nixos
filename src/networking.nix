@@ -15,7 +15,7 @@
 
     snapdrop = {
       enable = true;
-      package = pkgs.nixoscn.snapdrop;
+      package = pkgs.nixos-cn.snapdrop;
     };
 
     wifi-relay = {
