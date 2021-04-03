@@ -46,6 +46,7 @@ with lib; {
     # Set the list to `[ ]` to use official cache only.
     binaryCaches = [
       "https://mirrors.bfsu.edu.cn/nix-channels/store"
+      "https://cache.nixos.org/"
       "https://dcompass.cachix.org/"
       "https://lexuge.cachix.org/"
       "https://dram.cachix.org"

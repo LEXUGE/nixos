@@ -74,7 +74,10 @@ in {
         # services.openssh.enable = true;
       })
       (mkIf (config.std.interface.system.bluetooth.enable) {
-        hardware.bluetooth.enable = true;
+        hardware.bluetooth = {
+          enable = true;
+          disabledPlugins = [ "sap" ];
+        };
         # Whether enable blueman or not
         services.blueman.enable =
           mkIf (config.std.interface.system.bluetooth.service == "blueman")

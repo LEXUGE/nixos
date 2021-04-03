@@ -37,7 +37,7 @@ in {
       };
 
       # Customized binary caches list (with fallback to official binary cache)
-      nix.binaryCaches = cfg.binaryCaches;
+      nix.binaryCaches = lib.mkForce cfg.binaryCaches;
       nix.binaryCachePublicKeys = cfg.publicKeys;
 
       # Use local DNS server all the time
@@ -56,7 +56,9 @@ in {
             }
             {
               tag = "secure";
-              method = { hybrid = [ "cloudflare" "quad9" ]; };
+              method = {
+                hybrid = [ "cloudflare" "quad9" "libredns" "ahadns" ];
+              };
             }
 
             {
@@ -66,6 +68,28 @@ in {
             {
               tag = "ali";
               method = { udp = { addr = "223.5.5.5:53"; }; };
+            }
+            {
+              tag = "ahadns";
+              method = {
+                https = {
+                  timeout = 4;
+                  no_sni = true;
+                  name = "doh.la.ahadns.net";
+                  addr = "45.67.219.208:443";
+                };
+              };
+            }
+            {
+              tag = "libredns";
+              method = {
+                https = {
+                  timeout = 4;
+                  no_sni = true;
+                  name = "doh.libredns.gr";
+                  addr = "116.202.176.26:443";
+                };
+              };
             }
             {
               tag = "cloudflare";
@@ -94,18 +118,29 @@ in {
             {
               tag = "start";
               "if".qtype = [ "AAAA" ];
-              "then" = [ "disable" "end" ];
+              "then" = [ "blackhole" "end" ];
               "else" = [ "dispatch" ];
             }
             {
               tag = "dispatch";
               "if".domain = [
-                "${pkgs.netkit.chinalist}/google.china.raw.txt"
-                "${pkgs.netkit.chinalist}/apple.china.raw.txt"
-                "${pkgs.netkit.chinalist}/accelerated-domains.china.raw.txt"
+                { file = "${pkgs.netkit.chinalist}/google.china.raw.txt"; }
+                { file = "${pkgs.netkit.chinalist}/apple.china.raw.txt"; }
+                {
+                  file =
+                    "${pkgs.netkit.chinalist}/accelerated-domains.china.raw.txt";
+                }
               ];
               "then" = [ { query = "domestic"; } "end" ];
-              "else" = [ { query = "secure"; } "end" ];
+              "else" = [
+                {
+                  query = {
+                    tag = "secure";
+                    cache_policy = "persistent";
+                  };
+                }
+                "end"
+              ];
             }
           ];
           address = "0.0.0.0:53";

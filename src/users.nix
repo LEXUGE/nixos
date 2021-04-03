@@ -40,13 +40,17 @@
       (chromium.override { enableVaapi = true; })
       tdesktop
       minecraft
+      biber
+      zotero
       (texlive.combine {
         inherit (texlive)
           scheme-basic chktex
           # org-mode
           wrapfig ulem capt-of metafont
           # MLA Formatted Paper
-          setspace mla-paper thumbpdf times;
+          setspace mla-paper thumbpdf times
+          # BiBLaTeX
+          biblatex-mla biblatex csquotes;
       })
       steam
       gparted

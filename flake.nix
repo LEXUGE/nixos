@@ -13,7 +13,7 @@
     netkit.url = "github:icebox-nix/netkit.nix";
     dcompass.url = "github:LEXUGE/dcompass";
     nixos-cn.url = "github:nixos-cn/flakes";
-    # ash-emacs.url = "/home/ash/Documents/git/emacs.d";
+    #ash-emacs.url = "/home/ash/Documents/git/emacs.d";
     ash-emacs.url = "github:LEXUGE/emacs.d";
     iceberg.url = "github:icebox-nix/iceberg";
     nix-dram.url = "github:dramforever/nix-dram";
