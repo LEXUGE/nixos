@@ -49,80 +49,60 @@ in {
         package = pkgs.dcompass.dcompass-maxmind;
         settings = {
           ratelimit = 150;
-          upstreams = [
-            {
-              tag = "domestic";
-              method = { hybrid = [ "114DNS" "ali" ]; };
-            }
-            {
-              tag = "secure";
-              method = {
-                hybrid = [ "cloudflare" "quad9" "libredns" "ahadns" ];
-              };
-            }
+          cache_size = 2048;
+          upstreams = {
+            domestic = { hybrid = [ "114DNS" "ali" ]; };
 
-            {
-              tag = "114DNS";
-              method = { udp = { addr = "114.114.114.114:53"; }; };
-            }
-            {
-              tag = "ali";
-              method = { udp = { addr = "223.5.5.5:53"; }; };
-            }
-            {
-              tag = "ahadns";
-              method = {
-                https = {
-                  timeout = 4;
-                  no_sni = true;
-                  name = "doh.la.ahadns.net";
-                  addr = "45.67.219.208:443";
-                };
+            secure = { hybrid = [ "cloudflare" "quad9" "libredns" "ahadns" ]; };
+
+            "114DNS" = { udp = { addr = "114.114.114.114:53"; }; };
+
+            ali = { udp = { addr = "223.5.5.5:53"; }; };
+
+            ahadns = {
+              https = {
+                timeout = 4;
+                no_sni = true;
+                name = "doh.la.ahadns.net";
+                addr = "45.67.219.208:443";
               };
-            }
-            {
-              tag = "libredns";
-              method = {
-                https = {
-                  timeout = 4;
-                  no_sni = true;
-                  name = "doh.libredns.gr";
-                  addr = "116.202.176.26:443";
-                };
+            };
+
+            libredns = {
+              https = {
+                timeout = 4;
+                no_sni = true;
+                name = "doh.libredns.gr";
+                addr = "116.202.176.26:443";
               };
-            }
-            {
-              tag = "cloudflare";
-              method = {
-                https = {
-                  timeout = 4;
-                  no_sni = true;
-                  name = "cloudflare-dns.com";
-                  addr = "1.1.1.1:443";
-                };
+            };
+
+            cloudflare = {
+              https = {
+                timeout = 4;
+                no_sni = true;
+                name = "cloudflare-dns.com";
+                addr = "1.1.1.1:443";
               };
-            }
-            {
-              tag = "quad9";
-              method = {
-                https = {
-                  timeout = 4;
-                  no_sni = true;
-                  name = "dns.quad9.net";
-                  addr = "9.9.9.9:443";
-                };
+            };
+
+            quad9 = {
+              https = {
+                timeout = 4;
+                no_sni = true;
+                name = "dns.quad9.net";
+                addr = "9.9.9.9:443";
               };
-            }
-          ];
-          table = [
-            {
-              tag = "start";
+            };
+
+          };
+          table = {
+            start = {
               "if".qtype = [ "AAAA" ];
               "then" = [ "blackhole" "end" ];
               "else" = [ "dispatch" ];
-            }
-            {
-              tag = "dispatch";
+            };
+            dispatch = {
               "if".domain = [
                 { file = "${pkgs.netkit.chinalist}/google.china.raw.txt"; }
                 { file = "${pkgs.netkit.chinalist}/apple.china.raw.txt"; }
@@ -141,10 +121,9 @@ in {
                 }
                 "end"
               ];
-            }
-          ];
+            };
+          };
           address = "0.0.0.0:53";
-          cache_size = 4096;
           verbosity = "info";
         };
       };
