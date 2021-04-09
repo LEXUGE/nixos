@@ -39,6 +39,7 @@
     enable = true;
     enableSwap = false;
     enableVirtualisation = false;
+    enableXow = true;
     # Use TUNA (BFSU) Mirror together with original cache because TUNA has better performance inside Mainland China.
     # Use Cachix to reduce repeated builds.
     # Set the list to `[ ]` to use official cache only.

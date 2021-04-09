@@ -17,6 +17,11 @@ in {
       description =
         "Enable extra services. Disable this would inactivate all other service-related options like enableVirtualisation.";
     };
+    enableXow = mkOption {
+      type = types.bool;
+      default = false;
+      description = "Enable XOW service for Xbox One controller";
+    };
   };
   config = mkIf cfg.enable (mkMerge [
     ({
@@ -42,6 +47,11 @@ in {
         package = pkgs.pulseaudioFull;
       };
     })
+    (mkIf (cfg.enableXow) (mkMerge [({
+      services.hardware.xow.enable = true;
+      hardware.steam-hardware.enable = true;
+      hardware.xpadneo.enable = true;
+    })]))
     (mkIf (cfg.enableExtraServices) (mkMerge [
       ({
         # Enable WireShark
