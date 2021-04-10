@@ -50,6 +50,12 @@ in {
     (mkIf (cfg.enableXow) (mkMerge [({
       services.hardware.xow.enable = true;
       hardware.steam-hardware.enable = true;
+      hardware.bluetooth.settings = {
+        General = {
+          ControllerMode = "dual";
+          Privacy = "device";
+        };
+      };
       hardware.xpadneo.enable = true;
     })]))
     (mkIf (cfg.enableExtraServices) (mkMerge [

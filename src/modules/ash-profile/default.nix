@@ -132,6 +132,7 @@ in {
         "org/gnome/desktop/wm/keybindings" = {
           close = [ "<Shift><Super>q" ];
           show-desktop = [ "<Super>d" ];
+          toggle-fullscreen = [ "<Super>f" ];
         };
         # Favorite apps
         "org/gnome/shell" = {

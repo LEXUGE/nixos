@@ -8,6 +8,8 @@ with lib; {
     # Activate acpi_call module for TLP ThinkPad features
     boot.extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
 
+    hardware.enableAllFirmware = true;
+
     netkit.xmm7360 = {
       enable = true;
       autoStart = true;
