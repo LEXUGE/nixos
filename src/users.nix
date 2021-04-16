@@ -37,7 +37,7 @@
       remmina
       firefox-wayland
       aria2
-      (chromium.override { enableVaapi = true; })
+      chromium
       tdesktop
       minecraft
       biber
@@ -52,7 +52,14 @@
           # BiBLaTeX
           biblatex-mla biblatex csquotes;
       })
-      steam
+      # Steam scaling seems to be broken, doing it manually
+      (runCommand "steam-hidpi" { nativeBuildInputs = [ makeWrapper ]; } ''
+        mkdir -p $out/bin
+        makeWrapper ${steam}/bin/steam $out/bin/steam --set GDK_SCALE ${
+          toString config.std.interface.system.scale
+        }
+        cp -r ${steam}/share $out/share/
+      '')
       gparted
       etcher
       gnome-podcasts

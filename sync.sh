@@ -21,7 +21,7 @@ rsync -avP \
 find . -type f -name '*.nix' -exec nixfmt {} +
 shellcheck ./*.sh || true
 shfmt -w ./*.sh
-nix flake update --recreate-lock-file
+nix flake update
 nix flake check
 echo "Done."
 

@@ -48,12 +48,12 @@ in {
         enable = true;
         package = pkgs.dcompass.dcompass-maxmind;
         settings = {
-          ratelimit = 150;
-          cache_size = 2048;
+          # ratelimit = 150;
+          cache_size = 4096;
           upstreams = {
             domestic = { hybrid = [ "114DNS" "ali" ]; };
 
-            secure = { hybrid = [ "cloudflare" "quad9" "libredns" "ahadns" ]; };
+            secure = { hybrid = [ "cloudflare" "quad9" "ahadns" ]; };
 
             "114DNS" = { udp = { addr = "114.114.114.114:53"; }; };
 
@@ -65,15 +65,6 @@ in {
                 no_sni = true;
                 name = "doh.la.ahadns.net";
                 addr = "45.67.219.208:443";
-              };
-            };
-
-            libredns = {
-              https = {
-                timeout = 4;
-                no_sni = true;
-                name = "doh.libredns.gr";
-                addr = "116.202.176.26:443";
               };
             };
 
