@@ -29,7 +29,7 @@ in {
       boot.supportedFilesystems = [ "ntfs" ];
 
       # Auto upgrade
-      system.autoUpgrade.enable = true;
+      # system.autoUpgrade.enable = true;
 
       # Use nix-dram
       nix.package = pkgs.nix-dram;

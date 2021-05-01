@@ -41,11 +41,11 @@ with lib; {
     enable = true;
     isoMode = true;
     hostname = "niximg";
-    # Use TUNA (BFSU) Mirror together with original cache because TUNA has better performance inside Mainland China.
+    # Use SJTU Mirror together with original cache because SJTU has better performance inside Mainland China.
     # Use Cachix to reduce repeated builds.
     # Set the list to `[ ]` to use official cache only.
     binaryCaches = [
-      "https://mirrors.bfsu.edu.cn/nix-channels/store"
+      "https://mirror.sjtu.edu.cn/nix-channels/store"
       "https://cache.nixos.org/"
       "https://dcompass.cachix.org/"
       "https://lexuge.cachix.org/"
@@ -86,8 +86,7 @@ with lib; {
       pavucontrol
     ];
     emacsPackages = with pkgs; [
-      hunspell
-      hunspellDicts.en-us-large
+      (hunspellWithDicts [ hunspellDicts.en-us hunspellDicts.en-us-large ])
       emacs-all-the-icons-fonts
       ash-emacs-x86_64-linux
     ];

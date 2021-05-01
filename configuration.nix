@@ -40,11 +40,11 @@
     enableSwap = false;
     enableVirtualisation = false;
     enableXow = true;
-    # Use TUNA (BFSU) Mirror together with original cache because TUNA has better performance inside Mainland China.
+    # Use SJTU Mirror together with original cache because SJTU has better performance inside Mainland China.
     # Use Cachix to reduce repeated builds.
     # Set the list to `[ ]` to use official cache only.
     binaryCaches = [
-      "https://mirrors.bfsu.edu.cn/nix-channels/store"
+      "https://mirror.sjtu.edu.cn/nix-channels/store"
       "https://cache.nixos.org/"
       "https://dcompass.cachix.org/"
       "https://lexuge.cachix.org/"

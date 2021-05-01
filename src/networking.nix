@@ -6,6 +6,44 @@
     "net.netfilter.nf_conntrack_tcp_timeout_established" = 54000;
   };
 
+  services.v2ray = {
+    enable = true;
+    config = {
+      log.loglevel = "info";
+      inbounds = [{
+        port = 1080;
+        protocol = "socks";
+        sniffing = {
+          enabled = true;
+          destOverride = [ "http" "tls" ];
+        };
+        settings = { auth = "noauth"; };
+      }];
+      outbounds = [{
+        protocol = "vmess";
+        settings = {
+          vnext = [{
+            address = "175.24.191.112";
+            port = 53;
+            users = [{
+              id = "1e20eca6-8bd8-512d-596f-6067be9f3a17";
+              alterId = 64;
+            }];
+          }];
+        };
+        streamSettings = {
+          network = "mkcp";
+          kcpSettings = {
+            uplinkCapacity = 5;
+            downlinkCapacity = 100;
+            congestion = true;
+            header = { type = "wechat-video"; };
+          };
+        };
+      }];
+    };
+  };
+
   netkit = {
     clash = {
       enable = true;

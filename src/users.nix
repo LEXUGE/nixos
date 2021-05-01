@@ -14,15 +14,14 @@
         # video - light control
         # libvirtd - virtual manager controls.
         # docker - Docker control
-        extraGroups = [ "wheel" "networkmanager" "wireshark" ];
+        extraGroups = [ "wheel" "networkmanager" ]; # "wireshark" ];
       };
     };
   };
 
   ash-profile.ash = {
     emacsPackages = with pkgs; [
-      hunspell
-      hunspellDicts.en-us-large
+      (hunspellWithDicts [ hunspellDicts.en-us hunspellDicts.en-us-large ])
       emacs-all-the-icons-fonts
       ash-emacs-x86_64-linux
     ];
@@ -37,7 +36,7 @@
       remmina
       firefox-wayland
       aria2
-      chromium
+      # chromium
       tdesktop
       minecraft
       biber

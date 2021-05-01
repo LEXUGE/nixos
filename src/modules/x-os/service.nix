@@ -62,7 +62,7 @@ in {
       ({
         # Enable WireShark
         programs.wireshark = {
-          enable = true;
+          # enable = true;
           package = pkgs.wireshark-qt;
         };
 

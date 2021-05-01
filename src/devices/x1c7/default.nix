@@ -53,7 +53,7 @@ with lib; {
 
     # Enable TLP Power Management
     services.tlp = {
-      enable = true;
+      # enable = true;
       settings = {
         START_CHARGE_THRESH_BAT0 = 85;
         STOP_CHARGE_THRESH_BAT0 = 90;
@@ -61,6 +61,11 @@ with lib; {
     };
 
     # Enable fprintd
-    services.fprintd.enable = true;
+    # services.fprintd.enable = true;
+
+    # To debug fprintd
+    services.xserver.displayManager.gdm.debug = true;
+    services.xserver.desktopManager.gnome3.debug = true;
+    systemd.services.fprintd.environment.G_MESSAGES_DEBUG = "all";
   };
 }
