@@ -34,7 +34,7 @@
         streamSettings = {
           network = "mkcp";
           kcpSettings = {
-            uplinkCapacity = 5;
+            uplinkCapacity = 100;
             downlinkCapacity = 100;
             congestion = true;
             header = { type = "wechat-video"; };

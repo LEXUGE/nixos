@@ -31,25 +31,17 @@ in {
       # Auto upgrade
       # system.autoUpgrade.enable = true;
 
-      # Use nix-dram
-      nix.package = pkgs.nix-dram;
+      # Use nix-unstable
+      nix.package = pkgs.nixUnstable;
       nix.extraOptions = ''
         experimental-features = nix-command flakes
       '';
 
       # setup default registry for nix-dram
-      nix.registry.default = {
-        to = {
-          type = "github";
-          owner = "NixOS";
-          repo = "nixpkgs";
-          ref = "nixos-unstable";
-        };
-        from = {
-          type = "indirect";
-          id = "default";
-        };
-      };
+      # nix.registry.default = {
+      #   to = {type= "github"; owner= "NixOS"; repo= "nixpkgs"; ref = "nixos-unstable";};
+      #   from = {type = "indirect"; id = "default";};
+      # };
 
       # Auto gc and optimise
       nix.optimise.automatic = true;

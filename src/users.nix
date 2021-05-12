@@ -14,7 +14,7 @@
         # video - light control
         # libvirtd - virtual manager controls.
         # docker - Docker control
-        extraGroups = [ "wheel" "networkmanager" ]; # "wireshark" ];
+        extraGroups = [ "wheel" "networkmanager" "wireshark" ];
       };
     };
   };
@@ -74,7 +74,7 @@
       fawkes
       wolfram-engine
       dnsperf
-      nix-search
+      # nix-search
     ];
   };
 }

@@ -2,7 +2,7 @@
   description = "Harry Ying's NixOS configuration";
 
   inputs = {
-    nixos.url = "github:NixOS/nixpkgs/gnome-40";
+    nixos.url = "github:NixOS/nixpkgs/nixos-unstable";
     home = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixos";
@@ -16,11 +16,11 @@
     #ash-emacs.url = "/home/ash/Documents/git/emacs.d";
     ash-emacs.url = "github:LEXUGE/emacs.d";
     iceberg.url = "github:icebox-nix/iceberg";
-    nix-dram.url = "github:dramforever/nix-dram";
+    # nix-dram.url = "github:dramforever/nix-dram";
   };
 
   outputs = { self, nixos, home, std, netkit, ash-emacs, iceberg, nixos-cn
-    , nix-dram, dcompass, ... }@inputs: {
+    , dcompass, ... }@inputs: {
       x1c7-toplevel =
         self.nixosConfigurations.x1c7.config.system.build.toplevel;
       niximg = self.nixosConfigurations.niximg.config.system.build.isoImage;
@@ -45,7 +45,7 @@
                 iceberg.overlay
                 nixos-cn.overlay
                 dcompass.overlay
-                nix-dram.overlay
+                # nix-dram.overlay
               ];
             }
             ./configuration.nix
@@ -68,7 +68,7 @@
             "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-base.nix"
             {
               nixpkgs.overlays =
-                [ ash-emacs.overlay dcompass.overlay nix-dram.overlay ];
+                [ ash-emacs.overlay dcompass.overlay ]; # nix-dram.overlay
               x-os.publicKeys = [ dcompass.publicKey netkit.publicKey ];
             }
             ./niximg.nix

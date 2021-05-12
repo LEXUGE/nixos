@@ -61,7 +61,7 @@ with lib; {
     };
 
     # Enable fprintd
-    # services.fprintd.enable = true;
+    services.fprintd.enable = true;
 
     # To debug fprintd
     services.xserver.displayManager.gdm.debug = true;

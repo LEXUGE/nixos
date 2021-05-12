@@ -2,7 +2,29 @@
 
 with lib;
 
-let cfg = config.x-os;
+let
+  cfg = config.x-os;
+  zonefile = pkgs.writeText "a.cn.zone" ''
+    ; replace the trust-dns.org with your own name
+    @   IN          SOA     trust-dns.org. root.trust-dns.org. (
+                                    2021031306       ; Serial
+                                    28800   ; Refresh
+                                    7200    ; Retry
+                                    604800  ; Expire
+                                    86400)  ; Minimum TTL
+
+                    NS      bbb
+
+                    MX      1 alias
+
+                    ANAME   www
+
+    www             A       175.24.191.112
+
+    *.wildcard      CNAME   www
+
+    no-service 86400 IN MX 0 .
+  '';
 in {
   options.x-os = {
     hostname = mkOption {
@@ -82,6 +104,13 @@ in {
               };
             };
 
+            local = {
+              zone = {
+                origin = "a.cn";
+                path = "${zonefile}";
+              };
+            };
+
             quad9 = {
               https = {
                 timeout = 4;
@@ -96,12 +125,18 @@ in {
             start = {
               "if".qtype = [ "AAAA" ];
               "then" = [ "blackhole" "end" ];
+              "else" = [ "local" ];
+            };
+            local = {
+              "if".domain = [{ qname = "a.cn"; }];
+              "then" = [ { query = "local"; } "end" ];
               "else" = [ "dispatch" ];
             };
             dispatch = {
               "if".domain = [
                 { file = "${pkgs.netkit.chinalist}/google.china.raw.txt"; }
                 { file = "${pkgs.netkit.chinalist}/apple.china.raw.txt"; }
+                { qname = "arubanetworks.com"; }
                 {
                   file =
                     "${pkgs.netkit.chinalist}/accelerated-domains.china.raw.txt";
